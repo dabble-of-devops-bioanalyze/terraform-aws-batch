@@ -35,6 +35,7 @@ related:
     url: "https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-eks-autoscaling"
   - name: "terraform-aws-eks-cluster"
     url: "https://github.com/cloudposse/terraform-aws-eks-cluster/"
+    description: Base CloudPosse module for AWS EKS Clusters"
   - name: "terraform-null-label"
     description: "Terraform module designed to generate consistent names and tags for resources. Use terraform-null-label to implement a strict naming convention."
     url: "https://github.com/cloudposse/terraform-null-label"
