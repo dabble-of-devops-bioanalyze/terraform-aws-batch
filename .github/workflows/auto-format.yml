@@ -31,6 +31,12 @@ jobs:
       shell: bash
       run: make BUILD_HARNESS_PATH=/build-harness PACKAGES_PREFER_HOST=true -f /build-harness/templates/Makefile.build-harness pr/auto-format/host
 
+    - name: Generate README 
+      if: github.event.pull_request.state == 'open'
+      shell: bash
+      run: |
+        make BUILD_HARNESS_PATH=/build-harness PACKAGES_PREFER_HOST=true -f /build-harness/templates/Makefile.build-harness readme 
+
     # Commit changes (if any) to the PR branch
     - name: Commit changes to the PR branch
       if: github.event.pull_request.state == 'open'

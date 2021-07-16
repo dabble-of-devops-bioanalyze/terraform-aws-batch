@@ -3,12 +3,14 @@ output "id" {
   value       = module.this.enabled ? module.this.id : null
 }
 
-output "example" {
-  description = "Example output"
-  value       = module.this.enabled ? local.example : null
+output "account_id" {
+  value = data.aws_caller_identity.current.account_id
 }
 
-output "random" {
-  description = "Stable random number for this example"
-  value       = module.this.enabled ? join("", random_integer.example[*].result) : null
+output "caller_arn" {
+  value = data.aws_caller_identity.current.arn
+}
+
+output "caller_user" {
+  value = data.aws_caller_identity.current.user_id
 }
