@@ -343,8 +343,7 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
   [jerowe_homepage]: https://github.com/jerowe
   [jerowe_avatar]: https://img.cloudposse.com/150x150/https://github.com/jerowe.png
 
-[![README Footer][readme_footer_img]][readme_footer_link]
-[![Beacon][beacon]][website]
+Learn more at [Dabble of DevOps](https://www.dabbleofdevops.com)
 
   [logo]: https://cloudposse.com/logo-300x69.svg
   [docs]: https://cpco.io/docs?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=docs
