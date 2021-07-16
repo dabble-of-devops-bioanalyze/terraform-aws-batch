@@ -35,6 +35,7 @@ jobs:
       if: github.event.pull_request.state == 'open'
       shell: bash
       run: |
+        wget https://raw.githubusercontent.com/Dabble-of-DevOps-BioHub/biohub-info/master/docs/README.md.gotmpl -o /tmp/README.md.gotmp
         make BUILD_HARNESS_PATH=/build-harness PACKAGES_PREFER_HOST=true -f /build-harness/templates/Makefile.build-harness readme 
 
     # Commit changes (if any) to the PR branch
