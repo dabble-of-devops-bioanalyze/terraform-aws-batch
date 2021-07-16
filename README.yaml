@@ -5,7 +5,7 @@
 #
 
 # Name of this project
-name: terraform-example-module
+name: terraform-aws-batch
 
 # Logo for this project
 #logo: docs/logo.png
@@ -15,27 +15,26 @@ license: "APACHE2"
 
 # Copyrights
 copyrights:
-  - name: "Cloud Posse, LLC"
-    url: "https://cloudposse.com"
-    year: "2020"
+  - name: "Dabble of DevOps, SCorp"
+    url: "https://www.dabbleofdevops.com"
+    year: "2021"
 
 # Canonical GitHub repo
-github_repo: cloudposse/terraform-example-module
+github_repo: Dabble-of-DevOps-BioHub/terraform-aws-batch
 
 # Badges to display
 badges:
   - name: "Latest Release"
-    image: "https://img.shields.io/github/release/cloudposse/terraform-example-module.svg"
-    url: "https://github.com/cloudposse/terraform-example-module/releases/latest"
-  - name: "Slack Community"
-    image: "https://slack.cloudposse.com/badge.svg"
-    url: "https://slack.cloudposse.com"
-  - name: "Discourse Forum"
-    image: "https://img.shields.io/discourse/https/ask.sweetops.com/posts.svg"
-    url: "https://ask.sweetops.com/"
+    image: "https://img.shields.io/github/release/Dabble-of-Devops-BioHub/terraform-aws-batch.svg"
+    url: "https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch-module/releases/latest"
 
 # List any related terraform modules that this module may be used with or that this module depends on.
 related:
+  - name: "terraform-aws-eks-autoscaling"
+    description: "Wrapper module for terraform-aws-eks-cluster, terraform-aws-eks-worker, and terraform-aws-eks-node-group"
+    url: "https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-eks-autoscaling"
+  - name: "terraform-aws-eks-cluster"
+    url: "https://github.com/cloudposse/terraform-aws-eks-cluster/"
   - name: "terraform-null-label"
     description: "Terraform module designed to generate consistent names and tags for resources. Use terraform-null-label to implement a strict naming convention."
     url: "https://github.com/cloudposse/terraform-null-label"
@@ -48,6 +47,15 @@ references:
   - name: "Terraform Module Requirements"
     description: "HashiCorp's guidance on all the requirements for publishing a module. Meeting the requirements for publishing a module is extremely easy."
     url: "https://www.terraform.io/docs/registry/modules/publish.html#requirements"
+  - name: "Terraform `batch_compute_environment` Resource"
+    url: "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_compute_environment"
+    description: "Creates a AWS Batch compute environment. Compute environments contain the Amazon ECS container instances that are used to run containerized batch jobs."
+  - name: "Terraform `batch_job_queue` Resource"
+    url: "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_queue"
+    description: "Provides a Batch Job Queue resource." 
+  - name: "Terraform `batch_job_definition"
+    url: "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_definition"
+    description: "Provides a Batch Job Definition resource."
   - name: "Terraform `random_integer` Resource"
     description: "The resource random_integer generates random values from a given range, described by the min and max attributes of a given resource."
     url: "https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer"
@@ -57,8 +65,11 @@ references:
 
 # Short description of this project
 description: |-
-  This is `terraform-example-module` project provides all the scaffolding for a typical well-built Cloud Posse module. It's a template repository you can
-  use when creating new repositories.
+  The `terraform-aws-batch` recipe provides a starter template for getting started with AWS Batch. It creates:
+
+    * AWS Batch Compute Environment
+      ** Configured for use with the AWS Secrets Manager
+    * AWS Job Queue associated to the created Compute Environment
 
 # Introduction to the project
 #introduction: |-
@@ -73,15 +84,16 @@ usage: |-
 
   ```hcl
   module "example" {
-    source = "https://github.com/cloudposse/terraform-example-module.git?ref=master"
-    example = "Hello world!"
+    source = "https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch.git?ref=master"
   }
   ```
+
+  More complete documentation and tutorials coming soon!
 
 # Example usage
 examples: |-
   Here is an example of using this module:
-  - [`examples/complete`](https://github.com/cloudposse/terraform-example-module/) - complete example of using this module
+  - [`examples/complete`](https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch/) - complete example of using this module
 
 # How to get started quickly
 #quickstart: |-
@@ -94,5 +106,5 @@ include:
 
 # Contributors to this project
 contributors:
-  - name: "Erik Osterman"
-    github: "osterman"
+  - name: "Jillian Rowe"
+    github: "jerowe"
