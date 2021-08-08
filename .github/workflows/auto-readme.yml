@@ -1,0 +1,52 @@
+name: "auto-readme"
+on:
+  schedule:
+  # Update context.tf nightly
+  - cron:  '0 3 * * *'
+
+jobs:
+  update:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Update context.tf
+      shell: bash
+      id: update
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      run: |
+        wget https://raw.githubusercontent.com/Dabble-of-DevOps-BioHub/biohub-info/master/docs/README.md.gotmpl -O /tmp/README.md.gotmpl
+        make README_TEMPLATE_FILE=/tmp/README.md.gotmpl BUILD_HARNESS_PATH=/build-harness PACKAGES_PREFER_HOST=true -f /build-harness/templates/Makefile.build-harness readme 
+
+        if git diff --no-patch --exit-code context.tf; then
+          echo "No changes detected! Exiting the job..."
+        else
+          echo "README file has changed. Update examples and rebuild README.md."
+          echo "::set-output name=create_pull_request::true"
+        fi
+
+    - name: Create Pull Request
+      if: steps.update.outputs.create_pull_request == 'true'
+      uses: cloudposse/actions/github/create-pull-request@0.22.0
+      with:
+        token: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
+        committer: 'cloudpossebot <11232728+cloudpossebot@users.noreply.github.com>'
+        author: 'cloudpossebot <11232728+cloudpossebot@users.noreply.github.com>'
+        commit-message: Update context.tf from origin source
+        title: Update context.tf
+        body: |-
+          ## what
+          This is an auto-generated PR that updates the `README.md` file to the latest version from `Dabble-of-DevOps-BioHub/biohub-info`
+
+          ## why
+          To support all the changes in the main README 
+
+        branch: auto-update/readme
+        base: master
+        delete-branch: true
+        labels: |
+          auto-update
+          readme
+
