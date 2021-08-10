@@ -28,5 +28,17 @@ output "aws_iam_role-batch_secrets_role" {
 }
 
 output "aws_secrets_manager_secret-batch" {
-  value = aws_secretsmanager_secret.batch 
+  value = aws_secretsmanager_secret.batch
+}
+
+output "aws_batch_ecs_instance_role" {
+  value = aws_iam_instance_profile.ecs_instance_role
+}
+
+output "aws_batch_service_role" {
+  value = aws_iam_role.aws_batch_service_role
+}
+
+output "aws_batch_secrets_role" {
+  value = aws_iam_role.batch_secrets_role
 }
