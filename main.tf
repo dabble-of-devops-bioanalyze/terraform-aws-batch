@@ -85,6 +85,10 @@ resource "aws_iam_role_policy_attachment" "aws_batch_service_role" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSBatchServiceRole"
 }
 
+resource "aws_iam_role_policy_attachment" "aws_batch_full_access" {
+  role       = aws_iam_role.aws_batch_service_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSBatchFullAccess"
+}
 # If no security groups are supplied create one that allows all outgoing traffic
 # And EFS 
 
