@@ -98,7 +98,6 @@ It's 100% Open Source and licensed under the [GNU General Public License](LICENS
 {{ range $screenshot := (ds "config").screenshots }}
 {{ printf "![%s](%s)\n*%s*" $screenshot.name $screenshot.url $screenshot.description }}{{ end }}
 {{- end }}
-{{- end }}
 
 {{ if has (ds "config") "introduction" }}
 ## Introduction
@@ -119,7 +118,6 @@ The table below correctly indicates which inputs are required.
 {{end}}
 
 {{ (ds "config").usage -}}
-{{ end }}
 
 {{ if not $deprecated -}}
 {{ if has (ds "config") "quickstart" -}}
@@ -139,6 +137,7 @@ The table below correctly indicates which inputs are required.
 {{ (include "includes" $file) }}
 {{- end }}
 {{- end }}
+
 {{ if has (ds "config") "related" }}
 
 ## Share the Love
@@ -219,7 +218,7 @@ In general, PRs are welcome. We follow the typical "fork-and-pull" Git workflow.
 {{ else }}
 ## Copyright
 
-Copyright © 2017-{{ time.Now.Year }} [Cloud Posse, LLC](https://cpco.io/copyright)
+Copyright © 2017-{{ time.Now.Year }} [Dabble of DevOps Consulting](https://cpco.io/copyright)
 {{ end}}
 
 {{ if eq (ds "config").license "APACHE2" }}
@@ -344,18 +343,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 All other trademarks referenced herein are the property of their respective owners.
 
-## About
-
-This project is maintained and funded by [Cloud Posse, LLC][website]. Like it? Please let us know by [leaving a testimonial][testimonial]!
-
-[![Cloud Posse][logo]][website]
-
-We're a [DevOps Professional Services][hire] company based in Los Angeles, CA. We ❤️  [Open Source Software][we_love_open_source].
-
-We offer [paid support][commercial_support] on all of our projects.
-
-Check out [our other projects][github], [follow us on twitter][twitter], [apply for a job][jobs], or [hire us][hire] to help with your cloud strategy and implementation.
-
 
 {{ if has (datasource "config") "contributors" }}
 ### Contributors
@@ -380,8 +367,7 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
 
 {{- $utm_link := printf "%%s?utm_source=%s&utm_medium=%s&utm_campaign=%s&utm_content=%s" "github" "readme" (ds "config").github_repo "%s" -}}
 
-[![README Footer][readme_footer_img]][readme_footer_link]
-[![Beacon][beacon]][website]
+Learn more at [Dabble of DevOps](https://www.dabbleofdevops.com)
 
   [logo]: https://cloudposse.com/logo-300x69.svg
   [docs]: {{ printf $utm_link "https://cpco.io/docs" "docs" }}

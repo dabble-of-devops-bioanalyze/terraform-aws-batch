@@ -8,6 +8,7 @@ jobs:
   update:
     if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
+    container: cloudposse/build-harness:slim-latest
     steps:
     - uses: actions/checkout@v2
 
