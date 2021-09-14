@@ -3,9 +3,7 @@
 # terraform-aws-batch [![Latest Release](https://img.shields.io/github/release/Dabble-of-Devops-BioHub/terraform-aws-batch.svg)](https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch-module/releases/latest)
 <!-- markdownlint-restore -->
 
-[![README Header][readme_header_img]][readme_header_link]
-
-[![Cloud Posse][logo]](https://cpco.io/homepage)
+![BioDeploy Logo](https://raw.githubusercontent.com/Dabble-of-DevOps-BioHub/biohub-info/master/logos/BioHub_v2-01.jpg)
 
 <!--
 
@@ -36,17 +34,7 @@ The `terraform-aws-batch` recipe provides a starter template for getting started
 
 ---
 
-This project is part of our comprehensive ["SweetOps"](https://cpco.io/sweetops) approach towards DevOps.
-[<img align="right" title="Share via Email" src="https://docs.cloudposse.com/images/ionicons/ios-email-outline-2.0.1-16x16-999999.svg"/>][share_email]
-[<img align="right" title="Share on Google+" src="https://docs.cloudposse.com/images/ionicons/social-googleplus-outline-2.0.1-16x16-999999.svg" />][share_googleplus]
-[<img align="right" title="Share on Facebook" src="https://docs.cloudposse.com/images/ionicons/social-facebook-outline-2.0.1-16x16-999999.svg" />][share_facebook]
-[<img align="right" title="Share on Reddit" src="https://docs.cloudposse.com/images/ionicons/social-reddit-outline-2.0.1-16x16-999999.svg" />][share_reddit]
-[<img align="right" title="Share on LinkedIn" src="https://docs.cloudposse.com/images/ionicons/social-linkedin-outline-2.0.1-16x16-999999.svg" />][share_linkedin]
-[<img align="right" title="Share on Twitter" src="https://docs.cloudposse.com/images/ionicons/social-twitter-outline-2.0.1-16x16-999999.svg" />][share_twitter]
-
-
-[![Terraform Open Source Modules](https://docs.cloudposse.com/images/terraform-open-source-modules.svg)][terraform_modules]
-
+This project is part of the ["BioDeploy"](https://www.dabbleofdevops.com/biohub) project, which aims to make High Performance Compute Architecture accessible to everyone.
 
 
 It's 100% Open Source and licensed under the [APACHE2](LICENSE).
@@ -56,34 +44,13 @@ It's 100% Open Source and licensed under the [APACHE2](LICENSE).
 
 
 
+## Data Science Infrastructure on AWS
 
-We literally have [*hundreds of terraform modules*][terraform_modules] that are Open Source and well-maintained. Check them out!
-
-
-
+![BioHub Logo](https://raw.githubusercontent.com/Dabble-of-DevOps-BioHub/biohub-info/master/images/BioHub-Ecosystem-Data-Visualization.jpeg)
 
 
 
-## Security & Compliance [<img src="https://cloudposse.com/wp-content/uploads/2020/11/bridgecrew.svg" width="250" align="right" />](https://bridgecrew.io/)
 
-Security scanning is graciously provided by Bridgecrew. Bridgecrew is the leading fully hosted, cloud-native solution providing continuous Terraform security and compliance.
-
-| Benchmark | Description |
-|--------|---------------|
-| [![Infrastructure Security](https://www.bridgecrew.cloud/badges/github/Dabble-of-DevOps-BioHub/terraform-aws-batch/general)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=Dabble-of-DevOps-BioHub%2Fterraform-aws-batch&benchmark=INFRASTRUCTURE+SECURITY) | Infrastructure Security Compliance |
-| [![CIS KUBERNETES](https://www.bridgecrew.cloud/badges/github/Dabble-of-DevOps-BioHub/terraform-aws-batch/cis_kubernetes)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=Dabble-of-DevOps-BioHub%2Fterraform-aws-batch&benchmark=CIS+KUBERNETES+V1.5) | Center for Internet Security, KUBERNETES Compliance |
-| [![CIS AWS](https://www.bridgecrew.cloud/badges/github/Dabble-of-DevOps-BioHub/terraform-aws-batch/cis_aws)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=Dabble-of-DevOps-BioHub%2Fterraform-aws-batch&benchmark=CIS+AWS+V1.2) | Center for Internet Security, AWS Compliance |
-| [![CIS AZURE](https://www.bridgecrew.cloud/badges/github/Dabble-of-DevOps-BioHub/terraform-aws-batch/cis_azure)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=Dabble-of-DevOps-BioHub%2Fterraform-aws-batch&benchmark=CIS+AZURE+V1.1) | Center for Internet Security, AZURE Compliance |
-| [![PCI-DSS](https://www.bridgecrew.cloud/badges/github/Dabble-of-DevOps-BioHub/terraform-aws-batch/pci)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=Dabble-of-DevOps-BioHub%2Fterraform-aws-batch&benchmark=PCI-DSS+V3.2) | Payment Card Industry Data Security Standards Compliance |
-| [![NIST-800-53](https://www.bridgecrew.cloud/badges/github/Dabble-of-DevOps-BioHub/terraform-aws-batch/nist)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=Dabble-of-DevOps-BioHub%2Fterraform-aws-batch&benchmark=NIST-800-53) | National Institute of Standards and Technology Compliance |
-| [![ISO27001](https://www.bridgecrew.cloud/badges/github/Dabble-of-DevOps-BioHub/terraform-aws-batch/iso)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=Dabble-of-DevOps-BioHub%2Fterraform-aws-batch&benchmark=ISO27001) | Information Security Management System, ISO/IEC 27001 Compliance |
-| [![SOC2](https://www.bridgecrew.cloud/badges/github/Dabble-of-DevOps-BioHub/terraform-aws-batch/soc2)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=Dabble-of-DevOps-BioHub%2Fterraform-aws-batch&benchmark=SOC2)| Service Organization Control 2 Compliance |
-| [![CIS GCP](https://www.bridgecrew.cloud/badges/github/Dabble-of-DevOps-BioHub/terraform-aws-batch/cis_gcp)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=Dabble-of-DevOps-BioHub%2Fterraform-aws-batch&benchmark=CIS+GCP+V1.1) | Center for Internet Security, GCP Compliance |
-| [![HIPAA](https://www.bridgecrew.cloud/badges/github/Dabble-of-DevOps-BioHub/terraform-aws-batch/hipaa)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=Dabble-of-DevOps-BioHub%2Fterraform-aws-batch&benchmark=HIPAA) | Health Insurance Portability and Accountability Compliance |
-
-
-
-## Usage
 
 
 **IMPORTANT:** We do not pin modules to versions in our examples because of the
@@ -111,8 +78,6 @@ module "example" {
 More complete documentation and tutorials coming soon!
 
 
-
-
 ## Examples
 
 Here is an example of using this module:
@@ -133,14 +98,119 @@ Available targets:
 ```
 <!-- markdownlint-restore -->
 <!-- markdownlint-disable -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
+| <a name="requirement_local"></a> [local](#requirement\_local) | >= 1.2 |
+| <a name="requirement_random"></a> [random](#requirement\_random) | >= 2.2 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.49.0 |
+| <a name="provider_template"></a> [template](#provider\_template) | 2.2.0 |
+
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.24.1 |
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [aws_batch_compute_environment.batch](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_compute_environment) | resource |
+| [aws_batch_job_queue.default_queue](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_queue) | resource |
+| [aws_iam_instance_profile.ecs_instance_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_instance_profile) | resource |
+| [aws_iam_role.aws_batch_service_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role.batch_secrets_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role.ecs_instance_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy_attachment.aws_batch_full_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.aws_batch_service_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.ecs_instance_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_launch_template.batch](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_template) | resource |
+| [aws_secretsmanager_secret.batch](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret) | resource |
+| [aws_security_group.batch](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
+| [aws_ami.ecs_latest](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
+| [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
+| [template_file.launch_template_user_data](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_additional_tag_map"></a> [additional\_tag\_map](#input\_additional\_tag\_map) | Additional tags for appending to tags\_as\_list\_of\_maps. Not added to `tags`. | `map(string)` | `{}` | no |
+| <a name="input_additional_user_data"></a> [additional\_user\_data](#input\_additional\_user\_data) | Additional User Data for the launch template.  Must include ==MYBOUNDARY== and Content-Type: entries. | `string` | `""` | no |
+| <a name="input_ami_owners"></a> [ami\_owners](#input\_ami\_owners) | List of owners for source ECS AMI. | `list` | <pre>[<br>  "amazon"<br>]</pre> | no |
+| <a name="input_attributes"></a> [attributes](#input\_attributes) | Additional attributes (e.g. `1`) | `list(string)` | `[]` | no |
+| <a name="input_bid_percentage"></a> [bid\_percentage](#input\_bid\_percentage) | Integer of minimum percentage that a Spot Instance price must be when compared to on demand.  Example: A value of 20 would require the spot price be lower than 20% the current on demand price. | `string` | `"100"` | no |
+| <a name="input_block_device_mappings"></a> [block\_device\_mappings](#input\_block\_device\_mappings) | Specify volumes to attach to the instance besides the volumes specified by the AMI | <pre>list(object({<br>    device_name  = string<br>    no_device    = bool<br>    virtual_name = string<br>    ebs = object({<br>      delete_on_termination = bool<br>      encrypted             = bool<br>      iops                  = number<br>      kms_key_id            = string<br>      snapshot_id           = string<br>      volume_size           = number<br>      volume_type           = string<br>    })<br>  }))</pre> | `[]` | no |
+| <a name="input_context"></a> [context](#input\_context) | Single object for setting entire context at once.<br>See description of individual variables for details.<br>Leave string and numeric variables as `null` to use default value.<br>Individual variable settings (non-null) override settings in context object,<br>except for attributes, tags, and additional\_tag\_map, which are merged. | `any` | <pre>{<br>  "additional_tag_map": {},<br>  "attributes": [],<br>  "delimiter": null,<br>  "enabled": true,<br>  "environment": null,<br>  "id_length_limit": null,<br>  "label_key_case": null,<br>  "label_order": [],<br>  "label_value_case": null,<br>  "name": null,<br>  "namespace": null,<br>  "regex_replace_chars": null,<br>  "stage": null,<br>  "tags": {}<br>}</pre> | no |
+| <a name="input_credit_specification"></a> [credit\_specification](#input\_credit\_specification) | Customize the credit specification of the instances | <pre>object({<br>    cpu_credits = string<br>  })</pre> | `null` | no |
+| <a name="input_custom_ami"></a> [custom\_ami](#input\_custom\_ami) | Optional string for custom AMI.  If omitted, latest ECS AMI in the current region will be used. | `string` | `""` | no |
+| <a name="input_delimiter"></a> [delimiter](#input\_delimiter) | Delimiter to be used between `namespace`, `environment`, `stage`, `name` and `attributes`.<br>Defaults to `-` (hyphen). Set to `""` to use no delimiter at all. | `string` | `null` | no |
+| <a name="input_disable_api_termination"></a> [disable\_api\_termination](#input\_disable\_api\_termination) | If `true`, enables EC2 Instance Termination Protection | `bool` | `false` | no |
+| <a name="input_docker_max_container_size"></a> [docker\_max\_container\_size](#input\_docker\_max\_container\_size) | If docker\_expand\_volume is true, containers will allocate this amount of storage (GB) when launched. | `number` | `50` | no |
+| <a name="input_ebs_optimized"></a> [ebs\_optimized](#input\_ebs\_optimized) | If true, the launched EC2 instance will be EBS-optimized | `bool` | `false` | no |
+| <a name="input_ec2_key_pair"></a> [ec2\_key\_pair](#input\_ec2\_key\_pair) | Optional keypair to connect to the instance with.  Consider SSM as an alternative. | `string` | `""` | no |
+| <a name="input_elastic_gpu_specifications"></a> [elastic\_gpu\_specifications](#input\_elastic\_gpu\_specifications) | Specifications of Elastic GPU to attach to the instances | <pre>object({<br>    type = string<br>  })</pre> | `null` | no |
+| <a name="input_enable_monitoring"></a> [enable\_monitoring](#input\_enable\_monitoring) | Enable/disable detailed monitoring | `bool` | `true` | no |
+| <a name="input_enabled"></a> [enabled](#input\_enabled) | Set to false to prevent the module from creating any resources | `bool` | `null` | no |
+| <a name="input_environment"></a> [environment](#input\_environment) | Environment, e.g. 'uw2', 'us-west-2', OR 'prod', 'staging', 'dev', 'UAT' | `string` | `null` | no |
+| <a name="input_iam_instance_profile_name"></a> [iam\_instance\_profile\_name](#input\_iam\_instance\_profile\_name) | The IAM instance profile name to associate with launched instances | `string` | `""` | no |
+| <a name="input_id_length_limit"></a> [id\_length\_limit](#input\_id\_length\_limit) | Limit `id` to this many characters (minimum 6).<br>Set to `0` for unlimited length.<br>Set to `null` for default, which is `0`.<br>Does not affect `id_full`. | `number` | `null` | no |
+| <a name="input_instance_initiated_shutdown_behavior"></a> [instance\_initiated\_shutdown\_behavior](#input\_instance\_initiated\_shutdown\_behavior) | Shutdown behavior for the instances. Can be `stop` or `terminate` | `string` | `"terminate"` | no |
+| <a name="input_instance_market_options"></a> [instance\_market\_options](#input\_instance\_market\_options) | The market (purchasing) option for the instances | <pre>object({<br>    market_type = string<br>    spot_options = object({<br>      block_duration_minutes         = number<br>      instance_interruption_behavior = string<br>      max_price                      = number<br>      spot_instance_type             = string<br>      valid_until                    = string<br>    })<br>  })</pre> | `null` | no |
+| <a name="input_instance_types"></a> [instance\_types](#input\_instance\_types) | Optional list of instance types. | `list` | <pre>[<br>  "optimal"<br>]</pre> | no |
+| <a name="input_key_name"></a> [key\_name](#input\_key\_name) | The SSH key name that should be used for the instance | `string` | `""` | no |
+| <a name="input_label_key_case"></a> [label\_key\_case](#input\_label\_key\_case) | The letter case of label keys (`tag` names) (i.e. `name`, `namespace`, `environment`, `stage`, `attributes`) to use in `tags`.<br>Possible values: `lower`, `title`, `upper`.<br>Default value: `title`. | `string` | `null` | no |
+| <a name="input_label_order"></a> [label\_order](#input\_label\_order) | The naming order of the id output and Name tag.<br>Defaults to ["namespace", "environment", "stage", "name", "attributes"].<br>You can omit any of the 5 elements, but at least one must be present. | `list(string)` | `null` | no |
+| <a name="input_label_value_case"></a> [label\_value\_case](#input\_label\_value\_case) | The letter case of output label values (also used in `tags` and `id`).<br>Possible values: `lower`, `title`, `upper` and `none` (no transformation).<br>Default value: `lower`. | `string` | `null` | no |
+| <a name="input_max_vcpus"></a> [max\_vcpus](#input\_max\_vcpus) | Max vCPUs.  Default 2 for m4.large. | `string` | `8` | no |
+| <a name="input_metadata_http_endpoint_enabled"></a> [metadata\_http\_endpoint\_enabled](#input\_metadata\_http\_endpoint\_enabled) | Set false to disable the Instance Metadata Service. | `bool` | `true` | no |
+| <a name="input_metadata_http_put_response_hop_limit"></a> [metadata\_http\_put\_response\_hop\_limit](#input\_metadata\_http\_put\_response\_hop\_limit) | The desired HTTP PUT response hop limit (between 1 and 64) for Instance Metadata Service requests.<br>The default is `2` to support containerized workloads. | `number` | `2` | no |
+| <a name="input_metadata_http_tokens_required"></a> [metadata\_http\_tokens\_required](#input\_metadata\_http\_tokens\_required) | Set true to require IMDS session tokens, disabling Instance Metadata Service Version 1. | `bool` | `true` | no |
+| <a name="input_min_vcpus"></a> [min\_vcpus](#input\_min\_vcpus) | Minimum vCPUs.  > 0 causes instances to always be running. | `string` | `0` | no |
+| <a name="input_name"></a> [name](#input\_name) | Solution name, e.g. 'app' or 'jenkins' | `string` | `null` | no |
+| <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp' | `string` | `null` | no |
+| <a name="input_placement"></a> [placement](#input\_placement) | The placement specifications of the instances | <pre>object({<br>    affinity          = string<br>    availability_zone = string<br>    group_name        = string<br>    host_id           = string<br>    tenancy           = string<br>  })</pre> | `null` | no |
+| <a name="input_regex_replace_chars"></a> [regex\_replace\_chars](#input\_regex\_replace\_chars) | Regex to replace chars with empty string in `namespace`, `environment`, `stage` and `name`.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
+| <a name="input_region"></a> [region](#input\_region) | AWS Region | `string` | `"us-east-1"` | no |
+| <a name="input_secrets_enabled"></a> [secrets\_enabled](#input\_secrets\_enabled) | Enable IAM Role for AWS Secrets Manager | `bool` | `false` | no |
+| <a name="input_security_group_ids"></a> [security\_group\_ids](#input\_security\_group\_ids) | List of additional security groups to associate with cluster instances.  If empty, default security group will be added. | `list` | <pre>[<br>  ""<br>]</pre> | no |
+| <a name="input_stage"></a> [stage](#input\_stage) | Stage, e.g. 'prod', 'staging', 'dev', OR 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
+| <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | List of subnets compute environment instances will be deployed in. | `list` | n/a | yes |
+| <a name="input_tag_specifications_resource_types"></a> [tag\_specifications\_resource\_types](#input\_tag\_specifications\_resource\_types) | List of tag specification resource types to tag. Valid values are instance, volume, elastic-gpu and spot-instances-request. | `set(string)` | <pre>[<br>  "instance",<br>  "volume"<br>]</pre> | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | Additional tags (e.g. `map('BusinessUnit','XYZ')` | `map(string)` | `{}` | no |
+| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | VPC ID | `string` | n/a | yes |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_account_id"></a> [account\_id](#output\_account\_id) | n/a |
+| <a name="output_aws_batch_compute_environment"></a> [aws\_batch\_compute\_environment](#output\_aws\_batch\_compute\_environment) | n/a |
+| <a name="output_aws_batch_ecs_instance_role"></a> [aws\_batch\_ecs\_instance\_role](#output\_aws\_batch\_ecs\_instance\_role) | n/a |
+| <a name="output_aws_batch_job_queue"></a> [aws\_batch\_job\_queue](#output\_aws\_batch\_job\_queue) | n/a |
+| <a name="output_aws_batch_secrets_role"></a> [aws\_batch\_secrets\_role](#output\_aws\_batch\_secrets\_role) | n/a |
+| <a name="output_aws_batch_service_role"></a> [aws\_batch\_service\_role](#output\_aws\_batch\_service\_role) | n/a |
+| <a name="output_aws_iam_role-batch_secrets_role"></a> [aws\_iam\_role-batch\_secrets\_role](#output\_aws\_iam\_role-batch\_secrets\_role) | n/a |
+| <a name="output_aws_secrets_manager_secret-batch"></a> [aws\_secrets\_manager\_secret-batch](#output\_aws\_secrets\_manager\_secret-batch) | n/a |
+| <a name="output_caller_arn"></a> [caller\_arn](#output\_caller\_arn) | n/a |
+| <a name="output_caller_user"></a> [caller\_user](#output\_caller\_user) | n/a |
+| <a name="output_id"></a> [id](#output\_id) | ID of the created example |
+<!-- markdownlint-restore -->
+
 
 
 
 ## Share the Love
 
-Like this project? Please give it a ★ on [our GitHub](https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch)! (it helps us **a lot**)
-
-Are you using this project or any of our other projects? Consider [leaving a testimonial][testimonial]. =)
+Like this project? Please give it a ★ on [our GitHub](https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch)! (it helps **a lot**)
 
 
 
@@ -170,49 +240,25 @@ For additional context, refer to some of these links.
 
 **Got a question?** We got answers.
 
-File a GitHub [issue](https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch/issues), send us an [email][email] or join our [Slack Community][slack].
+File a GitHub [issue](https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch/issues), send us an jillian@dabbleofdevops.com.
 
-[![README Commercial Support][readme_commercial_support_img]][readme_commercial_support_link]
+## Bioinformatics Infrastructure on AWS for Startups
 
-## DevOps Accelerator for Startups
+I'll help you build your data science cloud infrastructure from the ground up so you can own it using open source software. Then I'll show you how to operate it and stick around for as long as you need us.
 
+[Learn More](https://www.dabbleofdevops.com)
 
-We are a [**DevOps Accelerator**][commercial_support]. We'll help you build your cloud infrastructure from the ground up so you can own it. Then we'll show you how to operate it and stick around for as long as you need us.
+Work directly with me via email, slack, and video conferencing.
 
-[![Learn More](https://img.shields.io/badge/learn%20more-success.svg?style=for-the-badge)][commercial_support]
-
-Work directly with our team of DevOps experts via email, slack, and video conferencing.
-
-We deliver 10x the value for a fraction of the cost of a full-time engineer. Our track record is not even funny. If you want things done right and you need it done FAST, then we're your best bet.
-
-- **Reference Architecture.** You'll get everything you need from the ground up built using 100% infrastructure as code.
-- **Release Engineering.** You'll have end-to-end CI/CD with unlimited staging environments.
-- **Site Reliability Engineering.** You'll have total visibility into your apps and microservices.
-- **Security Baseline.** You'll have built-in governance with accountability and audit logs for all changes.
-- **GitOps.** You'll be able to operate your infrastructure via Pull Requests.
+- **Scientific Workflow Automation and Optimization.** Got workflows that are giving you trouble? Let's work together to ensure that your analyses run with or without your scientists being fully caffeinated.
+- **High Performance Compute Infrastructure.** Highly available, auto scaling clusters to analyze *all the (bioinformatics related!) things*. All setups are completely integrated with your workflow system of choice, whether that is Airflow, Prefect, Snakemake or Nextflow.
+- **Kubernetes and AWS Batch Setup for Apache Airflow** Orchestrate your Bioinformatics Workflows with Apache Airflow. Get full auditing, SLA, logging and monitoring for your workflows running on AWS Batch.
+- **High Performance Compute Setup that Int** You'll have built-in governance with accountability and audit logs for all changes.
+- **Docker Images** Get advice and hands on training for your team to build complex software stacks onto docker images.
 - **Training.** You'll receive hands-on training so your team can operate what we build.
 - **Questions.** You'll have a direct line of communication between our teams via a Shared Slack channel.
 - **Troubleshooting.** You'll get help to triage when things aren't working.
-- **Code Reviews.** You'll receive constructive feedback on Pull Requests.
 - **Bug Fixes.** We'll rapidly work with you to fix any bugs in our projects.
-
-## Slack Community
-
-Join our [Open Source Community][slack] on Slack. It's **FREE** for everyone! Our "SweetOps" community is where you get to talk with others who share a similar vision for how to rollout and manage infrastructure. This is the best place to talk shop, ask questions, solicit feedback, and work together as a community to build totally *sweet* infrastructure.
-
-## Discourse Forums
-
-Participate in our [Discourse Forums][discourse]. Here you'll find answers to commonly asked questions. Most questions will be related to the enormous number of projects we support on our GitHub. Come here to collaborate on answers, find solutions, and get ideas about the products and services we value. It only takes a minute to get started! Just sign in with SSO using your GitHub account.
-
-## Newsletter
-
-Sign up for [our newsletter][newsletter] that covers everything on our technology radar.  Receive updates on what we're up to on GitHub as well as awesome new projects we discover.
-
-## Office Hours
-
-[Join us every Wednesday via Zoom][office_hours] for our weekly "Lunch & Learn" sessions. It's **FREE** for everyone!
-
-[![zoom](https://img.cloudposse.com/fit-in/200x200/https://cloudposse.com/wp-content/uploads/2019/08/Powered-by-Zoom.png")][office_hours]
 
 ## Contributing
 
@@ -222,7 +268,7 @@ Please use the [issue tracker](https://github.com/Dabble-of-DevOps-BioHub/terraf
 
 ### Developing
 
-If you are interested in being a contributor and want to get involved in developing this project or [help out](https://cpco.io/help-out) with our other projects, we would love to hear from you! Shoot us an [email][email].
+If you are interested in being a contributor and want to get involved in developing this project or help out with other projects, I would love to hear from you! Shoot me an email at jillian@dabbleofdevops.com.
 
 In general, PRs are welcome. We follow the typical "fork-and-pull" Git workflow.
 
@@ -281,18 +327,6 @@ under the License.
 
 All other trademarks referenced herein are the property of their respective owners.
 
-## About
-
-This project is maintained and funded by [Cloud Posse, LLC][website]. Like it? Please let us know by [leaving a testimonial][testimonial]!
-
-[![Cloud Posse][logo]][website]
-
-We're a [DevOps Professional Services][hire] company based in Los Angeles, CA. We ❤️  [Open Source Software][we_love_open_source].
-
-We offer [paid support][commercial_support] on all of our projects.
-
-Check out [our other projects][github], [follow us on twitter][twitter], [apply for a job][jobs], or [hire us][hire] to help with your cloud strategy and implementation.
-
 
 
 ### Contributors
@@ -305,8 +339,7 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
   [jerowe_homepage]: https://github.com/jerowe
   [jerowe_avatar]: https://img.cloudposse.com/150x150/https://github.com/jerowe.png
 
-[![README Footer][readme_footer_img]][readme_footer_link]
-[![Beacon][beacon]][website]
+Learn more at [Dabble of DevOps](https://www.dabbleofdevops.com)
 
   [logo]: https://cloudposse.com/logo-300x69.svg
   [docs]: https://cpco.io/docs?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=docs

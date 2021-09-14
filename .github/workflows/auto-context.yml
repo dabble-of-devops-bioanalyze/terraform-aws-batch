@@ -26,7 +26,8 @@ jobs:
             echo "context.tf file has changed. Update examples and rebuild README.md."
             make init
             make github/init/context.tf
-            make readme/build
+            wget https://raw.githubusercontent.com/Dabble-of-DevOps-BioHub/biohub-info/master/docs/README.md.gotmpl -O /tmp/README.md.gotmpl
+            make README_TEMPLATE_FILE=/tmp/README.md.gotmpl BUILD_HARNESS_PATH=/build-harness PACKAGES_PREFER_HOST=true -f /build-harness/templates/Makefile.build-harness readme 
             echo "::set-output name=create_pull_request::true"
           fi
         else
