@@ -3,7 +3,7 @@
 # terraform-aws-batch [![Latest Release](https://img.shields.io/github/release/Dabble-of-Devops-BioHub/terraform-aws-batch.svg)](https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch-module/releases/latest)
 <!-- markdownlint-restore -->
 
-![BioDeploy Logo](https://raw.githubusercontent.com/Dabble-of-DevOps-BioHub/biohub-info/master/logos/BioHub_v2-01.jpg)
+![BioAnalyze Logo](https://raw.githubusercontent.com/Dabble-of-DevOps-BioAnalyze/biohub-info/master/logos/BioAnalyze_v2-01.jpg)
 
 <!--
 
@@ -34,7 +34,7 @@ The `terraform-aws-batch` recipe provides a starter template for getting started
 
 ---
 
-This project is part of the ["BioDeploy"](https://www.dabbleofdevops.com/biohub) project, which aims to make High Performance Compute Architecture accessible to everyone.
+This project is part of the ["BioAnalyze"](https://www.dabbleofdevops.com/biohub) project, which aims to make High Performance Compute Architecture accessible to everyone.
 
 
 It's 100% Open Source and licensed under the [APACHE2](LICENSE).
@@ -46,7 +46,7 @@ It's 100% Open Source and licensed under the [APACHE2](LICENSE).
 
 ## Data Science Infrastructure on AWS
 
-![BioHub Logo](https://raw.githubusercontent.com/Dabble-of-DevOps-BioHub/biohub-info/master/images/BioHub-Ecosystem-Data-Visualization.jpeg)
+![BioAnalyze Logo](https://raw.githubusercontent.com/dabble-of-devops-bioanalyze/biohub-info/master/images/BioAnalyze-Ecosystem-Data-Visualization.jpeg)
 
 
 
