@@ -50,6 +50,32 @@ resource "aws_iam_role" "ecs_instance_role" {
 EOF
 }
 
+resource "aws_iam_role" "batch_execution_role" {
+  name = "${module.this.id}-batch_execution_role"
+  tags = module.this.tags
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "batch_execution_role" {
+  role       = aws_iam_role.batch_execution_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
+
 resource "aws_iam_role_policy_attachment" "ecs_instance_role" {
   role       = aws_iam_role.ecs_instance_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
@@ -89,8 +115,9 @@ resource "aws_iam_role_policy_attachment" "aws_batch_full_access" {
   role       = aws_iam_role.aws_batch_service_role.name
   policy_arn = "arn:aws:iam::aws:policy/AWSBatchFullAccess"
 }
+
 # If no security groups are supplied create one that allows all outgoing traffic
-# And EFS 
+# And EFS
 
 resource "aws_security_group" "batch" {
   count  = var.security_group_ids[0] == "" ? 1 : 0
@@ -185,7 +212,7 @@ Content-Type: multipart/mixed; boundary="==MYBOUNDARY=="
 Content-Type: text/x-shellscript; charset="us-ascii"
 
 #!/bin/bash
-# Terraform script 
+# Terraform script
 
 # Install the AWS SSM agent to allow instance ingress
 yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
