@@ -44,5 +44,5 @@ output "aws_batch_secrets_role" {
 }
 
 output "aws_batch_execution_role" {
-  value = aws_iam_role.batch_execution_role.name
+  value = aws_iam_role.batch_execution_role
 }
