@@ -23,9 +23,6 @@ output "aws_batch_compute_environment" {
   value = aws_batch_compute_environment.batch
 }
 
-output "aws_iam_role-batch_secrets_role" {
-  value = aws_iam_role.batch_secrets_role
-}
 
 output "aws_secrets_manager_secret-batch" {
   value = aws_secretsmanager_secret.batch
@@ -39,9 +36,9 @@ output "aws_batch_service_role" {
   value = aws_iam_role.aws_batch_service_role
 }
 
-output "aws_batch_secrets_role" {
-  value = aws_iam_role.batch_secrets_role
-}
+# output "aws_iam_role-batch_secrets_role" {
+#   value = aws_iam_role.batch_secrets_role
+# }
 
 output "aws_batch_execution_role" {
   value = aws_iam_role.batch_execution_role

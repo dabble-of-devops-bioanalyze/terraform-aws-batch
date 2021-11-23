@@ -14,3 +14,5 @@ subnet_ids = [          "subnet-09791655",
           "subnet-e82f0be7",]
 
 max_vcpus = 256
+
+secrets_enabled = true

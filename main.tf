@@ -6,7 +6,7 @@ resource "aws_secretsmanager_secret" "batch" {
 }
 
 locals {
-  id = replace(upper(replace(module.this.id, "-", " ")), " ", "")
+  id = replace(title(replace(module.this.id, "-", " ")), " ", "")
 }
 
 data "aws_iam_policy_document" "secrets_full_access" {
@@ -35,13 +35,34 @@ resource "aws_iam_policy" "secrets_full_access" {
   tags = module.this.tags
 }
 
-resource "aws_iam_role" "batch_secrets_role" {
-  count    = var.secrets_enabled ? 1 :0
-  name  = "${module.this.id}-batch_secrets_role"
-  tags  = module.this.tags
-
-  assume_role_policy = data.aws_iam_policy_document.secrets_full_access.json
+output "aws_iam_policy_document-secrets_full_access" {
+  value = data.aws_iam_policy_document.secrets_full_access
 }
+#resource "aws_iam_role" "batch_secrets_role" {
+#  count    = var.secrets_enabled ? 1 : 0
+#  name  = "${module.this.id}-batch_secrets_role"
+#  tags  = module.this.tags
+#
+#  #TODO change this over to the policy document json
+#  assume_role_policy = <<EOF
+#{
+#  "Version": "2012-10-17",
+#  "Statement": [
+#    {
+#      "Effect": "Allow",
+#      "Action": [
+#        "secretsmanager:GetSecretValue",
+#        "kms:Decrypt"
+#      ],
+#      "Resource": [
+#        "arn:aws:secretsmanager:${var.region}:${data.aws_caller_identity.current.account_id}:secret:*",
+#        "arn:aws:kms:${var.region}:${data.aws_caller_identity.current.account_id}:key/*"
+#      ]
+#    }
+#  ]
+#}
+#EOF
+#}
 
 resource "aws_iam_role" "ecs_instance_role" {
   name = "${module.this.id}-ecs_instance_role"
@@ -91,7 +112,7 @@ resource "aws_iam_role_policy_attachment" "batch_execution_role" {
 
 # if secrets are enabled add the secrets policy to the execution role
 resource "aws_iam_role_policy_attachment" "batch_execution_attach_secrets" {
-  count    = var.secrets_enabled ? 1 :0
+  count    = var.secrets_enabled ? 1 : 0
   role       = aws_iam_role.batch_execution_role.name
   policy_arn = aws_iam_policy.secrets_full_access.arn
 }

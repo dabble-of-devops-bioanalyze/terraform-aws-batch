@@ -15,3 +15,8 @@ variable "max_vcpus" {
   type    = number
   default = 8
 }
+
+variable "secrets_enabled" {
+  type = bool
+  default = true
+}
