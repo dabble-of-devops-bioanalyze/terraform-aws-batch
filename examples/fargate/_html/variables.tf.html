@@ -1,0 +1,21 @@
+<div class="highlight"><pre><span></span><span class="kr">variable</span> <span class="nv">&quot;region&quot;</span> <span class="p">{</span>
+  <span class="na">type</span>    <span class="o">=</span> <span class="kt">string</span>
+  <span class="na">default</span> <span class="o">=</span> <span class="s2">&quot;us-east-1&quot;</span>
+<span class="p">}</span>
+
+<span class="kr">variable</span> <span class="nv">&quot;max_vcpus&quot;</span> <span class="p">{</span>
+  <span class="na">type</span>    <span class="o">=</span> <span class="kt">number</span>
+  <span class="na">default</span> <span class="o">=</span> <span class="m">256</span>
+<span class="p">}</span>
+
+<span class="kr">variable</span> <span class="nv">&quot;secrets_enabled&quot;</span> <span class="p">{</span>
+  <span class="na">type</span>    <span class="o">=</span> <span class="kt">bool</span>
+  <span class="na">default</span> <span class="o">=</span> <span class="no">true</span>
+<span class="p">}</span>
+
+<span class="kr">variable</span> <span class="nv">&quot;type&quot;</span> <span class="p">{</span>
+  <span class="na">description</span> <span class="o">=</span> <span class="s2">&quot;Type of cluster to create.&quot;</span>
+  <span class="na">type</span>        <span class="o">=</span> <span class="kt">string</span>
+  <span class="na">default</span>     <span class="o">=</span> <span class="s2">&quot;FARGATE&quot;</span>
+<span class="p">}</span>
+</pre></div>

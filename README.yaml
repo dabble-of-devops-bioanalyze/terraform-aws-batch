@@ -5,7 +5,7 @@
 #
 
 # Name of this project
-name: terraform-aws-batch
+name: AWS Batch Terraform Module
 
 # Logo for this project
 #logo: docs/logo.png
@@ -20,19 +20,19 @@ copyrights:
     year: "2021"
 
 # Canonical GitHub repo
-github_repo: Dabble-of-DevOps-BioHub/terraform-aws-batch
+github_repo: dabble-of-devops-bioanalyze/terraform-aws-batch
 
 # Badges to display
 badges:
   - name: "Latest Release"
-    image: "https://img.shields.io/github/release/Dabble-of-Devops-BioHub/terraform-aws-batch.svg"
-    url: "https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch-module/releases/latest"
+    image: "https://img.shields.io/github/release/dabble-of-devops-bioanalyze/terraform-aws-batch.svg"
+    url: "https://github.com/dabble-of-devops-bioanalyze/terraform-aws-batch-module/releases/latest"
 
 # List any related terraform modules that this module may be used with or that this module depends on.
 related:
   - name: "terraform-aws-eks-autoscaling"
     description: "Wrapper module for terraform-aws-eks-cluster, terraform-aws-eks-worker, and terraform-aws-eks-node-group"
-    url: "https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-eks-autoscaling"
+    url: "https://github.com/dabble-of-devops-bioanalyze/terraform-aws-eks-autoscaling"
   - name: "terraform-aws-eks-cluster"
     url: "https://github.com/cloudposse/terraform-aws-eks-cluster/"
     description: Base CloudPosse module for AWS EKS Clusters"
@@ -53,7 +53,7 @@ references:
     description: "Creates a AWS Batch compute environment. Compute environments contain the Amazon ECS container instances that are used to run containerized batch jobs."
   - name: "Terraform `batch_job_queue` Resource"
     url: "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_queue"
-    description: "Provides a Batch Job Queue resource." 
+    description: "Provides a Batch Job Queue resource."
   - name: "Terraform `batch_job_definition"
     url: "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_definition"
     description: "Provides a Batch Job Definition resource."
@@ -79,13 +79,13 @@ description: |-
 # How to use this module. Should be an easy example to copy and paste.
 usage: |-
   For a complete example, see [examples/complete](examples/complete).
-  
+
   For automated tests of the complete example using [bats](https://github.com/bats-core/bats-core) and [Terratest](https://github.com/gruntwork-io/terratest)
   (which tests and deploys the example on AWS), see [test](test).
 
   ```hcl
   module "example" {
-    source = "https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch.git?ref=master"
+    source = "https://github.com/dabble-of-devops-bioanalyze/terraform-aws-batch.git?ref=master"
   }
   ```
 
@@ -95,7 +95,7 @@ usage: |-
 # Example usage
 examples: |-
   Here is an example of using this module:
-  - [`examples/complete`](https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch/) - complete example of using this module
+  - [`examples/complete`](https://github.com/dabble-of-devops-bioanalyze/terraform-aws-batch/) - complete example of using this module
 
 # How to get started quickly
 #quickstart: |-

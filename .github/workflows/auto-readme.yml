@@ -19,7 +19,7 @@ jobs:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       run: |
         wget https://raw.githubusercontent.com/Dabble-of-DevOps-BioHub/biohub-info/master/docs/README.md.gotmpl -O /tmp/README.md.gotmpl
-        make README_TEMPLATE_FILE=/tmp/README.md.gotmpl BUILD_HARNESS_PATH=/build-harness PACKAGES_PREFER_HOST=true -f /build-harness/templates/Makefile.build-harness readme 
+        make README_TEMPLATE_FILE=/tmp/README.md.gotmpl BUILD_HARNESS_PATH=/build-harness PACKAGES_PREFER_HOST=true -f /build-harness/templates/Makefile.build-harness readme
 
         if git diff --no-patch --exit-code context.tf; then
           echo "No changes detected! Exiting the job..."
@@ -42,7 +42,7 @@ jobs:
           This is an auto-generated PR that updates the `README.md` file to the latest version from `Dabble-of-DevOps-BioHub/biohub-info`
 
           ## why
-          To support all the changes in the main README 
+          To support all the changes in the main README
 
         branch: auto-update/readme
         base: master

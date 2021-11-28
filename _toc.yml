@@ -1,0 +1,10 @@
+root: README
+title: AWS Batch
+entries:
+- file: examples/examples
+- file: examples/ec2/README
+- file: examples/ec2/gcp.rst
+- file: docs/targets
+  entries:
+  - file: docs/terraform
+

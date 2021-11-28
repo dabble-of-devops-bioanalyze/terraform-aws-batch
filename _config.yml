@@ -1,0 +1,11 @@
+only_build_toc_files: true
+exclude_patterns:
+  - '**/.terraform'
+  - '.terraform/**'
+  - '**/.pytest_cache'
+  - '**/.aws'
+  - '.aws'
+  - '.github'
+  - '.github/**'
+  - 'build-harness'
+  - 'build-harness/**'

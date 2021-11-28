@@ -1,0 +1,260 @@
+<div class="highlight"><pre><span></span><span class="kr">provider</span> <span class="nv">&quot;aws&quot;</span> <span class="p">{</span>
+  <span class="na">region</span> <span class="o">=</span> <span class="nv">var.region</span>
+<span class="p">}</span>
+
+<span class="kr">resource</span> <span class="nc">&quot;aws_default_vpc&quot;</span> <span class="nv">&quot;default&quot;</span> <span class="p">{</span>
+  <span class="nb">tags</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">Name</span> <span class="o">=</span> <span class="s2">&quot;Default VPC&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">data</span> <span class="nc">&quot;aws_availability_zones&quot;</span> <span class="nv">&quot;available&quot;</span> <span class="p">{</span>
+  <span class="na">state</span> <span class="o">=</span> <span class="s2">&quot;available&quot;</span>
+<span class="p">}</span>
+
+<span class="kr">resource</span> <span class="nc">&quot;aws_default_subnet&quot;</span> <span class="nv">&quot;default_az&quot;</span> <span class="p">{</span>
+  <span class="na">count</span>             <span class="o">=</span> <span class="nf">length</span><span class="p">(</span><span class="nv">data.aws_availability_zones.available.names</span><span class="p">)</span>
+  <span class="na">availability_zone</span> <span class="o">=</span> <span class="nv">data.aws_availability_zones.available.names[count.index</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="kr">output</span> <span class="nv">&quot;vpc&quot;</span> <span class="p">{</span>
+  <span class="na">value</span> <span class="o">=</span> <span class="nv">aws_default_vpc.default.id</span>
+<span class="p">}</span>
+
+<span class="nb">locals</span> <span class="p">{</span>
+  <span class="na">subnet_ids</span> <span class="o">=</span> <span class="p">[</span><span class="err">for</span> <span class="err">s</span> <span class="err">in</span> <span class="nv">aws_default_subnet.default_az</span> <span class="p">:</span> <span class="nv">s.id</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="kr">output</span> <span class="nv">&quot;aws_default_subnet_default_az&quot;</span> <span class="p">{</span>
+  <span class="na">value</span> <span class="o">=</span> <span class="nv">local.subnet_ids</span>
+<span class="p">}</span>
+
+
+<span class="kr">module</span> <span class="nv">&quot;batch&quot;</span> <span class="p">{</span>
+  <span class="na">source</span>  <span class="o">=</span> <span class="s2">&quot;/root/terraform-recipes/terraform-aws-batch&quot;</span><span class="c1"></span>
+<span class="c1">  # version = &quot;1.9.0&quot;</span>
+<span class="c1">  # insert the 17 required variables here</span>
+  <span class="na">region</span>     <span class="o">=</span> <span class="nv">var.region</span>
+  <span class="na">vpc_id</span>     <span class="o">=</span>  <span class="nv">aws_default_vpc.default.id</span>
+
+  <span class="na">subnet_ids</span> <span class="o">=</span>  <span class="nv">local.subnet_ids</span>
+  <span class="na">max_vcpus</span>  <span class="o">=</span> <span class="nv">var.max_vcpus</span>
+  <span class="na">type</span> <span class="o">=</span> <span class="s2">&quot;FARGATE&quot;</span>
+  <span class="na">secrets_enabled</span> <span class="o">=</span> <span class="nv">var.secrets_enabled</span>
+
+  <span class="na">context</span> <span class="o">=</span> <span class="nv">module.this.context</span>
+<span class="p">}</span>
+
+
+<span class="kr">resource</span> <span class="nc">&quot;random_string&quot;</span> <span class="nv">&quot;s3&quot;</span> <span class="p">{</span>
+  <span class="na">length</span>           <span class="o">=</span> <span class="m">10</span>
+  <span class="na">special</span>          <span class="o">=</span> <span class="no">true</span>
+  <span class="na">override_special</span> <span class="o">=</span> <span class="s2">&quot;-&quot;</span>
+  <span class="na">upper</span>            <span class="o">=</span> <span class="no">false</span>
+  <span class="na">number</span>           <span class="o">=</span> <span class="no">true</span>
+<span class="p">}</span><span class="c1"></span>
+
+<span class="c1"># Now that we have a batch job queue here&#39;s an s3 bucket to push/pull data from</span>
+
+<span class="kr">module</span> <span class="nv">&quot;s3_bucket&quot;</span> <span class="p">{</span>
+  <span class="na">source</span> <span class="o">=</span> <span class="s2">&quot;cloudposse/s3-bucket/aws&quot;</span><span class="c1"></span>
+<span class="c1">  # Cloud Posse recommends pinning every module to a specific version</span>
+<span class="c1">  # version = &quot;x.x.x&quot;</span>
+  <span class="na">acl</span>                <span class="o">=</span> <span class="s2">&quot;private&quot;</span>
+  <span class="na">enabled</span>            <span class="o">=</span> <span class="no">true</span>
+  <span class="na">user_enabled</span>       <span class="o">=</span> <span class="no">true</span>
+  <span class="na">versioning_enabled</span> <span class="o">=</span> <span class="no">false</span>
+
+  <span class="na">bucket_name</span> <span class="o">=</span> <span class="s2">&quot;${module.this.id}-${random_string.s3.id}&quot;</span>
+  <span class="na">context</span>     <span class="o">=</span> <span class="nv">module.this.context</span>
+<span class="p">}</span>
+
+<span class="kr">output</span> <span class="nv">&quot;batch&quot;</span> <span class="p">{</span>
+  <span class="na">value</span> <span class="o">=</span> <span class="nv">module.batch</span>
+<span class="p">}</span>
+
+<span class="kr">output</span> <span class="nv">&quot;s3_bucket&quot;</span> <span class="p">{</span>
+  <span class="na">value</span> <span class="o">=</span> <span class="nv">module.s3_bucket.bucket_id</span>
+<span class="p">}</span>
+
+<span class="nb">locals</span> <span class="p">{</span>
+  <span class="na">id</span> <span class="o">=</span> <span class="nf">replace</span><span class="p">(</span><span class="nf">title</span><span class="p">(</span><span class="nf">replace</span><span class="p">(</span><span class="nv">module.this.id</span><span class="p">,</span> <span class="s2">&quot;-&quot;, &quot; &quot;)), &quot; &quot;, &quot;&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="kr">data</span> <span class="nc">&quot;aws_iam_policy_document&quot;</span> <span class="nv">&quot;s3_full_access&quot;</span> <span class="p">{</span>
+  <span class="nb">statement</span> <span class="p">{</span><span class="c1"></span>
+<span class="c1">    # sids cannot have -</span>
+    <span class="na">sid</span>       <span class="o">=</span> <span class="s2">&quot;${local.id}S3FullAccess&quot;</span>
+    <span class="na">effect</span>    <span class="o">=</span> <span class="s2">&quot;Allow&quot;</span>
+    <span class="na">resources</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;arn:aws:s3:::${module.s3_bucket.bucket_id}/*&quot;</span><span class="p">]</span>
+
+    <span class="na">actions</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="s2">&quot;s3:PutObject&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;s3:PutObjectAcl&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;s3:GetObject&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;s3:DeleteObject&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;s3:ListBucket&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;s3:ListBucketMultipartUploads&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;s3:GetBucketLocation&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;s3:AbortMultipartUpload&quot;</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">data</span> <span class="nc">&quot;aws_iam_policy_document&quot;</span> <span class="nv">&quot;s3_base_access&quot;</span> <span class="p">{</span>
+  <span class="nb">statement</span> <span class="p">{</span><span class="c1"></span>
+<span class="c1">    # sids cannot have -</span>
+    <span class="na">sid</span> <span class="o">=</span> <span class="s2">&quot;${local.id}S3BaseAccess&quot;</span>
+
+    <span class="na">actions</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="s2">&quot;s3:ListBucket&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;s3:ListBucketVersions&quot;</span>
+    <span class="p">]</span>
+
+    <span class="na">resources</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;arn:aws:s3:::${module.s3_bucket.bucket_id}&quot;</span><span class="p">]</span>
+    <span class="na">effect</span>    <span class="o">=</span> <span class="s2">&quot;Allow&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">resource</span> <span class="nc">&quot;aws_iam_policy&quot;</span> <span class="nv">&quot;s3_full_access&quot;</span> <span class="p">{</span>
+  <span class="na">name</span>   <span class="o">=</span> <span class="s2">&quot;${module.this.id}-s3-full-access&quot;</span>
+  <span class="na">path</span>   <span class="o">=</span> <span class="s2">&quot;/&quot;</span>
+  <span class="na">policy</span> <span class="o">=</span> <span class="nv">data.aws_iam_policy_document.s3_full_access.json</span>
+<span class="p">}</span>
+
+<span class="kr">resource</span> <span class="nc">&quot;aws_iam_policy&quot;</span> <span class="nv">&quot;s3_base_access&quot;</span> <span class="p">{</span>
+  <span class="na">name</span>   <span class="o">=</span> <span class="s2">&quot;${module.this.id}-s3-base-access&quot;</span>
+  <span class="na">path</span>   <span class="o">=</span> <span class="s2">&quot;/&quot;</span>
+  <span class="na">policy</span> <span class="o">=</span> <span class="nv">data.aws_iam_policy_document.s3_base_access.json</span>
+<span class="p">}</span>
+
+<span class="kr">resource</span> <span class="nc">&quot;aws_iam_role_policy_attachment&quot;</span> <span class="nv">&quot;batch_execution_role_s3_base_access&quot;</span> <span class="p">{</span>
+  <span class="na">role</span>       <span class="o">=</span> <span class="nv">module.batch.aws_batch_execution_role.name</span>
+  <span class="na">policy_arn</span> <span class="o">=</span> <span class="nv">aws_iam_policy.s3_base_access.arn</span>
+<span class="p">}</span>
+
+<span class="kr">resource</span> <span class="nc">&quot;aws_iam_role_policy_attachment&quot;</span> <span class="nv">&quot;batch_execution_role_s3_full_access&quot;</span> <span class="p">{</span>
+  <span class="na">role</span>       <span class="o">=</span> <span class="nv">module.batch.aws_batch_execution_role.name</span>
+  <span class="na">policy_arn</span> <span class="o">=</span> <span class="nv">aws_iam_policy.s3_full_access.arn</span>
+<span class="p">}</span>
+
+<span class="kr">data</span> <span class="nc">&quot;template_file&quot;</span> <span class="nv">&quot;container_properties&quot;</span> <span class="p">{</span>
+  <span class="na">depends_on</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="nv">module.batch</span><span class="p">,</span>
+    <span class="nv">module.s3_bucket</span><span class="p">,</span>
+  <span class="p">]</span>
+  <span class="na">template</span> <span class="o">=</span> <span class="nf">file</span><span class="p">(</span><span class="s2">&quot;${path.module}/container-properties.json.tpl&quot;</span><span class="p">)</span>
+  <span class="nb">vars</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">execution_role_arn</span> <span class="o">=</span> <span class="nv">module.batch.aws_batch_execution_role.arn</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">resource</span> <span class="nc">&quot;local_file&quot;</span> <span class="nv">&quot;container_properties&quot;</span> <span class="p">{</span>
+  <span class="na">content</span>  <span class="o">=</span> <span class="nv">data.template_file.container_properties.rendered</span>
+  <span class="na">filename</span> <span class="o">=</span> <span class="s2">&quot;${path.module}/container-properties.json&quot;</span>
+<span class="p">}</span>
+
+<span class="kr">resource</span> <span class="nc">&quot;aws_batch_job_definition&quot;</span> <span class="nv">&quot;rnaseq&quot;</span> <span class="p">{</span>
+  <span class="na">name</span>                  <span class="o">=</span> <span class="nv">module.this.id</span>
+  <span class="na">type</span>                  <span class="o">=</span> <span class="s2">&quot;container&quot;</span>
+  <span class="na">container_properties</span>  <span class="o">=</span> <span class="nv">data.template_file.container_properties.rendered</span>
+  <span class="na">platform_capabilities</span> <span class="o">=</span> <span class="p">[</span><span class="nv">var.type</span><span class="p">]</span>
+  <span class="na">tags</span> <span class="o">=</span> <span class="nv">module.this.tags</span>
+<span class="p">}</span>
+
+<span class="kr">data</span> <span class="nc">&quot;template_file&quot;</span> <span class="nv">&quot;dummy_container_properties&quot;</span> <span class="p">{</span>
+  <span class="na">depends_on</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="nv">module.batch</span><span class="p">,</span>
+    <span class="nv">module.s3_bucket</span><span class="p">,</span>
+  <span class="p">]</span>
+  <span class="na">template</span> <span class="o">=</span> <span class="nf">file</span><span class="p">(</span><span class="s2">&quot;${path.module}/dummy-job-container-properties.json.tpl&quot;</span><span class="p">)</span>
+  <span class="nb">vars</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">execution_role_arn</span> <span class="o">=</span> <span class="nv">module.batch.aws_batch_execution_role.arn</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">resource</span> <span class="nc">&quot;local_file&quot;</span> <span class="nv">&quot;dummy_container_properties&quot;</span> <span class="p">{</span>
+  <span class="na">content</span>  <span class="o">=</span> <span class="nv">data.template_file.dummy_container_properties.rendered</span>
+  <span class="na">filename</span> <span class="o">=</span> <span class="s2">&quot;${path.module}/dummy-job-container-properties.json&quot;</span>
+<span class="p">}</span>
+<span class="kr">resource</span> <span class="nc">&quot;aws_batch_job_definition&quot;</span> <span class="nv">&quot;dummy&quot;</span> <span class="p">{</span>
+  <span class="na">name</span> <span class="o">=</span> <span class="s2">&quot;${module.this.id}_test_batch_job_definition&quot;</span>
+  <span class="na">type</span> <span class="o">=</span> <span class="s2">&quot;container&quot;</span>
+  <span class="na">platform_capabilities</span> <span class="o">=</span> <span class="p">[</span><span class="nv">var.type</span><span class="p">]</span>
+  <span class="na">container_properties</span>  <span class="o">=</span> <span class="nv">data.template_file.dummy_container_properties.rendered</span>
+  <span class="na">tags</span> <span class="o">=</span> <span class="nv">module.this.tags</span>
+<span class="p">}</span>
+
+<span class="kr">output</span> <span class="nv">&quot;aws_batch_dummy_job_def&quot;</span> <span class="p">{</span>
+  <span class="na">value</span> <span class="o">=</span> <span class="nv">aws_batch_job_definition.dummy</span>
+<span class="p">}</span>
+
+<span class="kr">resource</span> <span class="nc">&quot;local_file&quot;</span> <span class="nv">&quot;nextflow_config&quot;</span> <span class="p">{</span>
+  <span class="na">content</span>  <span class="o">=</span> <span class="err">&lt;&lt;EOF</span>
+  <span class="nb">profiles</span> <span class="p">{</span>
+    <span class="nb">standard</span> <span class="p">{</span>
+
+    <span class="p">}</span>
+
+    <span class="nb">batch</span> <span class="p">{</span>
+      <span class="nv">process.container</span> <span class="p">=</span> <span class="err">&#39;job-definition</span><span class="p">:</span><span class="err">//$</span><span class="p">{</span><span class="nv">aws_batch_job_definition.rnaseq.name</span><span class="p">}</span><span class="err">&#39;</span>
+
+      <span class="nv">process.executor</span> <span class="p">=</span> <span class="err">&#39;awsbatch&#39;</span>
+      <span class="nv">process.queue</span> <span class="p">=</span> <span class="err">&#39;$</span><span class="p">{</span><span class="nv">module.batch.aws_batch_job_queue</span><span class="p">}</span><span class="err">&#39;</span>
+      <span class="na">workDir</span> <span class="o">=</span> <span class="err">&#39;s</span><span class="m">3</span><span class="p">:</span><span class="err">//$</span><span class="p">{</span><span class="nv">module.s3_bucket.bucket_id</span><span class="p">}</span><span class="err">/work&#39;</span>
+
+      <span class="nv">aws.region</span> <span class="p">=</span> <span class="err">&#39;$</span><span class="p">{</span><span class="nv">var.region</span><span class="p">}</span><span class="err">&#39;</span>
+    <span class="p">}</span>
+
+  <span class="p">}</span>
+  <span class="err">EOF</span>
+  <span class="na">filename</span> <span class="o">=</span> <span class="s2">&quot;${path.module}/nextflow.config&quot;</span>
+<span class="p">}</span>
+
+<span class="kr">data</span> <span class="nc">&quot;template_file&quot;</span> <span class="nv">&quot;pytest&quot;</span> <span class="p">{</span>
+  <span class="na">depends_on</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="nv">module.batch</span><span class="p">,</span>
+    <span class="nv">module.s3_bucket</span><span class="p">,</span>
+    <span class="nv">local_file.nextflow_config</span>
+  <span class="p">]</span>
+  <span class="na">template</span> <span class="o">=</span> <span class="nf">file</span><span class="p">(</span><span class="s2">&quot;${path.module}/tests/config.py.tpl&quot;</span><span class="p">)</span>
+  <span class="nb">vars</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">s3_bucket</span>           <span class="o">=</span> <span class="nv">module.s3_bucket.bucket_id</span>
+    <span class="na">job_queue</span>           <span class="o">=</span> <span class="nv">module.batch.aws_batch_job_queue</span>
+    <span class="na">job_def</span>             <span class="o">=</span> <span class="nv">aws_batch_job_definition.rnaseq.name</span>
+    <span class="na">dummy_job_def</span>       <span class="o">=</span> <span class="nv">aws_batch_job_definition.dummy.name</span>
+    <span class="na">job_role</span>            <span class="o">=</span> <span class="nv">module.batch.aws_batch_execution_role.arn</span>
+    <span class="na">compute_environment</span> <span class="o">=</span> <span class="nv">module.this.id</span>
+    <span class="na">execution_role_arn</span>  <span class="o">=</span> <span class="nv">module.batch.aws_batch_execution_role.arn</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">resource</span> <span class="nc">&quot;local_file&quot;</span> <span class="nv">&quot;pytest&quot;</span> <span class="p">{</span>
+  <span class="na">content</span>  <span class="o">=</span> <span class="nv">data.template_file.pytest.rendered</span>
+  <span class="na">filename</span> <span class="o">=</span> <span class="s2">&quot;${path.module}/tests/config.py&quot;</span>
+<span class="p">}</span>
+
+<span class="kr">output</span> <span class="nv">&quot;nextflow_config&quot;</span> <span class="p">{</span>
+  <span class="na">value</span>     <span class="o">=</span> <span class="nv">local_file.nextflow_config</span>
+  <span class="na">sensitive</span> <span class="o">=</span> <span class="no">true</span>
+<span class="p">}</span>
+
+<span class="kr">resource</span> <span class="nc">&quot;null_resource&quot;</span> <span class="nv">&quot;kubectl_update&quot;</span> <span class="p">{</span>
+  <span class="na">depends_on</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="nv">module.batch</span><span class="p">,</span>
+      <span class="nv">module.s3_bucket</span><span class="p">,</span>
+      <span class="nv">aws_batch_job_definition.dummy</span><span class="p">,</span>
+      <span class="nv">aws_batch_job_definition.rnaseq</span><span class="p">,</span>
+      <span class="nv">local_file.pytest</span><span class="p">,</span>
+      <span class="nv">local_file.nextflow_config</span><span class="p">,</span>
+  <span class="p">]</span>
+  <span class="nb">triggers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">always_run</span> <span class="o">=</span> <span class="nf">timestamp</span><span class="p">()</span>
+  <span class="p">}</span>
+  <span class="kr">provisioner</span> <span class="nv">&quot;local-exec&quot;</span> <span class="p">{</span>
+    <span class="na">command</span> <span class="o">=</span> <span class="s2">&quot;python -m pytest -s --log-cli-level=INFO tests/test_batch.py&quot;</span>
+    <span class="nb">environment</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="na">AWS_REGION</span> <span class="o">=</span> <span class="nv">var.region</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>

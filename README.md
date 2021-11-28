@@ -1,6 +1,6 @@
 
 <!-- markdownlint-disable -->
-# terraform-aws-batch [![Latest Release](https://img.shields.io/github/release/Dabble-of-Devops-BioHub/terraform-aws-batch.svg)](https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch-module/releases/latest)
+# AWS Batch Terraform Module [![Latest Release](https://img.shields.io/github/release/Dabble-of-Devops-BioHub/terraform-aws-batch.svg)](https://github.com/dabble-of-devops-bioanalyze/terraform-aws-batch-module/releases/latest)
 <!-- markdownlint-restore -->
 
 ![BioAnalyze Logo](https://raw.githubusercontent.com/Dabble-of-DevOps-BioAnalyze/biohub-info/master/logos/BioAnalyze_v2-01.jpg)
@@ -69,9 +69,9 @@ For a complete example, see [examples/complete](examples/complete).
 For automated tests of the complete example using [bats](https://github.com/bats-core/bats-core) and [Terratest](https://github.com/gruntwork-io/terratest)
 (which tests and deploys the example on AWS), see [test](test).
 
-```hcl
+```terraform
 module "example" {
-  source = "https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch.git?ref=master"
+  source = "https://github.com/dabble-of-devops-bioanalyze/terraform-aws-batch.git?ref=master"
 }
 ```
 
@@ -81,7 +81,7 @@ More complete documentation and tutorials coming soon!
 ## Examples
 
 Here is an example of using this module:
-- [`examples/complete`](https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch/) - complete example of using this module
+- [`examples/complete`](https://github.com/dabble-of-devops-bioanalyze/terraform-aws-batch/) - complete example of using this module
 
 
 
@@ -111,33 +111,36 @@ Available targets:
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | 3.49.0 |
-| <a name="provider_template"></a> [template](#provider\_template) | 2.2.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_ec2_batch_compute_environment"></a> [ec2\_batch\_compute\_environment](#module\_ec2\_batch\_compute\_environment) | ./modules/aws-batch-ec2 | n/a |
+| <a name="module_fargate_batch_compute_environment"></a> [fargate\_batch\_compute\_environment](#module\_fargate\_batch\_compute\_environment) | ./modules/aws-batch-fargate | n/a |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.24.1 |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [aws_batch_compute_environment.batch](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_compute_environment) | resource |
 | [aws_batch_job_queue.default_queue](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_queue) | resource |
+| [aws_default_security_group.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/default_security_group) | resource |
 | [aws_iam_instance_profile.ecs_instance_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_instance_profile) | resource |
+| [aws_iam_policy.secrets_full_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_role.aws_batch_service_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
-| [aws_iam_role.batch_secrets_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role.batch_execution_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.ecs_instance_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role_policy_attachment.aws_batch_full_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.aws_batch_service_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.batch_execution_attach_secrets](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.batch_execution_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.ecs_instance_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
-| [aws_launch_template.batch](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_template) | resource |
 | [aws_secretsmanager_secret.batch](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret) | resource |
 | [aws_security_group.batch](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
-| [aws_ami.ecs_latest](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
-| [template_file.launch_template_user_data](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
+| [aws_iam_policy_document.secrets_full_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_vpc.selected](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc) | data source |
 
 ## Inputs
 
@@ -145,7 +148,7 @@ Available targets:
 |------|-------------|------|---------|:--------:|
 | <a name="input_additional_tag_map"></a> [additional\_tag\_map](#input\_additional\_tag\_map) | Additional tags for appending to tags\_as\_list\_of\_maps. Not added to `tags`. | `map(string)` | `{}` | no |
 | <a name="input_additional_user_data"></a> [additional\_user\_data](#input\_additional\_user\_data) | Additional User Data for the launch template.  Must include ==MYBOUNDARY== and Content-Type: entries. | `string` | `""` | no |
-| <a name="input_ami_owners"></a> [ami\_owners](#input\_ami\_owners) | List of owners for source ECS AMI. | `list` | <pre>[<br>  "amazon"<br>]</pre> | no |
+| <a name="input_ami_owners"></a> [ami\_owners](#input\_ami\_owners) | List of owners for source ECS AMI. | `list(any)` | <pre>[<br>  "amazon"<br>]</pre> | no |
 | <a name="input_attributes"></a> [attributes](#input\_attributes) | Additional attributes (e.g. `1`) | `list(string)` | `[]` | no |
 | <a name="input_bid_percentage"></a> [bid\_percentage](#input\_bid\_percentage) | Integer of minimum percentage that a Spot Instance price must be when compared to on demand.  Example: A value of 20 would require the spot price be lower than 20% the current on demand price. | `string` | `"100"` | no |
 | <a name="input_block_device_mappings"></a> [block\_device\_mappings](#input\_block\_device\_mappings) | Specify volumes to attach to the instance besides the volumes specified by the AMI | <pre>list(object({<br>    device_name  = string<br>    no_device    = bool<br>    virtual_name = string<br>    ebs = object({<br>      delete_on_termination = bool<br>      encrypted             = bool<br>      iops                  = number<br>      kms_key_id            = string<br>      snapshot_id           = string<br>      volume_size           = number<br>      volume_type           = string<br>    })<br>  }))</pre> | `[]` | no |
@@ -165,7 +168,7 @@ Available targets:
 | <a name="input_id_length_limit"></a> [id\_length\_limit](#input\_id\_length\_limit) | Limit `id` to this many characters (minimum 6).<br>Set to `0` for unlimited length.<br>Set to `null` for default, which is `0`.<br>Does not affect `id_full`. | `number` | `null` | no |
 | <a name="input_instance_initiated_shutdown_behavior"></a> [instance\_initiated\_shutdown\_behavior](#input\_instance\_initiated\_shutdown\_behavior) | Shutdown behavior for the instances. Can be `stop` or `terminate` | `string` | `"terminate"` | no |
 | <a name="input_instance_market_options"></a> [instance\_market\_options](#input\_instance\_market\_options) | The market (purchasing) option for the instances | <pre>object({<br>    market_type = string<br>    spot_options = object({<br>      block_duration_minutes         = number<br>      instance_interruption_behavior = string<br>      max_price                      = number<br>      spot_instance_type             = string<br>      valid_until                    = string<br>    })<br>  })</pre> | `null` | no |
-| <a name="input_instance_types"></a> [instance\_types](#input\_instance\_types) | Optional list of instance types. | `list` | <pre>[<br>  "optimal"<br>]</pre> | no |
+| <a name="input_instance_types"></a> [instance\_types](#input\_instance\_types) | Optional list of instance types. | `list(any)` | <pre>[<br>  "optimal"<br>]</pre> | no |
 | <a name="input_key_name"></a> [key\_name](#input\_key\_name) | The SSH key name that should be used for the instance | `string` | `""` | no |
 | <a name="input_label_key_case"></a> [label\_key\_case](#input\_label\_key\_case) | The letter case of label keys (`tag` names) (i.e. `name`, `namespace`, `environment`, `stage`, `attributes`) to use in `tags`.<br>Possible values: `lower`, `title`, `upper`.<br>Default value: `title`. | `string` | `null` | no |
 | <a name="input_label_order"></a> [label\_order](#input\_label\_order) | The naming order of the id output and Name tag.<br>Defaults to ["namespace", "environment", "stage", "name", "attributes"].<br>You can omit any of the 5 elements, but at least one must be present. | `list(string)` | `null` | no |
@@ -181,11 +184,12 @@ Available targets:
 | <a name="input_regex_replace_chars"></a> [regex\_replace\_chars](#input\_regex\_replace\_chars) | Regex to replace chars with empty string in `namespace`, `environment`, `stage` and `name`.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
 | <a name="input_region"></a> [region](#input\_region) | AWS Region | `string` | `"us-east-1"` | no |
 | <a name="input_secrets_enabled"></a> [secrets\_enabled](#input\_secrets\_enabled) | Enable IAM Role for AWS Secrets Manager | `bool` | `false` | no |
-| <a name="input_security_group_ids"></a> [security\_group\_ids](#input\_security\_group\_ids) | List of additional security groups to associate with cluster instances.  If empty, default security group will be added. | `list` | <pre>[<br>  ""<br>]</pre> | no |
+| <a name="input_security_group_ids"></a> [security\_group\_ids](#input\_security\_group\_ids) | List of additional security groups to associate with cluster instances.  If empty, default security group will be added. | `list(any)` | <pre>[<br>  ""<br>]</pre> | no |
 | <a name="input_stage"></a> [stage](#input\_stage) | Stage, e.g. 'prod', 'staging', 'dev', OR 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
-| <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | List of subnets compute environment instances will be deployed in. | `list` | n/a | yes |
+| <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | List of subnets compute environment instances will be deployed in. | `list(any)` | n/a | yes |
 | <a name="input_tag_specifications_resource_types"></a> [tag\_specifications\_resource\_types](#input\_tag\_specifications\_resource\_types) | List of tag specification resource types to tag. Valid values are instance, volume, elastic-gpu and spot-instances-request. | `set(string)` | <pre>[<br>  "instance",<br>  "volume"<br>]</pre> | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Additional tags (e.g. `map('BusinessUnit','XYZ')` | `map(string)` | `{}` | no |
+| <a name="input_type"></a> [type](#input\_type) | AWS Batch Compute Environment Type: must be one of EC2, SPOT, FARGATE or FARGATE\_SPOT. | `string` | `"EC2"` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | VPC ID | `string` | n/a | yes |
 
 ## Outputs
@@ -195,10 +199,10 @@ Available targets:
 | <a name="output_account_id"></a> [account\_id](#output\_account\_id) | n/a |
 | <a name="output_aws_batch_compute_environment"></a> [aws\_batch\_compute\_environment](#output\_aws\_batch\_compute\_environment) | n/a |
 | <a name="output_aws_batch_ecs_instance_role"></a> [aws\_batch\_ecs\_instance\_role](#output\_aws\_batch\_ecs\_instance\_role) | n/a |
+| <a name="output_aws_batch_execution_role"></a> [aws\_batch\_execution\_role](#output\_aws\_batch\_execution\_role) | n/a |
 | <a name="output_aws_batch_job_queue"></a> [aws\_batch\_job\_queue](#output\_aws\_batch\_job\_queue) | n/a |
-| <a name="output_aws_batch_secrets_role"></a> [aws\_batch\_secrets\_role](#output\_aws\_batch\_secrets\_role) | n/a |
 | <a name="output_aws_batch_service_role"></a> [aws\_batch\_service\_role](#output\_aws\_batch\_service\_role) | n/a |
-| <a name="output_aws_iam_role-batch_secrets_role"></a> [aws\_iam\_role-batch\_secrets\_role](#output\_aws\_iam\_role-batch\_secrets\_role) | n/a |
+| <a name="output_aws_iam_policy_document-secrets_full_access"></a> [aws\_iam\_policy\_document-secrets\_full\_access](#output\_aws\_iam\_policy\_document-secrets\_full\_access) | n/a |
 | <a name="output_aws_secrets_manager_secret-batch"></a> [aws\_secrets\_manager\_secret-batch](#output\_aws\_secrets\_manager\_secret-batch) | n/a |
 | <a name="output_caller_arn"></a> [caller\_arn](#output\_caller\_arn) | n/a |
 | <a name="output_caller_user"></a> [caller\_user](#output\_caller\_user) | n/a |
@@ -210,7 +214,7 @@ Available targets:
 
 ## Share the Love
 
-Like this project? Please give it a ★ on [our GitHub](https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch)! (it helps **a lot**)
+Like this project? Please give it a ★ on [our GitHub](https://github.com/dabble-of-devops-bioanalyze/terraform-aws-batch)! (it helps **a lot**)
 
 
 
@@ -218,7 +222,7 @@ Like this project? Please give it a ★ on [our GitHub](https://github.com/Dabbl
 
 Check out these related projects.
 
-- [terraform-aws-eks-autoscaling](https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-eks-autoscaling) - Wrapper module for terraform-aws-eks-cluster, terraform-aws-eks-worker, and terraform-aws-eks-node-group
+- [terraform-aws-eks-autoscaling](https://github.com/dabble-of-devops-bioanalyze/terraform-aws-eks-autoscaling) - Wrapper module for terraform-aws-eks-cluster, terraform-aws-eks-worker, and terraform-aws-eks-node-group
 - [terraform-aws-eks-cluster](https://github.com/cloudposse/terraform-aws-eks-cluster/) - Base CloudPosse module for AWS EKS Clusters"
 - [terraform-null-label](https://github.com/cloudposse/terraform-null-label) - Terraform module designed to generate consistent names and tags for resources. Use terraform-null-label to implement a strict naming convention.
 
@@ -240,7 +244,7 @@ For additional context, refer to some of these links.
 
 **Got a question?** We got answers.
 
-File a GitHub [issue](https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch/issues), send us an jillian@dabbleofdevops.com.
+File a GitHub [issue](https://github.com/dabble-of-devops-bioanalyze/terraform-aws-batch/issues), send us an jillian@dabbleofdevops.com.
 
 ## Bioinformatics Infrastructure on AWS for Startups
 
@@ -264,7 +268,7 @@ Work directly with me via email, slack, and video conferencing.
 
 ### Bug Reports & Feature Requests
 
-Please use the [issue tracker](https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch/issues) to report any bugs or file feature requests.
+Please use the [issue tracker](https://github.com/dabble-of-devops-bioanalyze/terraform-aws-batch/issues) to report any bugs or file feature requests.
 
 ### Developing
 
@@ -342,32 +346,32 @@ All other trademarks referenced herein are the property of their respective owne
 Learn more at [Dabble of DevOps](https://www.dabbleofdevops.com)
 
   [logo]: https://cloudposse.com/logo-300x69.svg
-  [docs]: https://cpco.io/docs?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=docs
-  [website]: https://cpco.io/homepage?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=website
-  [github]: https://cpco.io/github?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=github
-  [jobs]: https://cpco.io/jobs?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=jobs
-  [hire]: https://cpco.io/hire?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=hire
-  [slack]: https://cpco.io/slack?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=slack
-  [linkedin]: https://cpco.io/linkedin?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=linkedin
-  [twitter]: https://cpco.io/twitter?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=twitter
-  [testimonial]: https://cpco.io/leave-testimonial?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=testimonial
-  [office_hours]: https://cloudposse.com/office-hours?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=office_hours
-  [newsletter]: https://cpco.io/newsletter?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=newsletter
-  [discourse]: https://ask.sweetops.com/?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=discourse
-  [email]: https://cpco.io/email?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=email
-  [commercial_support]: https://cpco.io/commercial-support?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=commercial_support
-  [we_love_open_source]: https://cpco.io/we-love-open-source?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=we_love_open_source
-  [terraform_modules]: https://cpco.io/terraform-modules?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=terraform_modules
+  [docs]: https://cpco.io/docs?utm_source=github&utm_medium=readme&utm_campaign=dabble-of-devops-bioanalyze/terraform-aws-batch&utm_content=docs
+  [website]: https://cpco.io/homepage?utm_source=github&utm_medium=readme&utm_campaign=dabble-of-devops-bioanalyze/terraform-aws-batch&utm_content=website
+  [github]: https://cpco.io/github?utm_source=github&utm_medium=readme&utm_campaign=dabble-of-devops-bioanalyze/terraform-aws-batch&utm_content=github
+  [jobs]: https://cpco.io/jobs?utm_source=github&utm_medium=readme&utm_campaign=dabble-of-devops-bioanalyze/terraform-aws-batch&utm_content=jobs
+  [hire]: https://cpco.io/hire?utm_source=github&utm_medium=readme&utm_campaign=dabble-of-devops-bioanalyze/terraform-aws-batch&utm_content=hire
+  [slack]: https://cpco.io/slack?utm_source=github&utm_medium=readme&utm_campaign=dabble-of-devops-bioanalyze/terraform-aws-batch&utm_content=slack
+  [linkedin]: https://cpco.io/linkedin?utm_source=github&utm_medium=readme&utm_campaign=dabble-of-devops-bioanalyze/terraform-aws-batch&utm_content=linkedin
+  [twitter]: https://cpco.io/twitter?utm_source=github&utm_medium=readme&utm_campaign=dabble-of-devops-bioanalyze/terraform-aws-batch&utm_content=twitter
+  [testimonial]: https://cpco.io/leave-testimonial?utm_source=github&utm_medium=readme&utm_campaign=dabble-of-devops-bioanalyze/terraform-aws-batch&utm_content=testimonial
+  [office_hours]: https://cloudposse.com/office-hours?utm_source=github&utm_medium=readme&utm_campaign=dabble-of-devops-bioanalyze/terraform-aws-batch&utm_content=office_hours
+  [newsletter]: https://cpco.io/newsletter?utm_source=github&utm_medium=readme&utm_campaign=dabble-of-devops-bioanalyze/terraform-aws-batch&utm_content=newsletter
+  [discourse]: https://ask.sweetops.com/?utm_source=github&utm_medium=readme&utm_campaign=dabble-of-devops-bioanalyze/terraform-aws-batch&utm_content=discourse
+  [email]: https://cpco.io/email?utm_source=github&utm_medium=readme&utm_campaign=dabble-of-devops-bioanalyze/terraform-aws-batch&utm_content=email
+  [commercial_support]: https://cpco.io/commercial-support?utm_source=github&utm_medium=readme&utm_campaign=dabble-of-devops-bioanalyze/terraform-aws-batch&utm_content=commercial_support
+  [we_love_open_source]: https://cpco.io/we-love-open-source?utm_source=github&utm_medium=readme&utm_campaign=dabble-of-devops-bioanalyze/terraform-aws-batch&utm_content=we_love_open_source
+  [terraform_modules]: https://cpco.io/terraform-modules?utm_source=github&utm_medium=readme&utm_campaign=dabble-of-devops-bioanalyze/terraform-aws-batch&utm_content=terraform_modules
   [readme_header_img]: https://cloudposse.com/readme/header/img
-  [readme_header_link]: https://cloudposse.com/readme/header/link?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=readme_header_link
+  [readme_header_link]: https://cloudposse.com/readme/header/link?utm_source=github&utm_medium=readme&utm_campaign=dabble-of-devops-bioanalyze/terraform-aws-batch&utm_content=readme_header_link
   [readme_footer_img]: https://cloudposse.com/readme/footer/img
-  [readme_footer_link]: https://cloudposse.com/readme/footer/link?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=readme_footer_link
+  [readme_footer_link]: https://cloudposse.com/readme/footer/link?utm_source=github&utm_medium=readme&utm_campaign=dabble-of-devops-bioanalyze/terraform-aws-batch&utm_content=readme_footer_link
   [readme_commercial_support_img]: https://cloudposse.com/readme/commercial-support/img
-  [readme_commercial_support_link]: https://cloudposse.com/readme/commercial-support/link?utm_source=github&utm_medium=readme&utm_campaign=Dabble-of-DevOps-BioHub/terraform-aws-batch&utm_content=readme_commercial_support_link
-  [share_twitter]: https://twitter.com/intent/tweet/?text=terraform-aws-batch&url=https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch
-  [share_linkedin]: https://www.linkedin.com/shareArticle?mini=true&title=terraform-aws-batch&url=https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch
-  [share_reddit]: https://reddit.com/submit/?url=https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch
-  [share_facebook]: https://facebook.com/sharer/sharer.php?u=https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch
-  [share_googleplus]: https://plus.google.com/share?url=https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch
-  [share_email]: mailto:?subject=terraform-aws-batch&body=https://github.com/Dabble-of-DevOps-BioHub/terraform-aws-batch
-  [beacon]: https://ga-beacon.cloudposse.com/UA-76589703-4/Dabble-of-DevOps-BioHub/terraform-aws-batch?pixel&cs=github&cm=readme&an=terraform-aws-batch
+  [readme_commercial_support_link]: https://cloudposse.com/readme/commercial-support/link?utm_source=github&utm_medium=readme&utm_campaign=dabble-of-devops-bioanalyze/terraform-aws-batch&utm_content=readme_commercial_support_link
+  [share_twitter]: https://twitter.com/intent/tweet/?text=AWS+Batch+Terraform+Module&url=https://github.com/dabble-of-devops-bioanalyze/terraform-aws-batch
+  [share_linkedin]: https://www.linkedin.com/shareArticle?mini=true&title=AWS+Batch+Terraform+Module&url=https://github.com/dabble-of-devops-bioanalyze/terraform-aws-batch
+  [share_reddit]: https://reddit.com/submit/?url=https://github.com/dabble-of-devops-bioanalyze/terraform-aws-batch
+  [share_facebook]: https://facebook.com/sharer/sharer.php?u=https://github.com/dabble-of-devops-bioanalyze/terraform-aws-batch
+  [share_googleplus]: https://plus.google.com/share?url=https://github.com/dabble-of-devops-bioanalyze/terraform-aws-batch
+  [share_email]: mailto:?subject=AWS+Batch+Terraform+Module&body=https://github.com/dabble-of-devops-bioanalyze/terraform-aws-batch
+  [beacon]: https://ga-beacon.cloudposse.com/UA-76589703-4/dabble-of-devops-bioanalyze/terraform-aws-batch?pixel&cs=github&cm=readme&an=terraform-aws-batch

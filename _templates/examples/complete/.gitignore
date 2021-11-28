@@ -27,7 +27,7 @@ test.log
 .ssh
 **/.ssh
 
-## Python things
+# Python things 
 .pytest_cache
 **/.pytest_cache
 _build

@@ -11,14 +11,24 @@ variable "vpc_id" {
 
 variable "subnet_ids" {
   description = "List of subnets compute environment instances will be deployed in."
-  type        = list(string)
+  type        = list(any)
 }
 
-variable "type" {
-  description = "AWS Batch Compute Environment Type: must be one of EC2, SPOT, FARGATE or FARGATE_SPOT."
-  type        = string
-  default     = "EC2"
+variable "ecs_instance_role" {
+  description = "ecs instance role created by main module"
+  type = any
 }
+
+variable "aws_iam_role_aws_batch_service_role" {
+  description = "AWS Batch IAM Service role"
+  type        = any
+}
+
+variable "aws_iam_role_policy_attachment_aws_batch_service_role" {
+  description = "Policy attachment for the AWS Batch Service Role"
+  type        = any
+}
+
 
 variable "secrets_enabled" {
   description = "Enable IAM Role for AWS Secrets Manager"
@@ -26,9 +36,16 @@ variable "secrets_enabled" {
   default     = false
 }
 
-###################################################
-# EB2 Launch Data
-###################################################
+# type
+variable "type" {
+  description = "AWS Batch Compute Environment Type: must be one of EC2 or SPOT."
+  type        = string
+  default     = "EC2"
+}
+
+#######################################################################################
+# AWS Batch Compute Environment - EC2
+#######################################################################################
 
 variable "additional_user_data" {
   description = "Additional User Data for the launch template.  Must include ==MYBOUNDARY== and Content-Type: entries."
