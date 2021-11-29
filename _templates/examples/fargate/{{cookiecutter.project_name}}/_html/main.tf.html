@@ -44,9 +44,11 @@
 <span class="kr">module</span> <span class="nv">&quot;batch&quot;</span> <span class="p">{</span>
   <span class="na">depends_on</span> <span class="o">=</span> <span class="p">[</span>
     <span class="nv">module.vpc</span><span class="p">,</span>
-  <span class="p">]</span>
-  <span class="na">source</span> <span class="o">=</span> <span class="s2">&quot;/root/terraform-recipes/terraform-aws-batch&quot;</span><span class="c1"></span>
+  <span class="p">]</span><span class="c1"></span>
+
+<span class="c1">  # source = &quot;/root/terraform-recipes/terraform-aws-batch&quot;</span>
 <span class="c1">  # version = &quot;1.9.0&quot;</span>
+  <span class="na">source</span> <span class="o">=</span> <span class="s2">&quot;../../&quot;</span><span class="c1"></span>
 <span class="c1">  # insert the 17 required variables here</span>
   <span class="na">region</span> <span class="o">=</span> <span class="nv">var.region</span>
   <span class="na">vpc_id</span> <span class="o">=</span> <span class="nv">local.vpc_id</span>

@@ -45,8 +45,10 @@ module "batch" {
   depends_on = [
     module.vpc,
   ]
-  source = "/root/terraform-recipes/terraform-aws-batch"
+
+  # source = "/root/terraform-recipes/terraform-aws-batch"
   # version = "1.9.0"
+  source = "../../"
   # insert the 17 required variables here
   region = var.region
   vpc_id = local.vpc_id
