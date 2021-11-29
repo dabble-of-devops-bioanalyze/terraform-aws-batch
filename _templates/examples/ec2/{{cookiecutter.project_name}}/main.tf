@@ -46,8 +46,9 @@ module "batch" {
     module.vpc,
   ]
 
-  # source = "/root/terraform-recipes/terraform-aws-batch"
-  # version >= "1.9.0"
+  # TODO Update this with the actual source
+  # source  = "dabble-of-devops-bioanalyze/batch/aws"
+  # version >= "1.13.0"
   source = "../../"
 
   region = var.region
