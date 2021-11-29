@@ -32,3 +32,5 @@ test.log
 .pytest_cache
 **/.pytest_cache
 _build
+
+config.cfg

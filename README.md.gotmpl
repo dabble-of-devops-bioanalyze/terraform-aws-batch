@@ -206,6 +206,17 @@ In general, PRs are welcome. We follow the typical "fork-and-pull" Git workflow.
  4. **Push** your work back up to your fork
  5. Submit a **Pull Request** so that we can review your changes
 
+#### Developer Notes
+
+The `README.md` is created using the standard [CloudPosse](https://github.com/cloudposse/terraform-example-module) template that has been modified to use BioAnalyze information and URLs, and other documentation is generated using [jupyter-book](https://jupyterbook.org/).
+
+Terraform code does not render properly when using the `literalinclude` directive, so instead we use `pygmentize` to render it to html which is included directly.
+
+```
+.. raw:: html
+   :file: ./_html/main.tf.html
+```
+
 **NOTE:** Be sure to merge the latest changes from "upstream" before making a pull request!
 {{ end }}
 {{ if has (ds "config") "copyrights" }}
@@ -349,7 +360,6 @@ All other trademarks referenced herein are the property of their respective owne
 
 <!-- markdownlint-disable -->
 | {{ range $contributor := (ds "config").contributors }}{{ printf " [![%s][%s_avatar]][%s_homepage]<br/>[%s][%s_homepage] |" $contributor.name $contributor.github $contributor.github $contributor.name $contributor.github}}{{ end }}
-|{{- range $contributor := (ds "config").contributors -}}---|{{ end }}
 <!-- markdownlint-restore -->
 
 {{ range $contributor := (ds "config").contributors -}}
