@@ -152,7 +152,7 @@ resource "aws_default_security_group" "default" {
 }
 
 resource "aws_security_group" "batch" {
-  count  = var.security_group_ids[0] == "" ? 1 : 0
+  count = var.security_group_ids[0] == "" ? 1 : 0
   depends_on = [
     data.aws_vpc.selected
   ]
@@ -161,11 +161,11 @@ resource "aws_security_group" "batch" {
   vpc_id = var.vpc_id
 
   ingress {
-    description      = "${module.this.id} Allow all traffic from vpc security group"
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    self = true
+    description = "${module.this.id} Allow all traffic from vpc security group"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    self        = true
   }
 
   ingress {
@@ -213,30 +213,30 @@ resource "aws_security_group" "batch" {
 }
 
 locals {
-    security_group_ids = var.security_group_ids[0] == "" ? [aws_security_group.batch[0].id] : var.security_group_ids
+  security_group_ids = var.security_group_ids[0] == "" ? [aws_security_group.batch[0].id] : var.security_group_ids
 }
 
 module "ec2_batch_compute_environment" {
-  count              = var.type == "EC2" || var.type == "SPOT" ? 1 : 0
+  count = var.type == "EC2" || var.type == "SPOT" ? 1 : 0
 
   source = "./modules/aws-batch-ec2"
-  type = var.type
+  type   = var.type
 
   # security_group_ids = var.security_group_ids[0] == "" ? [aws_security_group.batch[0].id, aws_default_security_group.default] : var.security_group_ids
   security_group_ids = local.security_group_ids
-  vpc_id = var.vpc_id
-  max_vcpus = var.max_vcpus
-  subnet_ids = var.subnet_ids
+  vpc_id             = var.vpc_id
+  max_vcpus          = var.max_vcpus
+  subnet_ids         = var.subnet_ids
 
-  ecs_instance_role = aws_iam_role.ecs_instance_role
-  aws_iam_role_aws_batch_service_role = aws_iam_role.aws_batch_service_role
+  ecs_instance_role                                     = aws_iam_role.ecs_instance_role
+  aws_iam_role_aws_batch_service_role                   = aws_iam_role.aws_batch_service_role
   aws_iam_role_policy_attachment_aws_batch_service_role = aws_iam_role_policy_attachment.aws_batch_service_role
 
   context = module.this.context
 }
 
 module "fargate_batch_compute_environment" {
-  count              = var.type == "FARGATE" || var.type == "FARGATE_SPOT" ? 1 : 0
+  count = var.type == "FARGATE" || var.type == "FARGATE_SPOT" ? 1 : 0
 
   source = "./modules/aws-batch-fargate"
 
@@ -245,18 +245,18 @@ module "fargate_batch_compute_environment" {
   # security_group_ids = var.security_group_ids[0] == "" ? ["${aws_security_group.batch[0].id}"] : var.security_group_ids
   # security_group_ids = var.security_group_ids[0] == "" ? [aws_security_group.batch[0].id, aws_default_security_group.default] : var.security_group_ids
   security_group_ids = local.security_group_ids
-  vpc_id = var.vpc_id
-  max_vcpus = var.max_vcpus
-  subnet_ids = var.subnet_ids
+  vpc_id             = var.vpc_id
+  max_vcpus          = var.max_vcpus
+  subnet_ids         = var.subnet_ids
 
-  aws_iam_role_aws_batch_service_role = aws_iam_role.aws_batch_service_role
+  aws_iam_role_aws_batch_service_role                   = aws_iam_role.aws_batch_service_role
   aws_iam_role_policy_attachment_aws_batch_service_role = aws_iam_role_policy_attachment.aws_batch_service_role
 
   context = module.this.context
 }
 
 locals {
-    aws_batch_compute_environment = var.type == "FARGATE" || var.type == "FARGATE_SPOT" ? module.fargate_batch_compute_environment[0].aws_batch_compute_environment : module.ec2_batch_compute_environment[0].aws_batch_compute_environment
+  aws_batch_compute_environment = var.type == "FARGATE" || var.type == "FARGATE_SPOT" ? module.fargate_batch_compute_environment[0].aws_batch_compute_environment : module.ec2_batch_compute_environment[0].aws_batch_compute_environment
 }
 
 resource "aws_batch_job_queue" "default_queue" {

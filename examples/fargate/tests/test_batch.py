@@ -40,23 +40,6 @@ def submit_batch_job_for_test(submit_data):
     logging.info(f'Job complete with status: {job_response["jobs"][0]["status"]}')
     return job_response, status
 
-def test_submit_dmmmy_job_batch():
-    """Test submitting a dummy job to batch"""
-
-    command = ["bash", "-c", " ".join(["ls -lah;", "sleep 60"])]
-    job_name = "dummy"
-    job_id = "job-{0}-{1}".format(job_name, int(time.time() * 1000))
-    submit_data = {
-        "jobName": job_id,
-        "jobQueue": JOB_QUEUE_NAME,
-        "jobDefinition": DUMMY_JOB_DEF_NAME,
-        "parameters": {"S3_BUCKET": DATA_S3,},
-        "containerOverrides": {"command": command},
-    }
-    job_response, status = submit_batch_job_for_test(submit_data)
-
-    assert status == "SUCCEEDED", pprint(job_response)
-    assert job_response["jobs"][0]["status"] == "SUCCEEDED"
 
 def test_submit_job_batch():
     """Test submitting a job to batch"""

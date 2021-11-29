@@ -1,0 +1,44 @@
+{
+    "namespace": "",
+    "tenant": "",
+    "name": "",
+    "environment": "",
+    "stage": "",
+    "delimiter": "-",
+    "project_name": "",
+    "terraform_variables": {
+        "additional_tag_map": {},
+        "attributes": [],
+        "delimiter": null,
+        "enabled": null,
+        "environment": null,
+        "id_length_limit": null,
+        "label_key_case": null,
+        "label_order": null,
+        "label_value_case": null,
+        "max_vcpus": 256,
+        "name": null,
+        "namespace": null,
+        "regex_replace_chars": null,
+        "region": "us-east-1",
+        "run_tests": false,
+        "secrets_enabled": true,
+        "stage": null,
+        "tags": {},
+        "type": "FARGATE"
+    },
+    "terraform_hcl": "additional_tag_map = {}\nattributes         = []\ncontext = {\n  \"additional_tag_map\": {},\n  \"attributes\": [],\n  \"delimiter\": null,\n  \"enabled\": true,\n  \"environment\": null,\n  \"id_length_limit\": null,\n  \"label_key_case\": null,\n  \"label_order\": [],\n  \"label_value_case\": null,\n  \"name\": null,\n  \"namespace\": null,\n  \"regex_replace_chars\": null,\n  \"stage\": null,\n  \"tags\": {}\n}\ndelimiter           = \"\"\nenabled             = \"\"\nenvironment         = \"\"\nid_length_limit     = \"\"\nlabel_key_case      = \"\"\nlabel_order         = \"\"\nlabel_value_case    = \"\"\nmax_vcpus           = 256\nname                = \"\"\nnamespace           = \"\"\nregex_replace_chars = \"\"\nregion              = \"us-east-1\"\nrun_tests           = false\nsecrets_enabled     = true\nstage               = \"\"\ntags                = {}\ntype                = \"FARGATE\"\n",
+    "terraform_state": {},
+    "docs_data": {
+        "title": "AWS Batch - Ec2",
+        "github_repo": "git@github.com:dabble-of-devops-bioanalyze/terraform-aws-batch.git",
+        "directory": "_templates/examples/ec2"
+    },
+    "_copy_without_render": [
+        "**/.pytest_cache",
+        ".pytest_cache",
+        "__pycache__",
+        "tests/__pycache__",
+        "**/__pycache__"
+    ]
+}

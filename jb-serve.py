@@ -1,30 +1,119 @@
 import subprocess
 from pathlib import Path
 import os
+import formic
+import re
 import glob
 import json
 import tempfile
-
+import typing
+from typing import TypedDict, Any, List
+import functools
+from functools import cache, lru_cache
+import shutil
 from pprint import pprint
 from cookiecutter import config
 from cookiecutter.main import cookiecutter
+from cookiecutter.generate import generate_context
+from cookiecutter.repository import determine_repo_dir
+from cookiecutter.config import get_user_config
 import click
 from livereload import Server
 
 import configparser
 import git
+from colorlog import ColoredFormatter
+import logging, colorlog
+
+FORMAT = "%(log_color)s[%(levelname)-8s%(filename)s:%(lineno)s - %(funcName)15s() ] %(blue)s%(message)s"
+formatter = ColoredFormatter(
+    FORMAT,
+    datefmt=None,
+    reset=True,
+    log_colors={
+        "DEBUG": "cyan",
+        "INFO": "green",
+        "WARNING": "yellow",
+        "ERROR": "red",
+        "CRITICAL": "red,bg_white",
+    },
+    secondary_log_colors={},
+    style="%",
+)
+handler = logging.StreamHandler()
+handler.setFormatter(formatter)
+logger = logging.getLogger("jupyterbook")
+logger.addHandler(handler)
+logger.setLevel("INFO")
+
 
 # This tool comes from - https://gist.github.com/tnwei/726d377410b9a6285ddc1b18c4e67dc6
 # with thanks!
 
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+
+TEMPLATES_DIR = os.path.join(THIS_DIR, "_templates")
+EXAMPLES_DIR = os.path.join(THIS_DIR, "examples")
+DOCS_DIR = THIS_DIR
+
+COOKIECUTTER_TEMPLATE_REPO = (
+    "https://github.com/dabble-of-devops-bioanalyze/terraform-example-module"
+)
+COOKIECUTTER_TEMPLATE_DIR = "_templates/terraform-cookiecutter"
+
+# Copy these dirs/files from source to dest
+COPY = [
+    "tests",
+    "*tf",
+    "**/*tf",
+    "*md",
+    "**/*md",
+    "*.rst",
+    "**/*rst",
+    "_html",
+    "**/_html",
+    "*json",
+    "**/*json",
+    "*tpl",
+    "**/*tpl",
+]
+# Clean up these dirs/files
+CLEAN = [
+    ".pytest_cache",
+    "tests/__pycache__",
+    ".terraform.lock.hcl",
+    ".terraform",
+    "terraform.tfstate",
+    "terraform.tfstate.backup",
+]
+
+
+class CookiecutterDir(TypedDict):
+    # directory containing the original example - usually example/name-of-example
+    example_dir: Path
+    # temp directory generated
+    temp_dir: Path
+    # directory to final cookiecutter - _templates/name-of-example/{{cookiecutter.project_name}}
+    destination_dir: Path
+
+
 def get_git_url():
-    repo = git.Repo('.', search_parent_directories=True)
-    config_file = os.path.join(repo.working_tree_dir, '.git', 'config')
+    repo = git.Repo(".", search_parent_directories=True)
+    config_file = os.path.join(repo.working_tree_dir, ".git", "config")
 
     config = configparser.ConfigParser()
     config.read(config_file)
-    sections = config.sections()
-    return config['remote "origin"']['url']
+    return config['remote "origin"']["url"]
+
+
+def bootstrap():
+    logger.info("Bootstraping directories")
+    os.makedirs(
+        os.path.join(THIS_DIR, "_templates", "module"), mode=0o777, exist_ok=True
+    )
+    os.makedirs(
+        os.path.join(THIS_DIR, "_templates", "examples"), mode=0o777, exist_ok=True
+    )
 
 
 @click.command()
@@ -53,83 +142,152 @@ def main(pathsource: Path, examplesdir: Path, outputdir: Path, port: int):
     + mkdocs docs on github
     """
     git_url = get_git_url()
+    bootstrap()
 
-    def cleanup_cookiecutter(example):
+    def cleanup_cookiecutter(example: CookiecutterDir):
         """We end up with a few directories we don't want, mainly, __pycache__ and .pytest_cache"""
-        dirs = glob.glob(os.path.join(example, "**", ".pytest_cache"), recursive=True)
-        for dir in dirs:
-            subprocess.run(["bash", "-c", f"rm -rf {dir}"])
-        dirs = glob.glob(os.path.join(example, "**", "__pycache__"), recursive=True)
+        # need to copy with keeping the directories in sync
+        # shutil.copytree(example["example_dir"], example["destination_dir"])
+        logger.debug(f'Post processing: {os.path.relpath(example["destination_dir"])}')
+        subprocess.run(
+            [
+                "bash",
+                "-c",
+                f'cp -rf {example["example_dir"]}/* {example["destination_dir"]}/',
+            ]
+        )
 
-        subprocess.run(["bash", "-c", f"rm -rf {example}/.terraform"])
-        subprocess.run(["bash", "-c", f"rm -rf {example}/terraform.tfstate"])
-        subprocess.run(["bash", "-c", f"rm -rf {example}/terraform.tfstate.backup"])
+        for clean in CLEAN:
+            logger.info(f'Removing {example["destination_dir"]}/{clean}')
+            subprocess.run(
+                [
+                    "bash",
+                    "-c",
+                    f'rm -rf {example["destination_dir"]}/{clean}',
+                ]
+            )
 
-        for dir in dirs:
-            subprocess.run(["bash", "-c", f"rm -rf {dir}"])
-
-    def gencookiecutter_dirs():
-        os.makedirs("_templates/module", mode=0o777, exist_ok=True)
-        os.makedirs("_templates/examples", mode=0o777, exist_ok=True)
-        examples = glob.glob("examples/*")
-        example_dirs = []
+    def gencookiecutter_dirs() -> List[CookiecutterDir]:
+        logger.info("gencookiecutter dirs")
+        examples = glob.glob(os.path.join(THIS_DIR, "examples", "*"), recursive=False)
+        example_dirs: List[CookiecutterDir] = []
+        seen = {}
         for example in examples:
             if (
                 os.path.isdir(example)
-                and example not in example_dirs
+                and example not in seen
                 and "_html" not in example
             ):
-                example_dirs.append(os.path.join("_templates", example))
+                temp_dir = tempfile.TemporaryDirectory()
+                seen[example] = 1
+                example_dirs.append(
+                    {
+                        "example_dir": example,
+                        "destination_dir": os.path.join(
+                            TEMPLATES_DIR,
+                            "examples",
+                            os.path.basename(example),
+                            "{{cookiecutter.project_name}}",
+                        ),
+                        "temp_dir": temp_dir.name,
+                    }
+                )
 
         return example_dirs
 
     def gen_terraform_json_variables(example):
         example_dir = os.path.join(examplesdir, os.path.basename(example))
-        tf = tempfile.NamedTemporaryFile(suffix=".json", delete=False)
-        command = f" terraform-docs tfvars json {example_dir} > {tf.name}"
+        # get the json tfvars
+        tfvars_json = tempfile.NamedTemporaryFile(suffix=".json", delete=False)
+        command = f" terraform-docs tfvars json {example_dir} > {tfvars_json.name}"
         subprocess.run(["bash", "-c", command])
-        f = open(tf.name)
+        f = open(tfvars_json.name)
         data = json.load(f)
-        del data["context"]
-        return data
+        if "context" in data:
+            del data["context"]
+        os.remove(tfvars_json.name)
+
+        tfvars_hcl = tempfile.NamedTemporaryFile(suffix=".hcl", delete=False)
+        command = f" terraform-docs tfvars hcl {example_dir} > {tfvars_hcl.name}"
+        subprocess.run(["bash", "-c", command])
+        f = open(tfvars_hcl.name)
+        hcl = f.read()
+        os.remove(tfvars_hcl.name)
+
+        # Generate the terraform markdown docs
+        command = f" terraform-docs markdown {example_dir} > {example_dir}/terraform.md"
+        subprocess.run(["bash", "-c", command])
+
+        # Return the variables in JSON and HCL format
+        return data, hcl
+
+    def gencookiecutter_context(example: CookiecutterDir, extra_context):
+
+        config_dict = get_user_config(config_file=None, default_config=False,)
+        repo_dir, cleanup = determine_repo_dir(
+            template=COOKIECUTTER_TEMPLATE_REPO,
+            abbreviations=config_dict["abbreviations"],
+            clone_to_dir=config_dict["cookiecutters_dir"],
+            checkout=None,
+            no_input=True,
+            password=None,
+            directory=COOKIECUTTER_TEMPLATE_DIR,
+        )
+        context_file = os.path.join(repo_dir, "cookiecutter.json")
+        cookiecutter_context = generate_context(
+            context_file=context_file,
+            default_context=config_dict["default_context"],
+            extra_context=extra_context,
+        )
+        cookiecutter_file = str(Path(example["destination_dir"]).parents[0])
+        cookiecutter_file = os.path.join(cookiecutter_file, "cookiecutter.json")
+        logger.debug(cookiecutter_context)
+        logger.info(f"Writing cookiecutter context to: {cookiecutter_file}")
+
+        with open(cookiecutter_file, "w") as f:
+            json.dump(cookiecutter_context["cookiecutter"], f, indent=4)
 
     def gencookiecutters():
         """
         cookiecutter https://github.com/user/repo-name.git --directory="directory1-name"
         """
         cookiecutter_dirs = gencookiecutter_dirs()
-        cookiecutter_template_dir = (
-            "https://github.com/dabble-of-devops-bioanalyze/terraform-example-module"
-        )
         for example in cookiecutter_dirs:
-            subprocess.run(["bash", "-c", f"rm -rf {example}"])
-            subprocess.run(["bash", "-c", f"mkdir -p {example}"])
-            terraform_variables = gen_terraform_json_variables(example)
-            title = os.path.basename(example)
+
+            terraform_json, terraform_hcl = gen_terraform_json_variables(
+                example["example_dir"]
+            )
+
+            title = os.path.basename(example["example_dir"])
             title = title.title()
-            cookiecutter(
-                cookiecutter_template_dir,
-                directory="_templates/terraform-cookiecutter",
-                overwrite_if_exists=True,
-                extra_context={
-                    "terraform_variables": terraform_variables,
-                    "docs_data": {
-                        "title": f"AWS Batch - {title}",
-                        "github_repo": git_url,
-                        "directory": example,
-                    },
+            extra_context = {
+                "terraform_variables": terraform_json,
+                "terraform_hcl": terraform_hcl,
+                "docs_data": {
+                    "title": f"AWS Batch - {title}",
+                    "github_repo": git_url,
+                    "directory": os.path.join(
+                        "_templates", os.path.relpath(example["example_dir"])
+                    ),
                 },
-                output_dir=example,
+            }
+
+            cookiecutter(
+                COOKIECUTTER_TEMPLATE_REPO,
+                directory=COOKIECUTTER_TEMPLATE_DIR,
+                overwrite_if_exists=True,
+                extra_context=extra_context,
+                output_dir=example["temp_dir"],
                 no_input=True,
             )
-            example_dir = os.path.join(examplesdir, os.path.basename(example))
-            subprocess.run(["bash", "-c", f"cp -rf {example_dir}/main.tf {example}/"])
-            subprocess.run(
-                ["bash", "-c", f"cp -rf {example_dir}/context.tf {example}/"]
+
+            if os.path.exists(example["destination_dir"]):
+                shutil.rmtree(example["destination_dir"])
+            logger.info(
+                f'Copying from: {example["temp_dir"]} to {example["destination_dir"]} '
             )
-            subprocess.run(
-                ["bash", "-c", f"cp -rf {example_dir}/variables.tf {example}/"]
-            )
+            shutil.move(example["temp_dir"], example["destination_dir"])
+            gencookiecutter_context(example, extra_context)
             cleanup_cookiecutter(example)
 
     def pygmentize():
@@ -163,21 +321,38 @@ def main(pathsource: Path, examplesdir: Path, outputdir: Path, port: int):
     server = Server()
 
     DELAY = 10
+
     # Globbing for all supported file types under examplesdir
-    server.watch(os.path.join(examplesdir, "**/**.tf"), pygmentize, delay=DELAY)
-    server.watch(os.path.join(examplesdir, "**/**.tfvars"), pygmentize, delay=DELAY)
-    server.watch(os.path.join(examplesdir, "**/*.tf"), pygmentize, delay=DELAY)
-    server.watch(os.path.join(pathsource, "**/*.tf"), pygmentize, delay=DELAY)
-    server.watch(os.path.join(pathsource, "*.tf"), pygmentize, delay=DELAY)
+    examples_fileset = formic.FileSet(
+        include=["**.tf", "**.tpl", "**.md"],
+        exclude=["**/_html/**", "_html", "tests/__pycache__/**", "tests/__pycache__",],
+        directory=examplesdir,
+        symlinks=False,
+    )
+    for file in examples_fileset:
+        logger.info(file)
+        server.watch(file, pygmentize, delay=DELAY)
 
     # Globbing for all supported file types under jupyter-book
     # Ignore unrelated files
-    server.watch(os.path.join(examplesdir, "**/*.md"), build)
-    server.watch(os.path.join(pathsource, "**/*.md"), build)
-    server.watch(os.path.join(pathsource, "**/*.ipynb"), build)
-    server.watch(os.path.join(pathsource, "**/**.rst"), build)
-    server.watch(pathsource / "_config.yml", build)
-    server.watch(pathsource / "_toc.yml", build)
+    jupyterbook_fileset = formic.FileSet(
+        include=["**.rst", "**.yaml", "**.yml", "**.md", "**/*.ipynb"],
+        exclude=[
+            "**/_html/**",
+            "_html",
+            "_build",
+            "_build/**",
+            "tests/__pycache__/**",
+            "tests/__pycache__",
+            ".github",
+            ".github/**"
+        ],
+        directory=pathsource,
+        symlinks=False,
+    )
+    for file in jupyterbook_fileset:
+        logger.info(file)
+        server.watch(file, build, delay=DELAY)
 
     server.serve(root=outputdir, port=port, host="0.0.0.0")
 

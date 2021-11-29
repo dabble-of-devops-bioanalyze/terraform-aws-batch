@@ -6,6 +6,26 @@ on:
     - master
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: dabbleofdevops/terraform:terraform-0.14.0
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Test examples/fargate
+      shell: bash
+      id: fargate
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+        AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+      run: |
+        cd examples/fargate
+        terraform init
+        terraform refresh
+        terraform apply -auto-approve && \
+        pip install -r tests/requirements.txt; python -m pytest -s --log-cli-level=INFO tests/test_batch.py
+
   publish:
     runs-on: ubuntu-latest
     steps:

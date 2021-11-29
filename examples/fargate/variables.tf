@@ -18,3 +18,9 @@ variable "type" {
   type        = string
   default     = "FARGATE"
 }
+
+variable "run_tests" {
+  description = "Run the python tests at the end the module"
+  type = bool
+  default = false
+}

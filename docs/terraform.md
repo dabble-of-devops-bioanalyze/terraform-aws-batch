@@ -87,7 +87,7 @@
 | <a name="input_secrets_enabled"></a> [secrets\_enabled](#input\_secrets\_enabled) | Enable IAM Role for AWS Secrets Manager | `bool` | `false` | no |
 | <a name="input_security_group_ids"></a> [security\_group\_ids](#input\_security\_group\_ids) | List of additional security groups to associate with cluster instances.  If empty, default security group will be added. | `list(any)` | <pre>[<br>  ""<br>]</pre> | no |
 | <a name="input_stage"></a> [stage](#input\_stage) | Stage, e.g. 'prod', 'staging', 'dev', OR 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
-| <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | List of subnets compute environment instances will be deployed in. | `list(any)` | n/a | yes |
+| <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | List of subnets compute environment instances will be deployed in. | `list(string)` | n/a | yes |
 | <a name="input_tag_specifications_resource_types"></a> [tag\_specifications\_resource\_types](#input\_tag\_specifications\_resource\_types) | List of tag specification resource types to tag. Valid values are instance, volume, elastic-gpu and spot-instances-request. | `set(string)` | <pre>[<br>  "instance",<br>  "volume"<br>]</pre> | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Additional tags (e.g. `map('BusinessUnit','XYZ')` | `map(string)` | `{}` | no |
 | <a name="input_type"></a> [type](#input\_type) | AWS Batch Compute Environment Type: must be one of EC2, SPOT, FARGATE or FARGATE\_SPOT. | `string` | `"EC2"` | no |

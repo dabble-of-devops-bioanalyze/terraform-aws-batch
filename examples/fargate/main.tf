@@ -68,6 +68,7 @@ resource "random_string" "s3" {
   number           = true
 }
 
+
 # Now that we have a batch job queue here's an s3 bucket to push/pull data from
 
 module "s3_bucket" {
@@ -195,6 +196,7 @@ resource "local_file" "dummy_container_properties" {
   content  = data.template_file.dummy_container_properties.rendered
   filename = "${path.module}/dummy-job-container-properties.json"
 }
+
 resource "aws_batch_job_definition" "dummy" {
   name                  = "${module.this.id}_test_batch_job_definition"
   type                  = "container"
@@ -259,6 +261,7 @@ output "nextflow_config" {
 }
 
 resource "null_resource" "pytest" {
+  count = var.run_tests ? 1 : 0
   depends_on = [
     module.batch,
     module.s3_bucket,
@@ -274,7 +277,7 @@ resource "null_resource" "pytest" {
     always_run = timestamp()
   }
   provisioner "local-exec" {
-    command = "python -m pytest -s --log-cli-level=INFO tests/test_batch.py"
+    command = "pip install -r tests/requirements.txt; python -m pytest -s --log-cli-level=INFO tests/test_batch.py"
     environment = {
       AWS_REGION = var.region
       LOG_LEVEL  = "INFO"
