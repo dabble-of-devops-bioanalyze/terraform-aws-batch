@@ -23,9 +23,9 @@ module "vpc" {
   tags                 = module.this.tags
 }
 
-output "vpc" {
-  value = module.vpc
-}
+# output "vpc" {
+#   value = module.vpc
+# }
 
 locals {
   # create vpc and subnets
@@ -171,6 +171,9 @@ data "template_file" "container_properties" {
 }
 
 resource "local_file" "container_properties" {
+  depends_on = [
+    data.template_file.container_properties
+  ]
   content  = data.template_file.container_properties.rendered
   filename = "${path.module}/container-properties.json"
 }
@@ -185,6 +188,11 @@ resource "aws_batch_job_definition" "rnaseq" {
 }
 
 resource "local_file" "nextflow_config" {
+  depends_on = [
+    module.batch,
+    module.s3_bucket,
+    aws_batch_job_definition.rnaseq
+  ]
   content  = <<EOF
   profiles {
     standard {
@@ -224,6 +232,9 @@ data "template_file" "pytest" {
 }
 
 resource "local_file" "pytest" {
+  depends_on = [
+    data.template_file.pytest
+  ]
   content  = data.template_file.pytest.rendered
   filename = "${path.module}/tests/config.py"
 }
@@ -251,8 +262,9 @@ resource "null_resource" "pytest" {
   provisioner "local-exec" {
     command = "pip install -r tests/requirements.txt; python -m pytest -s --log-cli-level=INFO tests/test_batch.py"
     environment = {
-      AWS_REGION = var.region
-      LOG_LEVEL  = "INFO"
+      AWS_REGION         = var.region
+      AWS_DEFAULT_REGION = var.region
+      LOG_LEVEL          = "INFO"
     }
   }
 }

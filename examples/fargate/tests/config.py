@@ -1,6 +1,7 @@
 DATA_S3 = "bioanalyze-fargate-test-nf-rnaseq-5jbrnartzo"
 JOB_S3 = DATA_S3
 
+
 # These come from the terraform code in auto-deployment/terraform
 ECR = "dabbleofdevops/nextflow-rnaseq-tutorial"
 COMPUTE_ENVIRONMENT = "bioanalyze-fargate-test-nf-rnaseq"
