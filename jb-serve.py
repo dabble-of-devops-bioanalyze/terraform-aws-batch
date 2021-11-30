@@ -68,6 +68,7 @@ TF_EXCLUDE = [
     "_html",
     ".terraform",
     "backend.tf",
+    "**/backend.tf.html",
     "**/backend.tf",
     "**/.terraform",
     "**/.terraform/**",

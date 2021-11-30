@@ -1,5 +1,0 @@
-pytest
-pandas
-boto3
-s3fs
-aws-batch-helpers

@@ -184,35 +184,6 @@ resource "aws_batch_job_definition" "rnaseq" {
   tags                  = module.this.tags
 }
 
-data "template_file" "dummy_container_properties" {
-  depends_on = [
-    module.batch,
-    module.s3_bucket,
-  ]
-  template = file("${path.module}/dummy-job-container-properties.json.tpl")
-  vars = {
-    execution_role_arn = module.batch.aws_batch_execution_role.arn
-  }
-}
-
-resource "local_file" "dummy_container_properties" {
-  content  = data.template_file.dummy_container_properties.rendered
-  filename = "${path.module}/dummy-job-container-properties.json"
-}
-
-resource "aws_batch_job_definition" "dummy" {
-  name                  = "${module.this.id}_test_batch_job_definition"
-  type                  = "container"
-  platform_capabilities = [var.type]
-  container_properties  = data.template_file.dummy_container_properties.rendered
-  propagate_tags        = true
-  tags                  = module.this.tags
-}
-
-output "aws_batch_dummy_job_def" {
-  value = aws_batch_job_definition.dummy
-}
-
 resource "local_file" "nextflow_config" {
   content  = <<EOF
   profiles {
@@ -246,7 +217,6 @@ data "template_file" "pytest" {
     s3_bucket           = module.s3_bucket.bucket_id
     job_queue           = module.batch.aws_batch_job_queue
     job_def             = aws_batch_job_definition.rnaseq.name
-    dummy_job_def       = aws_batch_job_definition.dummy.name
     job_role            = module.batch.aws_batch_execution_role.arn
     compute_environment = module.this.id
     execution_role_arn  = module.batch.aws_batch_execution_role.arn
@@ -271,7 +241,6 @@ resource "null_resource" "pytest" {
     aws_iam_policy.s3_full_access,
     aws_iam_role_policy_attachment.batch_execution_role_s3_base_access,
     aws_iam_role_policy_attachment.batch_execution_role_s3_full_access,
-    aws_batch_job_definition.dummy,
     aws_batch_job_definition.rnaseq,
     local_file.pytest,
     local_file.nextflow_config,
