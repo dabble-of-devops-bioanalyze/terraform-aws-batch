@@ -46,7 +46,7 @@ jobs:
         AWS_REGION: "us-east-1"
         AWS_DEFAULT_REGION: "us-east-1"
       run: |
-        cd ${matrix.example}
+        cd ${{ matrix.example}}
         terraform init
         terraform refresh
         terraform apply -auto-approve && \
