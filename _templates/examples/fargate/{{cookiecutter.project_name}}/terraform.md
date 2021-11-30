@@ -27,14 +27,12 @@
 
 | Name | Type |
 |------|------|
-| [aws_batch_job_definition.dummy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_definition) | resource |
 | [aws_batch_job_definition.rnaseq](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_definition) | resource |
 | [aws_iam_policy.s3_base_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.s3_full_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_role_policy_attachment.batch_execution_role_s3_base_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.batch_execution_role_s3_full_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [local_file.container_properties](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
-| [local_file.dummy_container_properties](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [local_file.nextflow_config](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [local_file.pytest](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [null_resource.pytest](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
@@ -42,7 +40,6 @@
 | [aws_iam_policy_document.s3_base_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.s3_full_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [template_file.container_properties](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
-| [template_file.dummy_container_properties](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
 | [template_file.pytest](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
 
 ## Inputs
@@ -74,7 +71,6 @@
 
 | Name | Description |
 |------|-------------|
-| <a name="output_aws_batch_dummy_job_def"></a> [aws\_batch\_dummy\_job\_def](#output\_aws\_batch\_dummy\_job\_def) | n/a |
 | <a name="output_batch"></a> [batch](#output\_batch) | n/a |
 | <a name="output_nextflow_config"></a> [nextflow\_config](#output\_nextflow\_config) | n/a |
 | <a name="output_s3_bucket"></a> [s3\_bucket](#output\_s3\_bucket) | n/a |

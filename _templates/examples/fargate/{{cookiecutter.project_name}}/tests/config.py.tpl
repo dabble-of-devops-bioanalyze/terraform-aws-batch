@@ -5,6 +5,5 @@ JOB_S3 = DATA_S3
 ECR = "dabbleofdevops/nextflow-rnaseq-tutorial"
 COMPUTE_ENVIRONMENT = "${compute_environment}"
 JOB_DEF_NAME = "${job_def}"
-DUMMY_JOB_DEF_NAME = "${dummy_job_def}"
 JOB_QUEUE_NAME = "${job_queue}"
 JOB_ROLE = "${execution_role_arn}"

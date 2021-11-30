@@ -15,7 +15,7 @@ import s3fs
 logging.basicConfig(level=logging.INFO)
 logging.getLogger('boto').setLevel(logging.CRITICAL)
 
-from .config import DATA_S3, ECR, COMPUTE_ENVIRONMENT, JOB_DEF_NAME, JOB_QUEUE_NAME, JOB_ROLE, DUMMY_JOB_DEF_NAME
+from .config import DATA_S3, ECR, COMPUTE_ENVIRONMENT, JOB_DEF_NAME, JOB_QUEUE_NAME, JOB_ROLE
 
 batch_client = boto3.client("batch")
 log_client = boto3.client("logs")

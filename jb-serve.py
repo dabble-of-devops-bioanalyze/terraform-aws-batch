@@ -87,6 +87,7 @@ TF_COOKIECUTTER_INCLUDE = [
     "**.tpl",
     "**.json",
     "**.md",
+    "**.config",
     "**.py",
     "_html",
     "**/_html",
