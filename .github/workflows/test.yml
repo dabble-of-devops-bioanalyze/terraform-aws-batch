@@ -39,7 +39,6 @@ jobs:
 
     - name: Test ${matrix.example}
       shell: bash
-      id: ${matrix.example}
       env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
