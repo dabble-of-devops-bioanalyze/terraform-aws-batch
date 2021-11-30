@@ -1,5 +1,6 @@
 import subprocess
 from pathlib import Path
+from copy import deepcopy
 import os
 import formic
 import re
@@ -61,6 +62,64 @@ COOKIECUTTER_TEMPLATE_REPO = (
 )
 COOKIECUTTER_TEMPLATE_DIR = "_templates/terraform-cookiecutter"
 
+TF_INCLUDE = ["**.tf", "**.tpl", "**.json", "**.md", "**.py"]
+TF_EXCLUDE = [
+    "**/_html/**",
+    "_html",
+    ".terraform",
+    "backend.tf",
+    "**/backend.tf",
+    "**/.terraform",
+    "**/.terraform/**",
+    "**/.terraform",
+    "**/.pytest_cache/**",
+    "**/.pytest_cache",
+    "tests/__pycache__/**",
+    "tests/__pycache__",
+    "*.tfvars.json",
+    "**/*.tfvars.json",
+    "*.tfvars",
+    "**/*.tfvars",
+]
+TF_COOKIECUTTER_INCLUDE = [
+    "**.tf",
+    "**.tpl",
+    "**.json",
+    "**.md",
+    "**.py",
+    "_html",
+    "**/_html",
+    "_html/**",
+    "**/_html/**",
+]
+TF_COOKIECUTTER_EXCLUDE = [
+    ".terraform",
+    "backend.tf",
+    "**/backend.tf",
+    "**/.terraform",
+    "**/.terraform/**",
+    "**/.terraform",
+    "**/.pytest_cache/**",
+    "**/.pytest_cache",
+    "tests/__pycache__/**",
+    "tests/__pycache__",
+    "*.tfvars.json",
+    "**/*.tfvars.json",
+    "*.tfvars",
+    "**/*.tfvars",
+]
+JB_INCLUDE = ["**.rst", "**.yaml", "**.yml", "**.md", "**/*.ipynb"]
+JB_EXCLUDE = [
+    "**/_html/**",
+    "_html",
+    "_build",
+    "_build/**",
+    "tests/__pycache__/**",
+    "tests/__pycache__",
+    ".github",
+    ".github/**",
+]
+
 # Copy these dirs/files from source to dest
 COPY = [
     "tests",
@@ -116,6 +175,21 @@ def bootstrap():
     )
 
 
+def generate_fileset(
+    include: List[str], exclude: List[str], directory: Path, return_relative: True
+):
+    examples_fileset = formic.FileSet(
+        include=include, exclude=exclude, directory=directory, symlinks=False,
+    )
+    files = []
+    for file in examples_fileset:
+        if return_relative:
+            files.append(os.path.relpath(file, directory))
+        else:
+            files.append(file)
+    return files
+
+
 @click.command()
 @click.argument("pathsource", default=".", type=Path)
 @click.option("-o", "--outputdir", default="_build/html", type=Path, show_default=True)
@@ -149,26 +223,49 @@ def main(pathsource: Path, examplesdir: Path, outputdir: Path, port: int):
         # need to copy with keeping the directories in sync
         # shutil.copytree(example["example_dir"], example["destination_dir"])
         logger.debug(f'Post processing: {os.path.relpath(example["destination_dir"])}')
+        copy_fileset = generate_fileset(
+            include=TF_COOKIECUTTER_INCLUDE,
+            exclude=TF_COOKIECUTTER_EXCLUDE,
+            directory=example["example_dir"],
+            return_relative=True,
+        )
+        includes_tmp = tempfile.NamedTemporaryFile(delete=False)
+        with open(includes_tmp.name, 'w') as fh:
+            fh.write("\n".join(copy_fileset))
+
+        # TODO Change all hacky references to cwd to a root dir
+        rsync_command = f"""rsync -avz  -m \
+    --include="*/"  \
+    --include-from={includes_tmp.name} \
+    --exclude="*" \
+     {os.path.relpath(example["example_dir"], os.getcwd())}/* \
+     {os.path.relpath(example["destination_dir"], os.getcwd())}/
+        """
+        logger.info('Rsyncing: ')
+        logger.info(rsync_command)
         subprocess.run(
             [
                 "bash",
                 "-c",
-                f'cp -rf {example["example_dir"]}/* {example["destination_dir"]}/',
+                rsync_command,
             ]
         )
 
+        # This shouldn't really be necessary
+        # But I'm paranoid so here we are
         for clean in CLEAN:
-            logger.info(f'Removing {example["destination_dir"]}/{clean}')
-            subprocess.run(
-                [
-                    "bash",
-                    "-c",
-                    f'rm -rf {example["destination_dir"]}/{clean}',
-                ]
-            )
+            logger.debug(f'Removing {example["destination_dir"]}/{clean}')
+            clean_this = os.path.join(example["destination_dir"], clean)
+            if os.path.exists(clean_this):
+                subprocess.run(
+                    ["bash", "-c", f'rm -rf {clean_this}',]
+                )
 
     def gencookiecutter_dirs() -> List[CookiecutterDir]:
-        logger.info("gencookiecutter dirs")
+        """
+        First time around we write out the cookiecutter template to a temporary directory
+        Then copy it over
+        """
         examples = glob.glob(os.path.join(THIS_DIR, "examples", "*"), recursive=False)
         example_dirs: List[CookiecutterDir] = []
         seen = {}
@@ -208,6 +305,7 @@ def main(pathsource: Path, examplesdir: Path, outputdir: Path, port: int):
         os.remove(tfvars_json.name)
 
         tfvars_hcl = tempfile.NamedTemporaryFile(suffix=".hcl", delete=False)
+        # TODO Need to remove the context from the TFVARs
         command = f" terraform-docs tfvars hcl {example_dir} > {tfvars_hcl.name}"
         subprocess.run(["bash", "-c", command])
         f = open(tfvars_hcl.name)
@@ -323,35 +421,28 @@ def main(pathsource: Path, examplesdir: Path, outputdir: Path, port: int):
     DELAY = 10
 
     # Globbing for all supported file types under examplesdir
-    examples_fileset = formic.FileSet(
-        include=["**.tf", "**.tpl", "**.md"],
-        exclude=["**/_html/**", "_html", "tests/__pycache__/**", "tests/__pycache__",],
+    logger.info("Generating files to watch in terraform examples dirs")
+    examples_fileset = generate_fileset(
+        include=TF_INCLUDE,
+        exclude=TF_EXCLUDE,
         directory=examplesdir,
-        symlinks=False,
+        return_relative=False,
     )
     for file in examples_fileset:
-        logger.info(file)
+        logger.debug(f"terraform examples: {file}")
         server.watch(file, pygmentize, delay=DELAY)
 
     # Globbing for all supported file types under jupyter-book
     # Ignore unrelated files
-    jupyterbook_fileset = formic.FileSet(
-        include=["**.rst", "**.yaml", "**.yml", "**.md", "**/*.ipynb"],
-        exclude=[
-            "**/_html/**",
-            "_html",
-            "_build",
-            "_build/**",
-            "tests/__pycache__/**",
-            "tests/__pycache__",
-            ".github",
-            ".github/**"
-        ],
+    logger.info("Generating files to watch in jupyterbook dirs")
+    jupyterbook_fileset = generate_fileset(
+        include=JB_INCLUDE,
+        exclude=JB_EXCLUDE,
         directory=pathsource,
-        symlinks=False,
+        return_relative=False,
     )
     for file in jupyterbook_fileset:
-        logger.info(file)
+        logger.debug(f"jupyter-book build: {file}")
         server.watch(file, build, delay=DELAY)
 
     server.serve(root=outputdir, port=port, host="0.0.0.0")

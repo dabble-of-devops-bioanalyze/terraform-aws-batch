@@ -1,0 +1,14 @@
+<div class="highlight"><pre><span></span><span class="c1"># terraform {</span>
+<span class="c1">#   required_version = &quot;&gt;= 0.12.2&quot;</span>
+
+<span class="c1">#   backend &quot;s3&quot; {</span>
+<span class="c1">#     region         = &quot;us-east-1&quot;</span>
+<span class="c1">#     bucket         = &quot;bioanalyze-test-terraform-state&quot;</span>
+<span class="c1">#     key            = &quot;bioanalyze-test-fargate-nf-rnaseq&quot;</span>
+<span class="c1">#     dynamodb_table = &quot;bioanalyze-test-terraform-state-lock&quot;</span>
+<span class="c1">#     profile        = &quot;&quot;</span>
+<span class="c1">#     role_arn       = &quot;&quot;</span>
+<span class="c1">#     encrypt        = &quot;true&quot;</span>
+<span class="c1">#   }</span>
+<span class="c1"># }</span>
+</pre></div>

@@ -6,6 +6,6 @@
     {"type": "VCPU", "value": "4"}
   ],
   "environment": [{ "name": "VARNAME", "value": "VARVAL" }],
-  "executionRoleArn": "arn:aws:iam::018835827632:role/bioanalyze-fargate-nf-rnaseq-batch_execution_role",
-  "jobRoleArn": "arn:aws:iam::018835827632:role/bioanalyze-fargate-nf-rnaseq-batch_execution_role"
+  "executionRoleArn": "arn:aws:iam::018835827632:role/bioanalyze-fargate-test-nf-rnaseq-batch_execution_role",
+  "jobRoleArn": "arn:aws:iam::018835827632:role/bioanalyze-fargate-test-nf-rnaseq-batch_execution_role"
 }
