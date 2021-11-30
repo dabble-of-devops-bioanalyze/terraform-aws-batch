@@ -1,6 +1,6 @@
 {
   "command": ["ls", "-la"],
-  "image": "dabbleofdevops/nextflow-rnaseq-tutorial:latest",
+  "image": "public.ecr.aws/f8x0t1z3/nextflow-rnaseq-tutorial:latest",
   "resourceRequirements": [
     {"type": "MEMORY", "value": "8192"},
     {"type": "VCPU", "value": "4"}

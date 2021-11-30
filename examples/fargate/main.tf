@@ -228,6 +228,8 @@ data "template_file" "pytest" {
     job_role            = module.batch.aws_batch_execution_role.arn
     compute_environment = module.this.id
     execution_role_arn  = module.batch.aws_batch_execution_role.arn
+    secret_name         = module.batch.aws_secrets_manager_secret-batch.name
+    secret_arn          = module.batch.aws_secrets_manager_secret-batch.arn
   }
 }
 

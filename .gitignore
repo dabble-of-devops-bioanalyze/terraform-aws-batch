@@ -34,3 +34,5 @@ test.log
 _build
 
 config.cfg
+
+examples/fargate/tests/__pycache__
