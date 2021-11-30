@@ -27,7 +27,7 @@ def submit_batch_job_for_test(submit_data):
         batch_client=batch_client, log_client=log_client, submit_job=submit_data
     )
     logging.info(f'Submitted job: {job_id}')
-    logging.info(pprint(job_response))
+    logging.debug(pprint(job_response))
 
     logging.info('Watching job')
     status = watch_job(
@@ -64,13 +64,14 @@ def test_s3_access():
     """Test that the credentials has access to the S3 bucket"""
     fs = s3fs.S3FileSystem()
     iris = pd.read_csv('https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv')
-    pprint(iris.head())
+    logging.debug(pprint(iris.head()))
 
+    logging.info('Testing the S3 Access credential roles')
+    logging.info(f'Uploading iris.csv to: s3://{DATA_S3}/data/iris.csv')
     iris.to_csv(f"s3://{DATA_S3}/data/iris.csv")
     file_list = fs.ls(f"{DATA_S3}/data/")
     assert f'{DATA_S3}/data/iris.csv' in file_list
-    logging.info(file_list)
-
+    logging.debug(file_list)
 
     command = ["bash", "-c", " ".join(["pwd;", "ls -lah; "f"aws s3 cp s3://{DATA_S3}/data/iris.csv ./ && head iris.csv"])]
     job_name = "s3-access"
