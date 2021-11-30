@@ -31,12 +31,12 @@ jobs:
       shell: bash
       run: make BUILD_HARNESS_PATH=/build-harness PACKAGES_PREFER_HOST=true -f /build-harness/templates/Makefile.build-harness pr/auto-format/host
 
-    - name: Generate README 
+    - name: Generate README
       if: github.event.pull_request.state == 'open'
       shell: bash
       run: |
         wget https://raw.githubusercontent.com/Dabble-of-DevOps-BioHub/biohub-info/master/docs/README.md.gotmpl -O /tmp/README.md.gotmpl
-        make README_TEMPLATE_FILE=/tmp/README.md.gotmpl BUILD_HARNESS_PATH=/build-harness PACKAGES_PREFER_HOST=true -f /build-harness/templates/Makefile.build-harness readme 
+        make README_TEMPLATE_FILE=/tmp/README.md.gotmpl BUILD_HARNESS_PATH=/build-harness PACKAGES_PREFER_HOST=true -f /build-harness/templates/Makefile.build-harness readme
 
     # Commit changes (if any) to the PR branch
     - name: Commit changes to the PR branch

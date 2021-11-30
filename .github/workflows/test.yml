@@ -1,0 +1,55 @@
+name: test
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  test-module:
+    runs-on: ubuntu-latest
+    container: cloudposse/build-harness:slim-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Test
+      shell: bash
+      id: module
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+        AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+        AWS_REGION: "us-east-1"
+        AWS_DEFAULT_REGION: "us-east-1"
+      run: |
+
+        make BUILD_HARNESS_PATH=/build-harness \
+          PACKAGES_PREFER_HOST=true -f \
+          /build-harness/templates/Makefile.build-harness
+          terraform/validate
+
+  test-examples:
+    needs: test-module
+    runs-on: ubuntu-latest
+    container: dabbleofdevops/terraform:terraform-0.14.0
+    strategy:
+      matrix:
+        example: ['examples/fargate']
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Test ${matrix.example}
+      shell: bash
+      id: ${matrix.example}
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+        AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+        AWS_REGION: "us-east-1"
+        AWS_DEFAULT_REGION: "us-east-1"
+      run: |
+        cd ${matrix.example}
+        terraform init
+        terraform refresh
+        terraform apply -auto-approve && \
+        pip install -r tests/requirements.txt; python -m pytest -s --log-cli-level=INFO tests/test_batch.py
+
