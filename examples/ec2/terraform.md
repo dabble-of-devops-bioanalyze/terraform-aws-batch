@@ -1,16 +1,18 @@
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.12.2 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
-| <a name="provider_local"></a> [local](#provider\_local) | n/a |
-| <a name="provider_null"></a> [null](#provider\_null) | n/a |
-| <a name="provider_random"></a> [random](#provider\_random) | n/a |
-| <a name="provider_template"></a> [template](#provider\_template) | n/a |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.67.0 |
+| <a name="provider_local"></a> [local](#provider\_local) | 2.1.0 |
+| <a name="provider_null"></a> [null](#provider\_null) | 3.1.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.1.0 |
+| <a name="provider_template"></a> [template](#provider\_template) | 2.2.0 |
 
 ## Modules
 
@@ -25,14 +27,12 @@ No requirements.
 
 | Name | Type |
 |------|------|
-| [aws_batch_job_definition.dummy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_definition) | resource |
 | [aws_batch_job_definition.rnaseq](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_definition) | resource |
 | [aws_iam_policy.s3_base_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.s3_full_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_role_policy_attachment.batch_execution_role_s3_base_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.batch_execution_role_s3_full_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [local_file.container_properties](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
-| [local_file.dummy_container_properties](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [local_file.nextflow_config](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [local_file.pytest](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [null_resource.pytest](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
@@ -40,7 +40,6 @@ No requirements.
 | [aws_iam_policy_document.s3_base_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.s3_full_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [template_file.container_properties](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
-| [template_file.dummy_container_properties](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
 | [template_file.pytest](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
 
 ## Inputs
@@ -72,10 +71,8 @@ No requirements.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_aws_batch_dummy_job_def"></a> [aws\_batch\_dummy\_job\_def](#output\_aws\_batch\_dummy\_job\_def) | n/a |
 | <a name="output_batch"></a> [batch](#output\_batch) | n/a |
 | <a name="output_nextflow_config"></a> [nextflow\_config](#output\_nextflow\_config) | n/a |
 | <a name="output_s3_bucket"></a> [s3\_bucket](#output\_s3\_bucket) | n/a |
 | <a name="output_subnet_ids"></a> [subnet\_ids](#output\_subnet\_ids) | n/a |
-| <a name="output_vpc"></a> [vpc](#output\_vpc) | n/a |
 | <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | n/a |

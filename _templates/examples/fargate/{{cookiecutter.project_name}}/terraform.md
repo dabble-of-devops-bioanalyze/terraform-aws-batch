@@ -75,5 +75,4 @@
 | <a name="output_nextflow_config"></a> [nextflow\_config](#output\_nextflow\_config) | n/a |
 | <a name="output_s3_bucket"></a> [s3\_bucket](#output\_s3\_bucket) | n/a |
 | <a name="output_subnet_ids"></a> [subnet\_ids](#output\_subnet\_ids) | n/a |
-| <a name="output_vpc"></a> [vpc](#output\_vpc) | n/a |
 | <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | n/a |

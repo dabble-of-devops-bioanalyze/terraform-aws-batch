@@ -22,7 +22,7 @@ resource "aws_batch_compute_environment" "batch" {
   compute_environment_name = module.this.id
 
   compute_resources {
-    instance_role = var.ecs_instance_role.arn
+    instance_role = var.ecs_instance_profile.arn
 
     launch_template {
       launch_template_id = aws_launch_template.batch.id
@@ -67,9 +67,13 @@ Content-Type: text/x-shellscript; charset="us-ascii"
 
 # Expand individual docker storage if container requires more than defaul 10GB
 cloud-init-per once docker_options echo 'OPTIONS="$$${OPTIONS} --storage-opt dm.basesize=${var.docker_max_container_size}G"' >> /etc/sysconfig/docker
-service docker restart
 
-docker restart ecs-agent
+echo ECS_CLUSTER=default>>/etc/ecs/ecs.config
+echo ECS_IMAGE_CLEANUP_INTERVAL=60m >> /etc/ecs/ecs.config
+echo ECS_IMAGE_MINIMUM_CLEANUP_AGE=60m >> /etc/ecs/ecs.config
+
+sudo systemctl restart docker || echo "unable to restart docker"
+sudo start ecs || echo "unable to restart ecs"
 
 ${var.additional_user_data}
 TEMPLATE

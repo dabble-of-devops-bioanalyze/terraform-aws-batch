@@ -2,7 +2,9 @@ region = "us-east-1"
 
 namespace = "bioanalyze"
 
-environment = "fargate"
+environment = "ec2"
+
+stage = "test"
 
 name = "nf-rnaseq"
 

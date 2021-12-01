@@ -1,4 +1,4 @@
-# AWS Batch - Fargate Example
+# AWS Batch - EC2 Example
 
 This example shows how to deploy an AWS Batch cluster using the Fargate backend.
 

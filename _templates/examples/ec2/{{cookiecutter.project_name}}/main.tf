@@ -23,9 +23,9 @@ module "vpc" {
   tags                 = module.this.tags
 }
 
-output "vpc" {
-  value = module.vpc
-}
+# output "vpc" {
+#   value = module.vpc
+# }
 
 locals {
   # create vpc and subnets
@@ -46,11 +46,11 @@ module "batch" {
     module.vpc,
   ]
 
-  # TODO Update this with the actual source
+  # TODO
   # source  = "dabble-of-devops-bioanalyze/batch/aws"
   # version >= "1.13.0"
   source = "../../"
-
+  # insert the 17 required variables here
   region = var.region
   vpc_id = local.vpc_id
 
@@ -171,6 +171,9 @@ data "template_file" "container_properties" {
 }
 
 resource "local_file" "container_properties" {
+  depends_on = [
+    data.template_file.container_properties
+  ]
   content  = data.template_file.container_properties.rendered
   filename = "${path.module}/container-properties.json"
 }
@@ -184,36 +187,12 @@ resource "aws_batch_job_definition" "rnaseq" {
   tags                  = module.this.tags
 }
 
-data "template_file" "dummy_container_properties" {
+resource "local_file" "nextflow_config" {
   depends_on = [
     module.batch,
     module.s3_bucket,
+    aws_batch_job_definition.rnaseq
   ]
-  template = file("${path.module}/dummy-job-container-properties.json.tpl")
-  vars = {
-    execution_role_arn = module.batch.aws_batch_execution_role.arn
-  }
-}
-
-resource "local_file" "dummy_container_properties" {
-  content  = data.template_file.dummy_container_properties.rendered
-  filename = "${path.module}/dummy-job-container-properties.json"
-}
-
-resource "aws_batch_job_definition" "dummy" {
-  name                  = "${module.this.id}_test_batch_job_definition"
-  type                  = "container"
-  platform_capabilities = [var.type]
-  container_properties  = data.template_file.dummy_container_properties.rendered
-  propagate_tags        = true
-  tags                  = module.this.tags
-}
-
-output "aws_batch_dummy_job_def" {
-  value = aws_batch_job_definition.dummy
-}
-
-resource "local_file" "nextflow_config" {
   content  = <<EOF
   profiles {
     standard {
@@ -246,14 +225,18 @@ data "template_file" "pytest" {
     s3_bucket           = module.s3_bucket.bucket_id
     job_queue           = module.batch.aws_batch_job_queue
     job_def             = aws_batch_job_definition.rnaseq.name
-    dummy_job_def       = aws_batch_job_definition.dummy.name
     job_role            = module.batch.aws_batch_execution_role.arn
     compute_environment = module.this.id
     execution_role_arn  = module.batch.aws_batch_execution_role.arn
+    secret_name         = module.batch.aws_secrets_manager_secret-batch.name
+    secret_arn          = module.batch.aws_secrets_manager_secret-batch.arn
   }
 }
 
 resource "local_file" "pytest" {
+  depends_on = [
+    data.template_file.pytest
+  ]
   content  = data.template_file.pytest.rendered
   filename = "${path.module}/tests/config.py"
 }
@@ -271,7 +254,6 @@ resource "null_resource" "pytest" {
     aws_iam_policy.s3_full_access,
     aws_iam_role_policy_attachment.batch_execution_role_s3_base_access,
     aws_iam_role_policy_attachment.batch_execution_role_s3_full_access,
-    aws_batch_job_definition.dummy,
     aws_batch_job_definition.rnaseq,
     local_file.pytest,
     local_file.nextflow_config,
@@ -282,8 +264,9 @@ resource "null_resource" "pytest" {
   provisioner "local-exec" {
     command = "pip install -r tests/requirements.txt; python -m pytest -s --log-cli-level=INFO tests/test_batch.py"
     environment = {
-      AWS_REGION = var.region
-      LOG_LEVEL  = "INFO"
+      AWS_REGION         = var.region
+      AWS_DEFAULT_REGION = var.region
+      LOG_LEVEL          = "INFO"
     }
   }
 }

@@ -222,13 +222,13 @@ module "ec2_batch_compute_environment" {
   source = "./modules/aws-batch-ec2"
   type   = var.type
 
-  # security_group_ids = var.security_group_ids[0] == "" ? [aws_security_group.batch[0].id, aws_default_security_group.default] : var.security_group_ids
   security_group_ids = local.security_group_ids
   vpc_id             = var.vpc_id
   max_vcpus          = var.max_vcpus
   subnet_ids         = var.subnet_ids
 
   ecs_instance_role                                     = aws_iam_role.ecs_instance_role
+  ecs_instance_profile                                  = aws_iam_instance_profile.ecs_instance_role
   aws_iam_role_aws_batch_service_role                   = aws_iam_role.aws_batch_service_role
   aws_iam_role_policy_attachment_aws_batch_service_role = aws_iam_role_policy_attachment.aws_batch_service_role
 

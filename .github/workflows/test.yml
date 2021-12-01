@@ -33,10 +33,9 @@ jobs:
     container: dabbleofdevops/terraform:terraform-0.14.0
     strategy:
       matrix:
-        example: ['examples/fargate']
+        example: ['examples/fargate', 'examples/ec2']
     steps:
     - uses: actions/checkout@v2
-
     - name: Test Example
       shell: bash
       env:

@@ -1,22 +1,26 @@
 variable "region" {
-  description = "AWS Region"
+  description = "AWS Region."
   type        = string
   default     = "us-east-1"
 }
 
 variable "vpc_id" {
-  description = "VPC ID"
+  description = "VPC ID for the compute environment. Required."
   type        = string
 }
 
 variable "subnet_ids" {
-  description = "List of subnets compute environment instances will be deployed in."
+  description = "List of subnets compute environment instances will be deployed in. Required."
   type        = list(any)
 }
 
 variable "ecs_instance_role" {
   description = "ecs instance role created by main module"
-  type = any
+  type        = any
+}
+variable "ecs_instance_profile" {
+  description = "ecs instance profile created by main module"
+  type        = any
 }
 
 variable "aws_iam_role_aws_batch_service_role" {

@@ -229,3 +229,9 @@ variable "metadata_http_put_response_hop_limit" {
     The default is `2` to support containerized workloads.
     EOT
 }
+
+variable "enable_batch_compute_environment" {
+  type = bool
+  default = true
+  description = "Create a compute environment"
+}
