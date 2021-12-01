@@ -22,6 +22,12 @@ terraform/init:
 		-w /tmp/terraform-module \
 		$(DOCKER_IMAGE) bash -c "terraform init"
 
+## terraform/init/force-copy: initialize terraform and run force-copy to copy the backend.
+terraform/init/force-copy:
+	docker run --rm -it \
+		-v $(shell pwd):/tmp/terraform-module \
+		-w /tmp/terraform-module \
+		$(DOCKER_IMAGE) bash -c "terraform init -force-copy"
 
 ## terraform/refresh: refresh terraform state
 terraform/refresh:
@@ -30,6 +36,12 @@ terraform/refresh:
 		-w /tmp/terraform-module \
 		$(DOCKER_IMAGE) bash -c "terraform refresh"
 
+## terraform/plan: plan terraform configuration
+terraform/plan:
+	docker run --rm -it \
+		-v $(shell pwd):/tmp/terraform-module \
+		-w /tmp/terraform-module \
+		$(DOCKER_IMAGE) bash -c "terraform plan"
 
 ## terraform/apply: apply terraform configuration
 terraform/apply:
