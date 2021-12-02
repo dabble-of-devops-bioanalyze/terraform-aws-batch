@@ -1,0 +1,1021 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AWS Batch Terraform Module &#8212; BioAnalyze - AWS Batch Module</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://path_to_book/README.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="examples/examples.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">BioAnalyze - AWS Batch Module</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1 current">
+  <a class="reference internal" href="#">
+   AWS Batch Terraform Module Latest Release
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="examples/examples.html">
+   Examples
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_templates/examples/fargate/%7B%7Bcookiecutter.project_name%7D%7D/readme.html">
+     AWS Batch Fargate - Example Module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_templates/examples/fargate/%7B%7Bcookiecutter.project_name%7D%7D/terraform.html">
+     AWS Batch Fargate - Terraform
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_templates/examples/ec2/%7B%7Bcookiecutter.project_name%7D%7D/readme.html">
+     AWS Batch EC2 - Example Module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_templates/examples/ec2/%7B%7Bcookiecutter.project_name%7D%7D/terraform.html">
+     AWS Batch EC2 - Terraform
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/README.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-science-infrastructure-on-aws">
+   Data Science Infrastructure on AWS
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#examples">
+   Examples
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#makefile-targets">
+   Makefile Targets
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#requirements">
+   Requirements
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#providers">
+   Providers
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#modules">
+   Modules
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resources">
+   Resources
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#inputs">
+   Inputs
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#outputs">
+   Outputs
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#share-the-love">
+   Share the Love
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#related-projects">
+   Related Projects
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#help">
+   Help
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bioinformatics-infrastructure-on-aws-for-startups">
+   Bioinformatics Infrastructure on AWS for Startups
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contributing">
+   Contributing
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bug-reports-feature-requests">
+     Bug Reports &amp; Feature Requests
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#developing">
+     Developing
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#developer-notes">
+       Developer Notes
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#copyrights">
+   Copyrights
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#license">
+   License
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#trademarks">
+   Trademarks
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#contributors">
+     Contributors
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <!-- markdownlint-disable -->
+<div class="tex2jax_ignore mathjax_ignore section" id="aws-batch-terraform-module-latest-release">
+<h1>AWS Batch Terraform Module <a class="reference external" href="https://github.com/dabble-of-devops-bioanalyze/terraform-aws-batch-module/releases/latest"><img alt="Latest Release" src="https://img.shields.io/github/release/dabble-of-devops-bioanalyze/terraform-aws-batch.svg" /></a><a class="headerlink" href="#aws-batch-terraform-module-latest-release" title="Permalink to this headline">¶</a></h1>
+<!-- markdownlint-restore -->
+<p><img alt="BioAnalyze Logo" src="https://raw.githubusercontent.com/Dabble-of-DevOps-BioAnalyze/biohub-info/master/logos/BioAnalyze_v2-01.jpg" /></p>
+<!--
+
+
+
+
+  ** DO NOT EDIT THIS FILE
+  **
+  ** This file was automatically generated by the `build-harness`.
+  ** 1) Make all changes to `README.yaml`
+  ** 2) Run `make init` (you only need to do this once)
+  ** 3) Run`make readme` to rebuild this file.
+  **
+  ** (We maintain HUNDREDS of open source projects. This is how we maintain our sanity.)
+  **
+
+
+
+
+
+-->
+<p>The <code class="docutils literal notranslate"><span class="pre">terraform-aws-batch</span></code> recipe provides a starter template for getting started with AWS Batch. It creates:</p>
+<ul class="simple">
+<li><p>AWS Batch Compute Environment
+** Configured for use with the AWS Secrets Manager</p></li>
+<li><p>AWS Job Queue associated to the created Compute Environment</p></li>
+</ul>
+<hr class="docutils" />
+<p>This project is part of the <a class="reference external" href="https://www.dabbleofdevops.com/biohub">“BioAnalyze”</a> project, which aims to make High Performance Compute Architecture accessible to everyone.</p>
+<p>It’s 100% Open Source and licensed under the <span class="xref myst">APACHE2</span>.</p>
+<div class="section" id="data-science-infrastructure-on-aws">
+<h2>Data Science Infrastructure on AWS<a class="headerlink" href="#data-science-infrastructure-on-aws" title="Permalink to this headline">¶</a></h2>
+<p><img alt="BioAnalyze Logo" src="https://raw.githubusercontent.com/dabble-of-devops-bioanalyze/biohub-info/master/images/BioAnalyze-Ecosystem-Data-Visualization.jpeg" /></p>
+<p><strong>IMPORTANT:</strong> We do not pin modules to versions in our examples because of the
+difficulty of keeping the versions in the documentation in sync with the latest released versions.
+We highly recommend that in your code you pin the version to the exact version you are
+using so that your infrastructure remains stable, and update versions in a
+systematic way so that they do not catch you by surprise.</p>
+<p>Also, because of a bug in the Terraform registry (<a class="reference external" href="https://github.com/hashicorp/terraform/issues/21417">hashicorp/terraform#21417</a>),
+the registry shows many of our inputs as required when in fact they are optional.
+The table below correctly indicates which inputs are required.</p>
+<p>For a complete example, see <span class="xref myst">examples/complete</span>.</p>
+<p>Each of the examples are deployed using GitHub actions. For more information see the <code class="docutils literal notranslate"><span class="pre">examples</span></code> and the <code class="docutils literal notranslate"><span class="pre">.github</span></code> directories.</p>
+<p>More complete documentation and tutorials coming soon!</p>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>The examples for using this module are in the <code class="docutils literal notranslate"><span class="pre">examples</span></code> directory.</p>
+<!-- markdownlint-disable -->
+</div>
+<div class="section" id="makefile-targets">
+<h2>Makefile Targets<a class="headerlink" href="#makefile-targets" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Available targets:
+
+  help                                Help screen
+  help/all                            Display help for all targets
+  help/short                          This help short screen
+  lint                                Lint terraform code
+</pre></div>
+</div>
+<!-- markdownlint-restore -->
+<!-- markdownlint-disable -->
+</div>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Version</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a name="requirement_terraform"></a> <a class="reference external" href="#requirement_terraform">terraform</a></p></td>
+<td><p>&gt;= 0.13</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="requirement_local"></a> <a class="reference external" href="#requirement_local">local</a></p></td>
+<td><p>&gt;= 1.2</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="requirement_random"></a> <a class="reference external" href="#requirement_random">random</a></p></td>
+<td><p>&gt;= 2.2</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="providers">
+<h2>Providers<a class="headerlink" href="#providers" title="Permalink to this headline">¶</a></h2>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Version</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a name="provider_aws"></a> <a class="reference external" href="#provider_aws">aws</a></p></td>
+<td><p>3.49.0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Source</p></th>
+<th class="head"><p>Version</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a name="module_ec2_batch_compute_environment"></a> <a class="reference external" href="#module_ec2_batch_compute_environment">ec2_batch_compute_environment</a></p></td>
+<td><p>./modules/aws-batch-ec2</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="module_fargate_batch_compute_environment"></a> <a class="reference external" href="#module_fargate_batch_compute_environment">fargate_batch_compute_environment</a></p></td>
+<td><p>./modules/aws-batch-fargate</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="module_this"></a> <a class="reference external" href="#module_this">this</a></p></td>
+<td><p>cloudposse/label/null</p></td>
+<td><p>0.24.1</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h2>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_queue">aws_batch_job_queue.default_queue</a></p></td>
+<td><p>resource</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/default_security_group">aws_default_security_group.default</a></p></td>
+<td><p>resource</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_instance_profile">aws_iam_instance_profile.ecs_instance_role</a></p></td>
+<td><p>resource</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy">aws_iam_policy.secrets_full_access</a></p></td>
+<td><p>resource</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role">aws_iam_role.aws_batch_service_role</a></p></td>
+<td><p>resource</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role">aws_iam_role.batch_execution_role</a></p></td>
+<td><p>resource</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role">aws_iam_role.ecs_instance_role</a></p></td>
+<td><p>resource</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment">aws_iam_role_policy_attachment.aws_batch_full_access</a></p></td>
+<td><p>resource</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment">aws_iam_role_policy_attachment.aws_batch_service_role</a></p></td>
+<td><p>resource</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment">aws_iam_role_policy_attachment.batch_execution_attach_secrets</a></p></td>
+<td><p>resource</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment">aws_iam_role_policy_attachment.batch_execution_role</a></p></td>
+<td><p>resource</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment">aws_iam_role_policy_attachment.ecs_instance_role</a></p></td>
+<td><p>resource</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret">aws_secretsmanager_secret.batch</a></p></td>
+<td><p>resource</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group">aws_security_group.batch</a></p></td>
+<td><p>resource</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity">aws_caller_identity.current</a></p></td>
+<td><p>data source</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document">aws_iam_policy_document.secrets_full_access</a></p></td>
+<td><p>data source</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc">aws_vpc.selected</a></p></td>
+<td><p>data source</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="inputs">
+<h2>Inputs<a class="headerlink" href="#inputs" title="Permalink to this headline">¶</a></h2>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="text-align:center head"><p>Required</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a name="input_additional_tag_map"></a> <a class="reference external" href="#input_additional_tag_map">additional_tag_map</a></p></td>
+<td><p>Additional tags for appending to tags_as_list_of_maps. Not added to <code class="docutils literal notranslate"><span class="pre">tags</span></code>.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">map(string)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{}</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_additional_user_data"></a> <a class="reference external" href="#input_additional_user_data">additional_user_data</a></p></td>
+<td><p>Additional User Data for the launch template.  Must include ==MYBOUNDARY== and Content-Type: entries.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_ami_owners"></a> <a class="reference external" href="#input_ami_owners">ami_owners</a></p></td>
+<td><p>List of owners for source ECS AMI.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">list(any)</span></code></p></td>
+<td><p><pre>[<br>  “amazon”<br>]</pre></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_attributes"></a> <a class="reference external" href="#input_attributes">attributes</a></p></td>
+<td><p>Additional attributes (e.g. <code class="docutils literal notranslate"><span class="pre">1</span></code>)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">list(string)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_bid_percentage"></a> <a class="reference external" href="#input_bid_percentage">bid_percentage</a></p></td>
+<td><p>Integer of minimum percentage that a Spot Instance price must be when compared to on demand.  Example: A value of 20 would require the spot price be lower than 20% the current on demand price.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;100&quot;</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_block_device_mappings"></a> <a class="reference external" href="#input_block_device_mappings">block_device_mappings</a></p></td>
+<td><p>Specify volumes to attach to the instance besides the volumes specified by the AMI</p></td>
+<td><p><pre>list(object({<br>    device_name  = string<br>    no_device    = bool<br>    virtual_name = string<br>    ebs = object({<br>      delete_on_termination = bool<br>      encrypted             = bool<br>      iops                  = number<br>      kms_key_id            = string<br>      snapshot_id           = string<br>      volume_size           = number<br>      volume_type           = string<br>    })<br>  }))</pre></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_context"></a> <a class="reference external" href="#input_context">context</a></p></td>
+<td><p>Single object for setting entire context at once.<br>See description of individual variables for details.<br>Leave string and numeric variables as <code class="docutils literal notranslate"><span class="pre">null</span></code> to use default value.<br>Individual variable settings (non-null) override settings in context object,<br>except for attributes, tags, and additional_tag_map, which are merged.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">any</span></code></p></td>
+<td><p><pre>{<br>  “additional_tag_map”: {},<br>  “attributes”: [],<br>  “delimiter”: null,<br>  “enabled”: true,<br>  “environment”: null,<br>  “id_length_limit”: null,<br>  “label_key_case”: null,<br>  “label_order”: [],<br>  “label_value_case”: null,<br>  “name”: null,<br>  “namespace”: null,<br>  “regex_replace_chars”: null,<br>  “stage”: null,<br>  “tags”: {}<br>}</pre></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_credit_specification"></a> <a class="reference external" href="#input_credit_specification">credit_specification</a></p></td>
+<td><p>Customize the credit specification of the instances</p></td>
+<td><p><pre>object({<br>    cpu_credits = string<br>  })</pre></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_custom_ami"></a> <a class="reference external" href="#input_custom_ami">custom_ami</a></p></td>
+<td><p>Optional string for custom AMI.  If omitted, latest ECS AMI in the current region will be used.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_delimiter"></a> <a class="reference external" href="#input_delimiter">delimiter</a></p></td>
+<td><p>Delimiter to be used between <code class="docutils literal notranslate"><span class="pre">namespace</span></code>, <code class="docutils literal notranslate"><span class="pre">environment</span></code>, <code class="docutils literal notranslate"><span class="pre">stage</span></code>, <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">attributes</span></code>.<br>Defaults to <code class="docutils literal notranslate"><span class="pre">-</span></code> (hyphen). Set to <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> to use no delimiter at all.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_disable_api_termination"></a> <a class="reference external" href="#input_disable_api_termination">disable_api_termination</a></p></td>
+<td><p>If <code class="docutils literal notranslate"><span class="pre">true</span></code>, enables EC2 Instance Termination Protection</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_docker_max_container_size"></a> <a class="reference external" href="#input_docker_max_container_size">docker_max_container_size</a></p></td>
+<td><p>If docker_expand_volume is true, containers will allocate this amount of storage (GB) when launched.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">number</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">50</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_ebs_optimized"></a> <a class="reference external" href="#input_ebs_optimized">ebs_optimized</a></p></td>
+<td><p>If true, the launched EC2 instance will be EBS-optimized</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_ec2_key_pair"></a> <a class="reference external" href="#input_ec2_key_pair">ec2_key_pair</a></p></td>
+<td><p>Optional keypair to connect to the instance with.  Consider SSM as an alternative.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_elastic_gpu_specifications"></a> <a class="reference external" href="#input_elastic_gpu_specifications">elastic_gpu_specifications</a></p></td>
+<td><p>Specifications of Elastic GPU to attach to the instances</p></td>
+<td><p><pre>object({<br>    type = string<br>  })</pre></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_enable_monitoring"></a> <a class="reference external" href="#input_enable_monitoring">enable_monitoring</a></p></td>
+<td><p>Enable/disable detailed monitoring</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_enabled"></a> <a class="reference external" href="#input_enabled">enabled</a></p></td>
+<td><p>Set to false to prevent the module from creating any resources</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_environment"></a> <a class="reference external" href="#input_environment">environment</a></p></td>
+<td><p>Environment, e.g. ‘uw2’, ‘us-west-2’, OR ‘prod’, ‘staging’, ‘dev’, ‘UAT’</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_iam_instance_profile_name"></a> <a class="reference external" href="#input_iam_instance_profile_name">iam_instance_profile_name</a></p></td>
+<td><p>The IAM instance profile name to associate with launched instances</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_id_length_limit"></a> <a class="reference external" href="#input_id_length_limit">id_length_limit</a></p></td>
+<td><p>Limit <code class="docutils literal notranslate"><span class="pre">id</span></code> to this many characters (minimum 6).<br>Set to <code class="docutils literal notranslate"><span class="pre">0</span></code> for unlimited length.<br>Set to <code class="docutils literal notranslate"><span class="pre">null</span></code> for default, which is <code class="docutils literal notranslate"><span class="pre">0</span></code>.<br>Does not affect <code class="docutils literal notranslate"><span class="pre">id_full</span></code>.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">number</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_instance_initiated_shutdown_behavior"></a> <a class="reference external" href="#input_instance_initiated_shutdown_behavior">instance_initiated_shutdown_behavior</a></p></td>
+<td><p>Shutdown behavior for the instances. Can be <code class="docutils literal notranslate"><span class="pre">stop</span></code> or <code class="docutils literal notranslate"><span class="pre">terminate</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;terminate&quot;</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_instance_market_options"></a> <a class="reference external" href="#input_instance_market_options">instance_market_options</a></p></td>
+<td><p>The market (purchasing) option for the instances</p></td>
+<td><p><pre>object({<br>    market_type = string<br>    spot_options = object({<br>      block_duration_minutes         = number<br>      instance_interruption_behavior = string<br>      max_price                      = number<br>      spot_instance_type             = string<br>      valid_until                    = string<br>    })<br>  })</pre></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_instance_types"></a> <a class="reference external" href="#input_instance_types">instance_types</a></p></td>
+<td><p>Optional list of instance types.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">list(any)</span></code></p></td>
+<td><p><pre>[<br>  “optimal”<br>]</pre></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_key_name"></a> <a class="reference external" href="#input_key_name">key_name</a></p></td>
+<td><p>The SSH key name that should be used for the instance</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_label_key_case"></a> <a class="reference external" href="#input_label_key_case">label_key_case</a></p></td>
+<td><p>The letter case of label keys (<code class="docutils literal notranslate"><span class="pre">tag</span></code> names) (i.e. <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">namespace</span></code>, <code class="docutils literal notranslate"><span class="pre">environment</span></code>, <code class="docutils literal notranslate"><span class="pre">stage</span></code>, <code class="docutils literal notranslate"><span class="pre">attributes</span></code>) to use in <code class="docutils literal notranslate"><span class="pre">tags</span></code>.<br>Possible values: <code class="docutils literal notranslate"><span class="pre">lower</span></code>, <code class="docutils literal notranslate"><span class="pre">title</span></code>, <code class="docutils literal notranslate"><span class="pre">upper</span></code>.<br>Default value: <code class="docutils literal notranslate"><span class="pre">title</span></code>.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_label_order"></a> <a class="reference external" href="#input_label_order">label_order</a></p></td>
+<td><p>The naming order of the id output and Name tag.<br>Defaults to [“namespace”, “environment”, “stage”, “name”, “attributes”].<br>You can omit any of the 5 elements, but at least one must be present.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">list(string)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_label_value_case"></a> <a class="reference external" href="#input_label_value_case">label_value_case</a></p></td>
+<td><p>The letter case of output label values (also used in <code class="docutils literal notranslate"><span class="pre">tags</span></code> and <code class="docutils literal notranslate"><span class="pre">id</span></code>).<br>Possible values: <code class="docutils literal notranslate"><span class="pre">lower</span></code>, <code class="docutils literal notranslate"><span class="pre">title</span></code>, <code class="docutils literal notranslate"><span class="pre">upper</span></code> and <code class="docutils literal notranslate"><span class="pre">none</span></code> (no transformation).<br>Default value: <code class="docutils literal notranslate"><span class="pre">lower</span></code>.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_max_vcpus"></a> <a class="reference external" href="#input_max_vcpus">max_vcpus</a></p></td>
+<td><p>Max vCPUs.  Default 2 for m4.large.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_metadata_http_endpoint_enabled"></a> <a class="reference external" href="#input_metadata_http_endpoint_enabled">metadata_http_endpoint_enabled</a></p></td>
+<td><p>Set false to disable the Instance Metadata Service.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_metadata_http_put_response_hop_limit"></a> <a class="reference external" href="#input_metadata_http_put_response_hop_limit">metadata_http_put_response_hop_limit</a></p></td>
+<td><p>The desired HTTP PUT response hop limit (between 1 and 64) for Instance Metadata Service requests.<br>The default is <code class="docutils literal notranslate"><span class="pre">2</span></code> to support containerized workloads.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">number</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">2</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_metadata_http_tokens_required"></a> <a class="reference external" href="#input_metadata_http_tokens_required">metadata_http_tokens_required</a></p></td>
+<td><p>Set true to require IMDS session tokens, disabling Instance Metadata Service Version 1.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_min_vcpus"></a> <a class="reference external" href="#input_min_vcpus">min_vcpus</a></p></td>
+<td><p>Minimum vCPUs.  &gt; 0 causes instances to always be running.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_name"></a> <a class="reference external" href="#input_name">name</a></p></td>
+<td><p>Solution name, e.g. ‘app’ or ‘jenkins’</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_namespace"></a> <a class="reference external" href="#input_namespace">namespace</a></p></td>
+<td><p>Namespace, which could be your organization name or abbreviation, e.g. ‘eg’ or ‘cp’</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_placement"></a> <a class="reference external" href="#input_placement">placement</a></p></td>
+<td><p>The placement specifications of the instances</p></td>
+<td><p><pre>object({<br>    affinity          = string<br>    availability_zone = string<br>    group_name        = string<br>    host_id           = string<br>    tenancy           = string<br>  })</pre></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_regex_replace_chars"></a> <a class="reference external" href="#input_regex_replace_chars">regex_replace_chars</a></p></td>
+<td><p>Regex to replace chars with empty string in <code class="docutils literal notranslate"><span class="pre">namespace</span></code>, <code class="docutils literal notranslate"><span class="pre">environment</span></code>, <code class="docutils literal notranslate"><span class="pre">stage</span></code> and <code class="docutils literal notranslate"><span class="pre">name</span></code>.<br>If not set, <code class="docutils literal notranslate"><span class="pre">&quot;/[^a-zA-Z0-9-]/&quot;</span></code> is used to remove all characters other than hyphens, letters and digits.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_region"></a> <a class="reference external" href="#input_region">region</a></p></td>
+<td><p>AWS Region</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;us-east-1&quot;</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_secrets_enabled"></a> <a class="reference external" href="#input_secrets_enabled">secrets_enabled</a></p></td>
+<td><p>Enable IAM Role for AWS Secrets Manager</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_security_group_ids"></a> <a class="reference external" href="#input_security_group_ids">security_group_ids</a></p></td>
+<td><p>List of additional security groups to associate with cluster instances.  If empty, default security group will be added.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">list(any)</span></code></p></td>
+<td><p><pre>[<br>  “”<br>]</pre></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_stage"></a> <a class="reference external" href="#input_stage">stage</a></p></td>
+<td><p>Stage, e.g. ‘prod’, ‘staging’, ‘dev’, OR ‘source’, ‘build’, ‘test’, ‘deploy’, ‘release’</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_subnet_ids"></a> <a class="reference external" href="#input_subnet_ids">subnet_ids</a></p></td>
+<td><p>List of subnets compute environment instances will be deployed in.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">list(string)</span></code></p></td>
+<td><p>n/a</p></td>
+<td class="text-align:center"><p>yes</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_tag_specifications_resource_types"></a> <a class="reference external" href="#input_tag_specifications_resource_types">tag_specifications_resource_types</a></p></td>
+<td><p>List of tag specification resource types to tag. Valid values are instance, volume, elastic-gpu and spot-instances-request.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">set(string)</span></code></p></td>
+<td><p><pre>[<br>  “instance”,<br>  “volume”<br>]</pre></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_tags"></a> <a class="reference external" href="#input_tags">tags</a></p></td>
+<td><p>Additional tags (e.g. <code class="docutils literal notranslate"><span class="pre">map('BusinessUnit','XYZ')</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">map(string)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{}</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="input_type"></a> <a class="reference external" href="#input_type">type</a></p></td>
+<td><p>AWS Batch Compute Environment Type: must be one of EC2, SPOT, FARGATE or FARGATE_SPOT.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;EC2&quot;</span></code></p></td>
+<td class="text-align:center"><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="input_vpc_id"></a> <a class="reference external" href="#input_vpc_id">vpc_id</a></p></td>
+<td><p>VPC ID</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>n/a</p></td>
+<td class="text-align:center"><p>yes</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="outputs">
+<h2>Outputs<a class="headerlink" href="#outputs" title="Permalink to this headline">¶</a></h2>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a name="output_account_id"></a> <a class="reference external" href="#output_account_id">account_id</a></p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="output_aws_batch_compute_environment"></a> <a class="reference external" href="#output_aws_batch_compute_environment">aws_batch_compute_environment</a></p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="output_aws_batch_ecs_instance_role"></a> <a class="reference external" href="#output_aws_batch_ecs_instance_role">aws_batch_ecs_instance_role</a></p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="output_aws_batch_execution_role"></a> <a class="reference external" href="#output_aws_batch_execution_role">aws_batch_execution_role</a></p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="output_aws_batch_job_queue"></a> <a class="reference external" href="#output_aws_batch_job_queue">aws_batch_job_queue</a></p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="output_aws_batch_service_role"></a> <a class="reference external" href="#output_aws_batch_service_role">aws_batch_service_role</a></p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="output_aws_iam_policy_document-secrets_full_access"></a> <a class="reference external" href="#output_aws_iam_policy_document-secrets_full_access">aws_iam_policy_document-secrets_full_access</a></p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="output_aws_secrets_manager_secret-batch"></a> <a class="reference external" href="#output_aws_secrets_manager_secret-batch">aws_secrets_manager_secret-batch</a></p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="output_caller_arn"></a> <a class="reference external" href="#output_caller_arn">caller_arn</a></p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-odd"><td><p><a name="output_caller_user"></a> <a class="reference external" href="#output_caller_user">caller_user</a></p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p><a name="output_id"></a> <a class="reference external" href="#output_id">id</a></p></td>
+<td><p>ID of the created example</p></td>
+</tr>
+</tbody>
+</table>
+<!-- markdownlint-restore -->
+</div>
+<div class="section" id="share-the-love">
+<h2>Share the Love<a class="headerlink" href="#share-the-love" title="Permalink to this headline">¶</a></h2>
+<p>Like this project? Please give it a ★ on <a class="reference external" href="https://github.com/dabble-of-devops-bioanalyze/terraform-aws-batch">our GitHub</a>! (it helps <strong>a lot</strong>)</p>
+</div>
+<div class="section" id="related-projects">
+<h2>Related Projects<a class="headerlink" href="#related-projects" title="Permalink to this headline">¶</a></h2>
+<p>Check out these related projects.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/dabble-of-devops-bioanalyze/terraform-aws-eks-autoscaling">terraform-aws-eks-autoscaling</a> - Wrapper module for terraform-aws-eks-cluster, terraform-aws-eks-worker, and terraform-aws-eks-node-group</p></li>
+<li><p><a class="reference external" href="https://github.com/cloudposse/terraform-aws-eks-cluster/">terraform-aws-eks-cluster</a> - Base CloudPosse module for AWS EKS Clusters”</p></li>
+<li><p><a class="reference external" href="https://github.com/cloudposse/terraform-null-label">terraform-null-label</a> - Terraform module designed to generate consistent names and tags for resources. Use terraform-null-label to implement a strict naming convention.</p></li>
+</ul>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<p>For additional context, refer to some of these links.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.terraform.io/docs/modules/index.html#standard-module-structure">Terraform Standard Module Structure</a> - HashiCorp’s standard module structure is a file and directory layout we recommend for reusable modules distributed in separate repositories.</p></li>
+<li><p><a class="reference external" href="https://www.terraform.io/docs/registry/modules/publish.html#requirements">Terraform Module Requirements</a> - HashiCorp’s guidance on all the requirements for publishing a module. Meeting the requirements for publishing a module is extremely easy.</p></li>
+<li><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_compute_environment">Terraform <code class="docutils literal notranslate"><span class="pre">batch_compute_environment</span></code> Resource</a> - Creates a AWS Batch compute environment. Compute environments contain the Amazon ECS container instances that are used to run containerized batch jobs.</p></li>
+<li><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_queue">Terraform <code class="docutils literal notranslate"><span class="pre">batch_job_queue</span></code> Resource</a> - Provides a Batch Job Queue resource.</p></li>
+<li><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_definition">Terraform `batch_job_definition</a> - Provides a Batch Job Definition resource.</p></li>
+<li><p><a class="reference external" href="https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer">Terraform <code class="docutils literal notranslate"><span class="pre">random_integer</span></code> Resource</a> - The resource random_integer generates random values from a given range, described by the min and max attributes of a given resource.</p></li>
+<li><p><a class="reference external" href="https://www.terraform.io/docs/configuration/terraform.html#specifying-a-required-terraform-version">Terraform Version Pinning</a> - The required_version setting can be used to constrain which versions of the Terraform CLI can be used with your configuration</p></li>
+</ul>
+</div>
+<div class="section" id="help">
+<h2>Help<a class="headerlink" href="#help" title="Permalink to this headline">¶</a></h2>
+<p><strong>Got a question?</strong> We got answers.</p>
+<p>File a GitHub <a class="reference external" href="https://github.com/dabble-of-devops-bioanalyze/terraform-aws-batch/issues">issue</a>, send us an <a class="reference external" href="mailto:jillian&#37;&#52;&#48;dabbleofdevops&#46;com">jillian<span>&#64;</span>dabbleofdevops<span>&#46;</span>com</a>.</p>
+</div>
+<div class="section" id="bioinformatics-infrastructure-on-aws-for-startups">
+<h2>Bioinformatics Infrastructure on AWS for Startups<a class="headerlink" href="#bioinformatics-infrastructure-on-aws-for-startups" title="Permalink to this headline">¶</a></h2>
+<p>I’ll help you build your data science cloud infrastructure from the ground up so you can own it using open source software. Then I’ll show you how to operate it and stick around for as long as you need us.</p>
+<p><a class="reference external" href="https://www.dabbleofdevops.com">Learn More</a></p>
+<p>Work directly with me via email, slack, and video conferencing.</p>
+<ul class="simple">
+<li><p><strong>Scientific Workflow Automation and Optimization.</strong> Got workflows that are giving you trouble? Let’s work together to ensure that your analyses run with or without your scientists being fully caffeinated.</p></li>
+<li><p><strong>High Performance Compute Infrastructure.</strong> Highly available, auto scaling clusters to analyze <em>all the (bioinformatics related!) things</em>. All setups are completely integrated with your workflow system of choice, whether that is Airflow, Prefect, Snakemake or Nextflow.</p></li>
+<li><p><strong>Kubernetes and AWS Batch Setup for Apache Airflow</strong> Orchestrate your Bioinformatics Workflows with Apache Airflow. Get full auditing, SLA, logging and monitoring for your workflows running on AWS Batch.</p></li>
+<li><p><strong>High Performance Compute Setup that Int</strong> You’ll have built-in governance with accountability and audit logs for all changes.</p></li>
+<li><p><strong>Docker Images</strong> Get advice and hands on training for your team to build complex software stacks onto docker images.</p></li>
+<li><p><strong>Training.</strong> You’ll receive hands-on training so your team can operate what we build.</p></li>
+<li><p><strong>Questions.</strong> You’ll have a direct line of communication between our teams via a Shared Slack channel.</p></li>
+<li><p><strong>Troubleshooting.</strong> You’ll get help to triage when things aren’t working.</p></li>
+<li><p><strong>Bug Fixes.</strong> We’ll rapidly work with you to fix any bugs in our projects.</p></li>
+</ul>
+</div>
+<div class="section" id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bug-reports-feature-requests">
+<h3>Bug Reports &amp; Feature Requests<a class="headerlink" href="#bug-reports-feature-requests" title="Permalink to this headline">¶</a></h3>
+<p>Please use the <a class="reference external" href="https://github.com/dabble-of-devops-bioanalyze/terraform-aws-batch/issues">issue tracker</a> to report any bugs or file feature requests.</p>
+</div>
+<div class="section" id="developing">
+<h3>Developing<a class="headerlink" href="#developing" title="Permalink to this headline">¶</a></h3>
+<p>If you are interested in being a contributor and want to get involved in developing this project or help out with other projects, I would love to hear from you! Shoot me an email at <a class="reference external" href="mailto:jillian&#37;&#52;&#48;dabbleofdevops&#46;com">jillian<span>&#64;</span>dabbleofdevops<span>&#46;</span>com</a>.</p>
+<p>In general, PRs are welcome. We follow the typical “fork-and-pull” Git workflow.</p>
+<ol class="simple">
+<li><p><strong>Fork</strong> the repo on GitHub</p></li>
+<li><p><strong>Clone</strong> the project to your own machine</p></li>
+<li><p><strong>Commit</strong> changes to your own branch</p></li>
+<li><p><strong>Push</strong> your work back up to your fork</p></li>
+<li><p>Submit a <strong>Pull Request</strong> so that we can review your changes</p></li>
+</ol>
+<div class="section" id="developer-notes">
+<h4>Developer Notes<a class="headerlink" href="#developer-notes" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">README.md</span></code> is created using the standard <a class="reference external" href="https://github.com/cloudposse/terraform-example-module">CloudPosse</a> template that has been modified to use BioAnalyze information and URLs, and other documentation is generated using <a class="reference external" href="https://jupyterbook.org/">jupyter-book</a>.</p>
+<p>Terraform code does not render properly when using the <code class="docutils literal notranslate"><span class="pre">literalinclude</span></code> directive, so instead we use <code class="docutils literal notranslate"><span class="pre">pygmentize</span></code> to render it to html which is included directly.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">raw</span><span class="p">::</span> <span class="n">html</span>
+   <span class="p">:</span><span class="n">file</span><span class="p">:</span> <span class="o">./</span><span class="n">_html</span><span class="o">/</span><span class="n">main</span><span class="o">.</span><span class="n">tf</span><span class="o">.</span><span class="n">html</span>
+</pre></div>
+</div>
+<p><strong>NOTE:</strong> Be sure to merge the latest changes from “upstream” before making a pull request!</p>
+</div>
+</div>
+</div>
+<div class="section" id="copyrights">
+<h2>Copyrights<a class="headerlink" href="#copyrights" title="Permalink to this headline">¶</a></h2>
+<p>Copyright © 2021-2021 <a class="reference external" href="https://www.dabbleofdevops.com">Dabble of DevOps, SCorp</a></p>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a></p>
+<p>See <span class="xref myst">LICENSE</span> for full details.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+&quot;License&quot;); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+&quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+</pre></div>
+</div>
+</div>
+<div class="section" id="trademarks">
+<h2>Trademarks<a class="headerlink" href="#trademarks" title="Permalink to this headline">¶</a></h2>
+<p>All other trademarks referenced herein are the property of their respective owners.</p>
+<div class="section" id="contributors">
+<h3>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline">¶</a></h3>
+<!-- markdownlint-disable -->
+<p>|  <a class="reference external" href="https://github.com/jerowe"><img alt="Jillian Rowe" src="https://img.cloudposse.com/150x150/https://github.com/jerowe.png" /></a><br/><a class="reference external" href="https://github.com/jerowe">Jillian Rowe</a> |</p>
+<!-- markdownlint-restore -->
+<p>Learn more at <a class="reference external" href="https://www.dabbleofdevops.com">Dabble of DevOps</a></p>
+</div>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='right-next' id="next-link" href="examples/examples.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Examples</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By BioAnalyze<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
