@@ -38,14 +38,21 @@ jobs:
     #    jupyter-book build .
 
     # Import the book?
-    - name: Import the book
-      run: |
-       ghp-import -n -p -f _build/html
+    # - name: Import the book
+    #   run: |
+    #    ghp-import -n -p -f _build/html
 
     # Push the book's HTML to github-pages
-    - name: GitHub Pages action
-      uses: peaceiris/actions-gh-pages@v3.6.1
+    # - name: GitHub Pages action
+    #   uses: peaceiris/actions-gh-pages@v3.6.1
+    #   with:
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+    #     publish_dir: ./_build/html
+    #     keep_files: true
+    #     # publish_branch: master
+
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@4.1.7
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./_build/html
-        # publish_branch: master
+          branch: gh-pages # The branch the action should deploy to.
+          folder: _build/html
