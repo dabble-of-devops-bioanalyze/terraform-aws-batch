@@ -29,13 +29,18 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install jupyter-book sphinx
+        pip install jupyter-book sphinx  ghp-import
 
     # Build the book
     # The book is already built
-    #- name: Build the book
-    #  run: |
+    # - name: Build the book
+    #   run: |
     #    jupyter-book build .
+
+    # Import the book?
+    - name: Import the book
+      run: |
+       ghp-import -n -p -f _build/html
 
     # Push the book's HTML to github-pages
     - name: GitHub Pages action
@@ -43,4 +48,4 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./_build/html
-        publish_branch: master
+        # publish_branch: master
