@@ -21,11 +21,11 @@
   <span class="na">single_nat_gateway</span>   <span class="o">=</span> <span class="no">true</span>
   <span class="na">enable_dns_hostnames</span> <span class="o">=</span> <span class="no">true</span>
   <span class="na">tags</span>                 <span class="o">=</span> <span class="nv">module.this.tags</span>
-<span class="p">}</span>
+<span class="p">}</span><span class="c1"></span>
 
-<span class="kr">output</span> <span class="nv">&quot;vpc&quot;</span> <span class="p">{</span>
-  <span class="na">value</span> <span class="o">=</span> <span class="nv">module.vpc</span>
-<span class="p">}</span>
+<span class="c1"># output &quot;vpc&quot; {</span>
+<span class="c1">#   value = module.vpc</span>
+<span class="c1"># }</span>
 
 <span class="nb">locals</span> <span class="p">{</span><span class="c1"></span>
 <span class="c1">  # create vpc and subnets</span>
@@ -171,6 +171,9 @@
 <span class="p">}</span>
 
 <span class="kr">resource</span> <span class="nc">&quot;local_file&quot;</span> <span class="nv">&quot;container_properties&quot;</span> <span class="p">{</span>
+  <span class="na">depends_on</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="nv">data.template_file.container_properties</span>
+  <span class="p">]</span>
   <span class="na">content</span>  <span class="o">=</span> <span class="nv">data.template_file.container_properties.rendered</span>
   <span class="na">filename</span> <span class="o">=</span> <span class="s2">&quot;${path.module}/container-properties.json&quot;</span>
 <span class="p">}</span>
@@ -184,36 +187,12 @@
   <span class="na">tags</span>                  <span class="o">=</span> <span class="nv">module.this.tags</span>
 <span class="p">}</span>
 
-<span class="kr">data</span> <span class="nc">&quot;template_file&quot;</span> <span class="nv">&quot;dummy_container_properties&quot;</span> <span class="p">{</span>
+<span class="kr">resource</span> <span class="nc">&quot;local_file&quot;</span> <span class="nv">&quot;nextflow_config&quot;</span> <span class="p">{</span>
   <span class="na">depends_on</span> <span class="o">=</span> <span class="p">[</span>
     <span class="nv">module.batch</span><span class="p">,</span>
     <span class="nv">module.s3_bucket</span><span class="p">,</span>
+    <span class="nv">aws_batch_job_definition.rnaseq</span>
   <span class="p">]</span>
-  <span class="na">template</span> <span class="o">=</span> <span class="nf">file</span><span class="p">(</span><span class="s2">&quot;${path.module}/dummy-job-container-properties.json.tpl&quot;</span><span class="p">)</span>
-  <span class="nb">vars</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">execution_role_arn</span> <span class="o">=</span> <span class="nv">module.batch.aws_batch_execution_role.arn</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kr">resource</span> <span class="nc">&quot;local_file&quot;</span> <span class="nv">&quot;dummy_container_properties&quot;</span> <span class="p">{</span>
-  <span class="na">content</span>  <span class="o">=</span> <span class="nv">data.template_file.dummy_container_properties.rendered</span>
-  <span class="na">filename</span> <span class="o">=</span> <span class="s2">&quot;${path.module}/dummy-job-container-properties.json&quot;</span>
-<span class="p">}</span>
-
-<span class="kr">resource</span> <span class="nc">&quot;aws_batch_job_definition&quot;</span> <span class="nv">&quot;dummy&quot;</span> <span class="p">{</span>
-  <span class="na">name</span>                  <span class="o">=</span> <span class="s2">&quot;${module.this.id}_test_batch_job_definition&quot;</span>
-  <span class="na">type</span>                  <span class="o">=</span> <span class="s2">&quot;container&quot;</span>
-  <span class="na">platform_capabilities</span> <span class="o">=</span> <span class="p">[</span><span class="nv">var.type</span><span class="p">]</span>
-  <span class="na">container_properties</span>  <span class="o">=</span> <span class="nv">data.template_file.dummy_container_properties.rendered</span>
-  <span class="na">propagate_tags</span>        <span class="o">=</span> <span class="no">true</span>
-  <span class="na">tags</span>                  <span class="o">=</span> <span class="nv">module.this.tags</span>
-<span class="p">}</span>
-
-<span class="kr">output</span> <span class="nv">&quot;aws_batch_dummy_job_def&quot;</span> <span class="p">{</span>
-  <span class="na">value</span> <span class="o">=</span> <span class="nv">aws_batch_job_definition.dummy</span>
-<span class="p">}</span>
-
-<span class="kr">resource</span> <span class="nc">&quot;local_file&quot;</span> <span class="nv">&quot;nextflow_config&quot;</span> <span class="p">{</span>
   <span class="na">content</span>  <span class="o">=</span> <span class="err">&lt;&lt;EOF</span>
   <span class="nb">profiles</span> <span class="p">{</span>
     <span class="nb">standard</span> <span class="p">{</span>
@@ -246,14 +225,18 @@
     <span class="na">s3_bucket</span>           <span class="o">=</span> <span class="nv">module.s3_bucket.bucket_id</span>
     <span class="na">job_queue</span>           <span class="o">=</span> <span class="nv">module.batch.aws_batch_job_queue</span>
     <span class="na">job_def</span>             <span class="o">=</span> <span class="nv">aws_batch_job_definition.rnaseq.name</span>
-    <span class="na">dummy_job_def</span>       <span class="o">=</span> <span class="nv">aws_batch_job_definition.dummy.name</span>
     <span class="na">job_role</span>            <span class="o">=</span> <span class="nv">module.batch.aws_batch_execution_role.arn</span>
     <span class="na">compute_environment</span> <span class="o">=</span> <span class="nv">module.this.id</span>
     <span class="na">execution_role_arn</span>  <span class="o">=</span> <span class="nv">module.batch.aws_batch_execution_role.arn</span>
+    <span class="na">secret_name</span>         <span class="o">=</span> <span class="nv">module.batch.aws_secrets_manager_secret-batch.name</span>
+    <span class="na">secret_arn</span>          <span class="o">=</span> <span class="nv">module.batch.aws_secrets_manager_secret-batch.arn</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="kr">resource</span> <span class="nc">&quot;local_file&quot;</span> <span class="nv">&quot;pytest&quot;</span> <span class="p">{</span>
+  <span class="na">depends_on</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="nv">data.template_file.pytest</span>
+  <span class="p">]</span>
   <span class="na">content</span>  <span class="o">=</span> <span class="nv">data.template_file.pytest.rendered</span>
   <span class="na">filename</span> <span class="o">=</span> <span class="s2">&quot;${path.module}/tests/config.py&quot;</span>
 <span class="p">}</span>
@@ -271,7 +254,6 @@
     <span class="nv">aws_iam_policy.s3_full_access</span><span class="p">,</span>
     <span class="nv">aws_iam_role_policy_attachment.batch_execution_role_s3_base_access</span><span class="p">,</span>
     <span class="nv">aws_iam_role_policy_attachment.batch_execution_role_s3_full_access</span><span class="p">,</span>
-    <span class="nv">aws_batch_job_definition.dummy</span><span class="p">,</span>
     <span class="nv">aws_batch_job_definition.rnaseq</span><span class="p">,</span>
     <span class="nv">local_file.pytest</span><span class="p">,</span>
     <span class="nv">local_file.nextflow_config</span><span class="p">,</span>
@@ -282,8 +264,9 @@
   <span class="kr">provisioner</span> <span class="nv">&quot;local-exec&quot;</span> <span class="p">{</span>
     <span class="na">command</span> <span class="o">=</span> <span class="s2">&quot;pip install -r tests/requirements.txt; python -m pytest -s --log-cli-level=INFO tests/test_batch.py&quot;</span>
     <span class="nb">environment</span> <span class="o">=</span> <span class="p">{</span>
-      <span class="na">AWS_REGION</span> <span class="o">=</span> <span class="nv">var.region</span>
-      <span class="na">LOG_LEVEL</span>  <span class="o">=</span> <span class="s2">&quot;INFO&quot;</span>
+      <span class="na">AWS_REGION</span>         <span class="o">=</span> <span class="nv">var.region</span>
+      <span class="na">AWS_DEFAULT_REGION</span> <span class="o">=</span> <span class="nv">var.region</span>
+      <span class="na">LOG_LEVEL</span>          <span class="o">=</span> <span class="s2">&quot;INFO&quot;</span>
     <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">}</span>

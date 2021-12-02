@@ -50,4 +50,3 @@ jobs:
         terraform refresh
         terraform apply -auto-approve && \
         pip install -r tests/requirements.txt; python -m pytest -s --reruns 5 --log-cli-level=INFO tests/test_batch.py
-

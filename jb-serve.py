@@ -315,7 +315,7 @@ def main(pathsource: Path, examplesdir: Path, outputdir: Path, port: int):
         os.remove(tfvars_hcl.name)
 
         # Generate the terraform markdown docs
-        command = f" terraform-docs markdown {example_dir} > {example_dir}/terraform.md"
+        command = f" terraform-docs markdown {example_dir} > {example_dir}/terraform-requirements.md"
         subprocess.run(["bash", "-c", command])
 
         # Return the variables in JSON and HCL format

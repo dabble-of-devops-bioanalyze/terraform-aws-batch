@@ -1,14 +1,14 @@
-<div class="highlight"><pre><span></span><span class="c1"># terraform {</span>
-<span class="c1">#   required_version = &quot;&gt;= 0.12.2&quot;</span>
+<div class="highlight"><pre><span></span><span class="nb">terraform</span> <span class="p">{</span>
+  <span class="na">required_version</span> <span class="o">=</span> <span class="s2">&quot;&gt;= 0.12.2&quot;</span>
 
-<span class="c1">#   backend &quot;s3&quot; {</span>
-<span class="c1">#     region         = &quot;us-east-1&quot;</span>
-<span class="c1">#     bucket         = &quot;bioanalyze-test-terraform-state&quot;</span>
-<span class="c1">#     key            = &quot;bioanalyze-test-fargate-nf-rnaseq&quot;</span>
-<span class="c1">#     dynamodb_table = &quot;bioanalyze-test-terraform-state-lock&quot;</span>
-<span class="c1">#     profile        = &quot;&quot;</span>
-<span class="c1">#     role_arn       = &quot;&quot;</span>
-<span class="c1">#     encrypt        = &quot;true&quot;</span>
-<span class="c1">#   }</span>
-<span class="c1"># }</span>
+  <span class="kr">backend</span> <span class="nv">&quot;s3&quot;</span> <span class="p">{</span>
+    <span class="na">region</span>         <span class="o">=</span> <span class="s2">&quot;us-east-1&quot;</span>
+    <span class="na">bucket</span>         <span class="o">=</span> <span class="s2">&quot;bioanalyze-test-terraform-state&quot;</span>
+    <span class="na">key</span>            <span class="o">=</span> <span class="s2">&quot;bioanalyze-fargate-test-nf-rnaseq&quot;</span>
+    <span class="na">dynamodb_table</span> <span class="o">=</span> <span class="s2">&quot;bioanalyze-test-terraform-state-lock&quot;</span>
+    <span class="na">profile</span>        <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="na">role_arn</span>       <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="na">encrypt</span>        <span class="o">=</span> <span class="s2">&quot;true&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>

@@ -1,6 +1,5 @@
 title: BioAnalyze - AWS Batch Module
 author: BioAnalyze
-logo: https://github.com/dabble-of-devops-bioanalyze/biohub-info/raw/master/logos/bioanalyze-logo-transparent.png
 only_build_toc_files: true
 exclude_patterns:
   - "**/.pytest_cache"
