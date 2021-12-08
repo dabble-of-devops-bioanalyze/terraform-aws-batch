@@ -114,6 +114,8 @@ JB_INCLUDE = ["**.rst", "**.yaml", "**.yml", "**.md", "**/*.ipynb"]
 JB_EXCLUDE = [
     "**/_html/**",
     "_html",
+    "docs",
+    "docs/*",
     "_build",
     "_build/**",
     "tests/__pycache__/**",
@@ -194,7 +196,7 @@ def generate_fileset(
 
 @click.command()
 @click.argument("pathsource", default=".", type=Path)
-@click.option("-o", "--outputdir", default="_build/html", type=Path, show_default=True)
+@click.option("-o", "--outputdir", default="docs", type=Path, show_default=True)
 @click.option("-e", "--examplesdir", default="examples", type=Path, show_default=True)
 @click.option("-p", "--port", default=8002, type=click.INT, show_default=True)
 def main(pathsource: Path, examplesdir: Path, outputdir: Path, port: int):
@@ -207,7 +209,7 @@ def main(pathsource: Path, examplesdir: Path, outputdir: Path, port: int):
     Args
     ----
     PATHSOURCE: Directory in `jb build <dir>`
-    outputdir: Directory where HTML output is generated. `jb` defaults to `_build/html`
+    outputdir: Directory where HTML output is generated. `jb` defaults to `docs` for deployment with GH pages.
     examplesdir: Directory where terraform examples are located. defaults to `examples`.
     port: Port to host the webserver. Default is 8002
 
