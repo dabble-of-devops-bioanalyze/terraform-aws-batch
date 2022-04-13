@@ -393,6 +393,7 @@ def main(pathsource: Path, examplesdir: Path, outputdir: Path, port: int):
             cleanup_cookiecutter(example)
 
     def pygmentize():
+        """Syntax highlighting with the base jupyterbook does not work when running a literal include on terraform files."""
         terraform_files = glob.glob(f"{examplesdir}/**/**.tf", recursive=True)
         for terraform_file in terraform_files:
             dirname = os.path.dirname(terraform_file)

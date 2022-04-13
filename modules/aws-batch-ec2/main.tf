@@ -1,6 +1,8 @@
 data "aws_ami" "ecs_latest" {
   most_recent = true
   owners      = ["amazon"]
+  #if using plcuster
+  #owners = ["247102896272"]
 
   filter {
     name   = "name"
@@ -65,6 +67,16 @@ Content-Type: text/x-shellscript; charset="us-ascii"
 #!/bin/bash
 # Terraform script
 
+# Nextflow needs the aws cli installed
+# https://www.nextflow.io/docs/latest/awscloud.html#aws-cli-installation
+# do not use $HOME
+sudo yum install -y bzip2 wget
+cd /home/ec2-user
+wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh -b -f -p ./miniconda
+./miniconda/bin/conda install -c conda-forge -y awscli
+rm Miniconda3-latest-Linux-x86_64.sh
+
 # Expand individual docker storage if container requires more than defaul 10GB
 cloud-init-per once docker_options echo 'OPTIONS="$$${OPTIONS} --storage-opt dm.basesize=${var.docker_max_container_size}G"' >> /etc/sysconfig/docker
 
@@ -75,6 +87,7 @@ echo ECS_IMAGE_MINIMUM_CLEANUP_AGE=60m >> /etc/ecs/ecs.config
 sudo systemctl restart docker || echo "unable to restart docker"
 sudo start ecs || echo "unable to restart ecs"
 
+## Extra user data
 ${var.additional_user_data}
 TEMPLATE
 }
@@ -87,6 +100,7 @@ resource "aws_launch_template" "batch" {
 
   description = "Used by Batch Compute Environment ${module.this.id}"
   image_id    = var.custom_ami == "" ? data.aws_ami.ecs_latest.id : var.custom_ami
+  # image_id    = var.use_pcluster_ami == true ? data.aws_ami.pcluster.id : data.aws_ami.ecs_latest.id
 
   dynamic "block_device_mappings" {
     for_each = var.block_device_mappings
@@ -149,7 +163,8 @@ resource "aws_launch_template" "batch" {
   }
 
   # instance_type = var.instance_type
-  key_name = var.key_name
+  # key_name = var.key_name
+  key_name  = var.ec2_key_pair != "" ? var.ec2_key_pair : null
 
   dynamic "placement" {
     for_each = var.placement != null ? [var.placement] : []

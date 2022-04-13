@@ -250,3 +250,18 @@ variable "metadata_http_put_response_hop_limit" {
     The default is `2` to support containerized workloads.
     EOT
 }
+
+
+###################################################
+# Pcluster
+###################################################
+
+variable "pcluster_version" {
+  type = string
+  default = "3.1.2"
+}
+
+variable "use_pcluster_ami" {
+  type = bool
+  default = false
+}

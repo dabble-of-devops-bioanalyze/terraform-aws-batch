@@ -24,3 +24,9 @@ variable "run_tests" {
   type = bool
   default = false
 }
+
+variable "ec2_key_pair" {
+  description = "ec2 key pair for ssh"
+  type = string
+  default = ""
+}

@@ -49,7 +49,7 @@ module "batch" {
   # TODO
   # source  = "dabble-of-devops-bioanalyze/batch/aws"
   # version >= "1.13.0"
-  source = "../../"
+  source = "../../terraform-recipes/terraform-aws-batch"
   # insert the 17 required variables here
   region = var.region
   vpc_id = local.vpc_id
@@ -58,6 +58,7 @@ module "batch" {
   max_vcpus       = var.max_vcpus
   type            = var.type
   secrets_enabled = var.secrets_enabled
+  ec2_key_pair = var.ec2_key_pair
 
   context = module.this.context
 }
@@ -71,23 +72,14 @@ resource "random_string" "s3" {
   number           = true
 }
 
+resource "aws_s3_bucket" "workflow" {
+  bucket = "${module.this.id}-${random_string.s3.id}"
+  tags = module.this.tags
+}
 
-# Now that we have a batch job queue here's an s3 bucket to push/pull data from
-
-module "s3_bucket" {
-  source = "cloudposse/s3-bucket/aws"
-  # version = var.s3_bucket_version
-  # Cloud Posse recommends pinning every module to a specific version
-  # version = "x.x.x"
-  acl     = "private"
-  enabled = true
-  # user_enabled       = true
-  user_enabled       = false
-  versioning_enabled = false
-
-  bucket_name = "${module.this.id}-${random_string.s3.id}"
-  # tags = module.this.tags
-  context = module.this.context
+resource "aws_s3_bucket_acl" "workflow" {
+  bucket = aws_s3_bucket.workflow.id
+  acl    = "private"
 }
 
 output "batch" {
@@ -95,19 +87,23 @@ output "batch" {
 }
 
 output "s3_bucket" {
-  value = module.s3_bucket.bucket_id
+  # value = module.s3_bucket.bucket_id
+  value = aws_s3_bucket.workflow.id
 }
+
 
 locals {
   # cheap camelcase function
   id = replace(title(replace(module.this.id, "-", " ")), " ", "")
+  s3_bucket_id = aws_s3_bucket.workflow.id
+
 }
 data "aws_iam_policy_document" "s3_full_access" {
   statement {
     # sids cannot have -
     sid       = "${local.id}S3FullAccess"
     effect    = "Allow"
-    resources = ["arn:aws:s3:::${module.s3_bucket.bucket_id}/*"]
+    resources = ["arn:aws:s3:::${local.s3_bucket_id}/*"]
 
     actions = [
       "s3:PutObject",
@@ -132,7 +128,7 @@ data "aws_iam_policy_document" "s3_base_access" {
       "s3:ListBucketVersions"
     ]
 
-    resources = ["arn:aws:s3:::${module.s3_bucket.bucket_id}"]
+    resources = ["arn:aws:s3:::${local.s3_bucket_id}"]
     effect    = "Allow"
   }
 }
@@ -162,7 +158,8 @@ resource "aws_iam_role_policy_attachment" "batch_execution_role_s3_full_access" 
 data "template_file" "container_properties" {
   depends_on = [
     module.batch,
-    module.s3_bucket,
+    aws_s3_bucket.workflow,
+    # module.s3_bucket,
   ]
   template = file("${path.module}/container-properties.json.tpl")
   vars = {
@@ -190,7 +187,8 @@ resource "aws_batch_job_definition" "rnaseq" {
 resource "local_file" "nextflow_config" {
   depends_on = [
     module.batch,
-    module.s3_bucket,
+    aws_s3_bucket.workflow,
+    # module.s3_bucket,
     aws_batch_job_definition.rnaseq
   ]
   content  = <<EOF
@@ -204,7 +202,7 @@ resource "local_file" "nextflow_config" {
 
       process.executor = 'awsbatch'
       process.queue = '${module.batch.aws_batch_job_queue}'
-      workDir = 's3://${module.s3_bucket.bucket_id}/work'
+      workDir = 's3://${local.s3_bucket_id}/work'
 
       aws.region = '${var.region}'
     }
@@ -217,12 +215,14 @@ resource "local_file" "nextflow_config" {
 data "template_file" "pytest" {
   depends_on = [
     module.batch,
-    module.s3_bucket,
+    aws_s3_bucket.workflow,
+    # module.s3_bucket,
     local_file.nextflow_config
   ]
   template = file("${path.module}/tests/config.py.tpl")
   vars = {
-    s3_bucket           = module.s3_bucket.bucket_id
+    # s3_bucket           = module.s3_bucket.bucket_id
+    s3_bucket           = local.s3_bucket_id
     job_queue           = module.batch.aws_batch_job_queue
     job_def             = aws_batch_job_definition.rnaseq.name
     job_role            = module.batch.aws_batch_execution_role.arn
@@ -250,7 +250,8 @@ resource "null_resource" "pytest" {
   count = var.run_tests ? 1 : 0
   depends_on = [
     module.batch,
-    module.s3_bucket,
+    # module.s3_bucket,
+    aws_s3_bucket.workflow,
     aws_iam_policy.s3_full_access,
     aws_iam_role_policy_attachment.batch_execution_role_s3_base_access,
     aws_iam_role_policy_attachment.batch_execution_role_s3_full_access,

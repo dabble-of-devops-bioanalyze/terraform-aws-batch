@@ -7,5 +7,20 @@
   ],
   "environment": [{ "name": "VARNAME", "value": "VARVAL" }],
   "executionRoleArn": "${execution_role_arn}",
-  "jobRoleArn": "${execution_role_arn}"
+  "jobRoleArn": "${execution_role_arn}",
+  "mountPoints": [
+    {
+      "containerPath": "/home/ec2-user/miniconda",
+      "readOnly": true,
+      "sourceVolume": "aws-cli"
+    }
+  ],
+  "volumes": [
+    {
+      "host": {
+        "sourcePath": "/home/ec2-user/miniconda"
+      },
+      "name": "aws-cli"
+    }
+  ]
 }

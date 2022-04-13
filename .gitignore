@@ -38,3 +38,4 @@ config.cfg
 
 examples/fargate/tests/__pycache__
 examples/ec2/tests/__pycache__
+

@@ -6,6 +6,21 @@
     {"type": "VCPU", "value": "4"}
   ],
   "environment": [{ "name": "VARNAME", "value": "VARVAL" }],
-  "executionRoleArn": "arn:aws:iam::018835827632:role/bioanalyze-ec2-test-nf-rnaseq-batch_execution_role",
-  "jobRoleArn": "arn:aws:iam::018835827632:role/bioanalyze-ec2-test-nf-rnaseq-batch_execution_role"
+  "executionRoleArn": "arn:aws:iam::858286506743:role/bioanalyze-ec2-test-nf-rnaseq-batch_execution_role",
+  "jobRoleArn": "arn:aws:iam::858286506743:role/bioanalyze-ec2-test-nf-rnaseq-batch_execution_role",
+  "mountPoints": [
+    {
+      "containerPath": "/home/ec2-user/miniconda",
+      "readOnly": true,
+      "sourceVolume": "aws-cli"
+    }
+  ],
+  "volumes": [
+    {
+      "host": {
+        "sourcePath": "/home/ec2-user/miniconda"
+      },
+      "name": "aws-cli"
+    }
+  ]
 }

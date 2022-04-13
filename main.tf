@@ -226,6 +226,7 @@ module "ec2_batch_compute_environment" {
   vpc_id             = var.vpc_id
   max_vcpus          = var.max_vcpus
   subnet_ids         = var.subnet_ids
+  ec2_key_pair       = var.ec2_key_pair
 
   ecs_instance_role                                     = aws_iam_role.ecs_instance_role
   ecs_instance_profile                                  = aws_iam_instance_profile.ecs_instance_role

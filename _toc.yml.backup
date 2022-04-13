@@ -1,0 +1,15 @@
+root: README
+title: AWS Batch
+entries:
+  - title: Examples
+    file: examples/examples
+    entries:
+    - title: AWS Batch Fargate - Example Module
+      # For zendesk make sure to leave off the .md/.rst
+      file: _templates/examples/fargate/{{cookiecutter.project_name}}/readme
+    - title: AWS Batch Fargate - Terraform
+      file: _templates/examples/fargate/{{cookiecutter.project_name}}/terraform
+    - title: AWS Batch EC2 - Example Module
+      file: _templates/examples/ec2/{{cookiecutter.project_name}}/readme
+    - title: AWS Batch EC2 - Terraform
+      file: _templates/examples/ec2/{{cookiecutter.project_name}}/terraform

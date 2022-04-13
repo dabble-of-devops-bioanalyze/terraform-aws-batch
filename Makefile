@@ -27,6 +27,7 @@ custom-init:
 		cloudposse/build-harness:slim-latest init
 
 custom-readme:
+	$(MAKE) github/init/context.tf
 	$(MAKE) download-readme
 	$(MAKE) custom-init
 	docker run -it -v "$(shell pwd):/tmp/terraform-module" \

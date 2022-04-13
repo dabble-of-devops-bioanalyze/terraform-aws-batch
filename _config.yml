@@ -23,8 +23,8 @@ exclude_patterns:
   - "**/.ipynb_checkpoints"
   - "__pycache__"
   - "**/__pycache__"
-sphinx:
-  config:
-    html_baseurl: 'https://path_to_book/'
-  extra_extensions:
-    - sphinx_sitemap
+#sphinx:
+#  config:
+#    html_baseurl: 'https://path_to_book/'
+#  extra_extensions:
+#    - sphinx_sitemap

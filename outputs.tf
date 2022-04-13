@@ -38,3 +38,7 @@ output "aws_batch_service_role" {
 output "aws_batch_execution_role" {
   value = aws_iam_role.batch_execution_role
 }
+
+output "batch_module" {
+  value =   var.type == "FARGATE" || var.type == "FARGATE_SPOT" ? module.fargate_batch_compute_environment : module.ec2_batch_compute_environment
+}
