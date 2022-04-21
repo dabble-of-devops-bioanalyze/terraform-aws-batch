@@ -50,7 +50,7 @@ resource "aws_batch_compute_environment" "batch" {
 
   lifecycle {
     create_before_destroy = true
-    ignore_changes = [
+    ignore_changes        = [
       compute_resources[0].desired_vcpus
     ]
   }
@@ -77,6 +77,9 @@ bash Miniconda3-latest-Linux-x86_64.sh -b -f -p ./miniconda
 ./miniconda/bin/conda install -c conda-forge -y awscli
 rm Miniconda3-latest-Linux-x86_64.sh
 
+# https://docs.aws.amazon.com/batch/latest/userguide/efs-volumes.html
+sudo systemctl enable --now amazon-ecs-volume-plugin
+
 # Expand individual docker storage if container requires more than defaul 10GB
 cloud-init-per once docker_options echo 'OPTIONS="$$${OPTIONS} --storage-opt dm.basesize=${var.docker_max_container_size}G"' >> /etc/sysconfig/docker
 
@@ -86,6 +89,7 @@ echo ECS_IMAGE_MINIMUM_CLEANUP_AGE=60m >> /etc/ecs/ecs.config
 
 sudo systemctl restart docker || echo "unable to restart docker"
 sudo start ecs || echo "unable to restart ecs"
+
 
 ## Extra user data
 ${var.additional_user_data}
@@ -164,7 +168,7 @@ resource "aws_launch_template" "batch" {
 
   # instance_type = var.instance_type
   # key_name = var.key_name
-  key_name  = var.ec2_key_pair != "" ? var.ec2_key_pair : null
+  key_name = var.ec2_key_pair != "" ? var.ec2_key_pair : null
 
   dynamic "placement" {
     for_each = var.placement != null ? [var.placement] : []
