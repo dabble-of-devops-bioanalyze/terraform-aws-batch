@@ -70,7 +70,7 @@ Content-Type: text/x-shellscript; charset="us-ascii"
 # Nextflow needs the aws cli installed
 # https://www.nextflow.io/docs/latest/awscloud.html#aws-cli-installation
 # do not use $HOME
-sudo yum install -y bzip2 wget
+sudo yum install -y bzip2 wget amazon-efs-utils
 cd /home/ec2-user
 wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
 bash Miniconda3-latest-Linux-x86_64.sh -b -f -p ./miniconda
@@ -89,7 +89,6 @@ echo ECS_IMAGE_MINIMUM_CLEANUP_AGE=60m >> /etc/ecs/ecs.config
 
 sudo systemctl restart docker || echo "unable to restart docker"
 sudo start ecs || echo "unable to restart ecs"
-
 
 ## Extra user data
 ${var.additional_user_data}
