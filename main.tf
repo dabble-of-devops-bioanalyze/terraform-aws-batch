@@ -233,6 +233,7 @@ module "ec2_batch_compute_environment" {
   aws_iam_role_aws_batch_service_role                   = aws_iam_role.aws_batch_service_role
   aws_iam_role_policy_attachment_aws_batch_service_role = aws_iam_role_policy_attachment.aws_batch_service_role
   block_device_mappings                                 = var.block_device_mappings
+  custom_ami                                            = var.custom_ami
 
   context = module.this.context
 }
