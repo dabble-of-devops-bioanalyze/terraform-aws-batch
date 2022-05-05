@@ -78,17 +78,10 @@ bash Miniconda3-latest-Linux-x86_64.sh -b -f -p ./miniconda
 rm Miniconda3-latest-Linux-x86_64.sh
 
 # https://docs.aws.amazon.com/batch/latest/userguide/efs-volumes.html
-sudo systemctl enable --now amazon-ecs-volume-plugin
+sudo systemctl enable --now amazon-ecs-volume-plugin || echo "Unable to start ecs-volume-plugin"
 
 # Expand individual docker storage if container requires more than defaul 10GB
 cloud-init-per once docker_options echo 'OPTIONS="$$${OPTIONS} --storage-opt dm.basesize=${var.docker_max_container_size}G"' >> /etc/sysconfig/docker
-
-echo ECS_CLUSTER=default>>/etc/ecs/ecs.config
-echo ECS_IMAGE_CLEANUP_INTERVAL=60m >> /etc/ecs/ecs.config
-echo ECS_IMAGE_MINIMUM_CLEANUP_AGE=60m >> /etc/ecs/ecs.config
-
-sudo systemctl restart docker || echo "unable to restart docker"
-sudo start ecs || echo "unable to restart ecs"
 
 ## Extra user data
 ${var.additional_user_data}
