@@ -152,7 +152,7 @@ resource "aws_default_security_group" "default" {
 }
 
 resource "aws_security_group" "batch" {
-  count = var.security_group_ids[0] == "" ? 1 : 0
+  count      = var.security_group_ids[0] == "" ? 1 : 0
   depends_on = [
     data.aws_vpc.selected
   ]
@@ -232,6 +232,7 @@ module "ec2_batch_compute_environment" {
   ecs_instance_profile                                  = aws_iam_instance_profile.ecs_instance_role
   aws_iam_role_aws_batch_service_role                   = aws_iam_role.aws_batch_service_role
   aws_iam_role_policy_attachment_aws_batch_service_role = aws_iam_role_policy_attachment.aws_batch_service_role
+  block_device_mappings                                 = var.block_device_mappings
 
   context = module.this.context
 }
@@ -261,9 +262,9 @@ locals {
 }
 
 resource "aws_batch_job_queue" "default_queue" {
-  name     = "${module.this.id}-default-job-queue"
-  state    = "ENABLED"
-  priority = 1
+  name                 = "${module.this.id}-default-job-queue"
+  state                = "ENABLED"
+  priority             = 1
   compute_environments = [
     local.aws_batch_compute_environment.arn,
   ]
