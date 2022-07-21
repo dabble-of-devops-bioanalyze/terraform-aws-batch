@@ -91,7 +91,8 @@ variable "ec2_key_pair" {
 variable "instance_types" {
   description = "Optional list of instance types."
   type        = list(any)
-  default     = [
+
+  default = [
     "c3",
     "c3.2xlarge",
     "c3.4xlarge",
