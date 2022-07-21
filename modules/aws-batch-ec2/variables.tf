@@ -66,7 +66,8 @@ variable "ami_owners" {
 variable "bid_percentage" {
   description = "Integer of minimum percentage that a Spot Instance price must be when compared to on demand.  Example: A value of 20 would require the spot price be lower than 20% the current on demand price."
   type        = string
-  default     = "100" # 100% of on demand price.  The module still requires this value when the compute type is not SPOT.
+  default     = "100"
+  # 100% of on demand price.  The module still requires this value when the compute type is not SPOT.
 }
 
 variable "custom_ami" {
@@ -90,13 +91,217 @@ variable "ec2_key_pair" {
 variable "instance_types" {
   description = "Optional list of instance types."
   type        = list(any)
-  default     = ["optimal"]
+  default     = [
+    "c3",
+    "c3.2xlarge",
+    "c3.4xlarge",
+    "c3.8xlarge",
+    "c3.large",
+    "c3.xlarge",
+    "c4",
+    "c4.2xlarge",
+    "c4.4xlarge",
+    "c4.8xlarge",
+    "c4.large",
+    "c4.xlarge",
+    "c5",
+    "c5.12xlarge",
+    "c5.18xlarge",
+    "c5.24xlarge",
+    "c5.2xlarge",
+    "c5.4xlarge",
+    "c5.9xlarge",
+    "c5.large",
+    "c5.metal",
+    "c5.xlarge",
+    "c5a",
+    "c5a.12xlarge",
+    "c5a.16xlarge",
+    "c5a.24xlarge",
+    "c5a.2xlarge",
+    "c5a.4xlarge",
+    "c5a.8xlarge",
+    "c5a.large",
+    "c5a.xlarge",
+    "c5d",
+    "c5d.12xlarge",
+    "c5d.18xlarge",
+    "c5d.24xlarge",
+    "c5d.2xlarge",
+    "c5d.4xlarge",
+    "c5d.9xlarge",
+    "c5d.large",
+    "c5d.metal",
+    "c5d.xlarge",
+    "c5n",
+    "c5n.18xlarge",
+    "c5n.2xlarge",
+    "c5n.4xlarge",
+    "c5n.9xlarge",
+    "c5n.large",
+    "c5n.metal",
+    "c5n.xlarge",
+    "c6i",
+    "c6i.12xlarge",
+    "c6i.16xlarge",
+    "c6i.24xlarge",
+    "c6i.2xlarge",
+    "c6i.32xlarge",
+    "c6i.4xlarge",
+    "c6i.8xlarge",
+    "c6i.large",
+    "c6i.metal",
+    "c6i.xlarge",
+    "m3",
+    "m3.2xlarge",
+    "m3.large",
+    "m3.medium",
+    "m3.xlarge",
+    "m4",
+    "m4.10xlarge",
+    "m4.16xlarge",
+    "m4.2xlarge",
+    "m4.4xlarge",
+    "m4.large",
+    "m4.xlarge",
+    "m5",
+    "m5.12xlarge",
+    "m5.16xlarge",
+    "m5.24xlarge",
+    "m5.2xlarge",
+    "m5.4xlarge",
+    "m5.8xlarge",
+    "m5.large",
+    "m5.metal",
+    "m5.xlarge",
+    "m5a",
+    "m5a.12xlarge",
+    "m5a.16xlarge",
+    "m5a.24xlarge",
+    "m5a.2xlarge",
+    "m5a.4xlarge",
+    "m5a.8xlarge",
+    "m5a.large",
+    "m5a.xlarge",
+    "m5ad",
+    "m5ad.12xlarge",
+    "m5ad.16xlarge",
+    "m5ad.24xlarge",
+    "m5ad.2xlarge",
+    "m5ad.4xlarge",
+    "m5ad.8xlarge",
+    "m5ad.large",
+    "m5ad.xlarge",
+    "m5d",
+    "m5d.12xlarge",
+    "m5d.16xlarge",
+    "m5d.24xlarge",
+    "m5d.2xlarge",
+    "m5d.4xlarge",
+    "m5d.8xlarge",
+    "m5d.large",
+    "m5d.metal",
+    "m5d.xlarge",
+    "m5zn",
+    "m5zn.12xlarge",
+    "m5zn.2xlarge",
+    "m5zn.3xlarge",
+    "m5zn.6xlarge",
+    "m5zn.large",
+    "m5zn.metal",
+    "m5zn.xlarge",
+    "m6i",
+    "m6i.12xlarge",
+    "m6i.16xlarge",
+    "m6i.24xlarge",
+    "m6i.2xlarge",
+    "m6i.32xlarge",
+    "m6i.4xlarge",
+    "m6i.8xlarge",
+    "m6i.large",
+    "m6i.metal",
+    "m6i.xlarge",
+    "optimal",
+    "r3",
+    "r3.2xlarge",
+    "r3.4xlarge",
+    "r3.8xlarge",
+    "r3.large",
+    "r3.xlarge",
+    "r4",
+    "r4.16xlarge",
+    "r4.2xlarge",
+    "r4.4xlarge",
+    "r4.8xlarge",
+    "r4.large",
+    "r4.xlarge",
+    "r5",
+    "r5.12xlarge",
+    "r5.16xlarge",
+    "r5.24xlarge",
+    "r5.2xlarge",
+    "r5.4xlarge",
+    "r5.8xlarge",
+    "r5.large",
+    "r5.metal",
+    "r5.xlarge",
+    "r5a",
+    "r5a.12xlarge",
+    "r5a.16xlarge",
+    "r5a.24xlarge",
+    "r5a.2xlarge",
+    "r5a.4xlarge",
+    "r5a.8xlarge",
+    "r5a.large",
+    "r5a.xlarge",
+    "r5ad",
+    "r5ad.12xlarge",
+    "r5ad.16xlarge",
+    "r5ad.24xlarge",
+    "r5ad.2xlarge",
+    "r5ad.4xlarge",
+    "r5ad.8xlarge",
+    "r5ad.large",
+    "r5ad.xlarge",
+    "r5d",
+    "r5d.12xlarge",
+    "r5d.16xlarge",
+    "r5d.24xlarge",
+    "r5d.2xlarge",
+    "r5d.4xlarge",
+    "r5d.8xlarge",
+    "r5d.large",
+    "r5d.metal",
+    "r5d.xlarge",
+    "r5n",
+    "r5n.12xlarge",
+    "r5n.16xlarge",
+    "r5n.24xlarge",
+    "r5n.2xlarge",
+    "r5n.4xlarge",
+    "r5n.8xlarge",
+    "r5n.large",
+    "r5n.metal",
+    "r5n.xlarge",
+    "r6i",
+    "r6i.12xlarge",
+    "r6i.16xlarge",
+    "r6i.24xlarge",
+    "r6i.2xlarge",
+    "r6i.32xlarge",
+    "r6i.4xlarge",
+    "r6i.8xlarge",
+    "r6i.large",
+    "r6i.metal",
+    "r6i.xlarge",
+  ]
+
 }
 
 variable "max_vcpus" {
-  description = "Max vCPUs.  Default 2 for m4.large."
+  description = "Max vCPUs. This will declare how many instances you can have running at a given time. For example, setting this at 256 would allow for 16 tasks * 16 cpus each."
   type        = string
-  default     = 8
+  default     = 640000
 }
 
 variable "min_vcpus" {
@@ -153,7 +358,7 @@ variable "block_device_mappings" {
     device_name  = string
     no_device    = bool
     virtual_name = string
-    ebs = object({
+    ebs          = object({
       delete_on_termination = bool
       encrypted             = bool
       iops                  = number
@@ -171,7 +376,7 @@ variable "instance_market_options" {
   description = "The market (purchasing) option for the instances"
 
   type = object({
-    market_type = string
+    market_type  = string
     spot_options = object({
       block_duration_minutes         = number
       instance_interruption_behavior = string
@@ -257,11 +462,11 @@ variable "metadata_http_put_response_hop_limit" {
 ###################################################
 
 variable "pcluster_version" {
-  type = string
+  type    = string
   default = "3.1.2"
 }
 
 variable "use_pcluster_ami" {
-  type = bool
+  type    = bool
   default = false
 }

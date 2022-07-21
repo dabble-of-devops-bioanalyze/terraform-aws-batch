@@ -40,7 +40,7 @@ module "this" {
   context = var.context
 }
 
-# Copy contents of cloudposse/terraform-null-label/variables.tf here
+# Copy contents of cloudposse/terraform-null-label/module_variables.tf here
 
 variable "context" {
   type = any
@@ -199,4 +199,4 @@ variable "label_value_case" {
     error_message = "Allowed values: `lower`, `title`, `upper`, `none`."
   }
 }
-#### End of copy of cloudposse/terraform-null-label/variables.tf
+#### End of copy of cloudposse/terraform-null-label/module_variables.tf

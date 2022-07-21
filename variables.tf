@@ -45,7 +45,8 @@ variable "ami_owners" {
 variable "bid_percentage" {
   description = "Integer of minimum percentage that a Spot Instance price must be when compared to on demand.  Example: A value of 20 would require the spot price be lower than 20% the current on demand price."
   type        = string
-  default     = "100" # 100% of on demand price.  The module still requires this value when the compute type is not SPOT.
+  default     = "100"
+  # 100% of on demand price.  The module still requires this value when the compute type is not SPOT.
 }
 
 variable "custom_ami" {
@@ -73,9 +74,9 @@ variable "instance_types" {
 }
 
 variable "max_vcpus" {
-  description = "Max vCPUs.  Default 2 for m4.large."
+  description = "Max vCPUs. This will declare how many instances you can have running at a given time. For example, setting this at 256 would allow for 16 tasks * 16 cpus each."
   type        = string
-  default     = 8
+  default     = 640000
 }
 
 variable "min_vcpus" {
@@ -132,7 +133,7 @@ variable "block_device_mappings" {
     device_name  = string
     no_device    = bool
     virtual_name = string
-    ebs = object({
+    ebs          = object({
       delete_on_termination = bool
       encrypted             = bool
       iops                  = number
@@ -150,7 +151,7 @@ variable "instance_market_options" {
   description = "The market (purchasing) option for the instances"
 
   type = object({
-    market_type = string
+    market_type  = string
     spot_options = object({
       block_duration_minutes         = number
       instance_interruption_behavior = string
@@ -231,7 +232,7 @@ variable "metadata_http_put_response_hop_limit" {
 }
 
 variable "enable_batch_compute_environment" {
-  type = bool
-  default = true
+  type        = bool
+  default     = true
   description = "Create a compute environment"
 }

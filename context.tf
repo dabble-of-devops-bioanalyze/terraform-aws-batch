@@ -45,7 +45,7 @@ module "this" {
   context = var.context
 }
 
-# Copy contents of cloudposse/terraform-null-label/variables.tf here
+# Copy contents of cloudposse/terraform-null-label/module_variables.tf here
 
 variable "context" {
   type = any
@@ -276,4 +276,4 @@ variable "descriptor_formats" {
     EOT
 }
 
-#### End of copy of cloudposse/terraform-null-label/variables.tf
+#### End of copy of cloudposse/terraform-null-label/module_variables.tf
